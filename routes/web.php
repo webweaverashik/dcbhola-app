@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,17 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('index');
+    });
 });
 
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/', function () {
-//         return view('index');
-//     });
-// });
-
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/login', [UserController::class, 'showLoginForm']);
+Route::post('/login', [UserController::class, 'login'])->name('login');
