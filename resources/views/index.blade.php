@@ -1,6 +1,14 @@
+@section('page-level-custom-css')
+    <link href="{{ asset('src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+
 @extends('layouts.layout')
 
-@section('title', 'DC Bhola Dashboard')
+
+@section('title', 'Dashboard')
 
 @section('content')
     <div class="row layout-top-spacing">
