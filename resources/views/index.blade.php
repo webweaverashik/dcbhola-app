@@ -11,10 +11,19 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="row layout-top-spacing">
-
-        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <div class="widget widget-six">
+<div class="row layout-top-spacing">
+    
+    @if (Session::has('success'))
+    <div class="col-md-12">
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ Session::get('success') }}
+        </div>
+    </div>
+    @endif
+    
+    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+        <div class="widget widget-six">
                 <div class="widget-heading">
                     <h6 class="">Statistics</h6>
                     <div class="task-action">

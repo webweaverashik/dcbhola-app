@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthenticateController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -22,5 +23,16 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/login', [UserController::class, 'showLoginForm']);
-Route::post('/login', [UserController::class, 'login'])->name('login');
+// Route::get('/login', [UserController::class, 'showLoginForm']);
+// Route::post('/login', [UserController::class, 'login'])->name('login');
+
+
+
+Route::controller(AuthenticateController::class)->group(function(){
+    // Route::get('/registration','registration')->middleware('alreadyLoggedIn');
+    // Route::post('/registration-user','registerUser')->name('register-user');
+    Route::get('/login','login')->middleware('alreadyLoggedIn');
+    Route::post('/login','loginUser')->name('login');
+    Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
+    Route::get('/logout','logout');
+});

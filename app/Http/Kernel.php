@@ -63,5 +63,15 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        'isLoggedIn' => \App\Http\Middleware\AuthCheck::class,
+        'alreadyLoggedIn' => \App\Http\Middleware\AlreadyLoggedIn::class,
     ];
+
+
+    // Custom Middleware
+    // protected $routeMiddleware = [
+    //     'isLoggedIn' => \App\Http\Middleware\AuthCheck::class,
+    //     'alreadyLoggedIn' => \App\Http\Middleware\AlreadyLoggedIn::class,
+    // ];
 }

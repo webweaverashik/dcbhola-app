@@ -50,8 +50,10 @@
                                     <h2>Sign In</h2>
                                     <p>Enter your email and password to login</p>
                                     
-                                    @if (session('message'))
-                                        <p class="alert alert-light-danger">{{ session('message') }}</p>
+                                    @if (Session::has('fail'))
+                                        <div class="alert alert-danger">
+                                            {{ Session::get('fail') }}
+                                        </div>
                                     @endif
 
                                 </div>
@@ -62,12 +64,22 @@
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
                                             <input type="email" class="form-control" name="email" required>
+                                            <span class="text-danger">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="mb-4">
                                             <label class="form-label">Password</label>
                                             <input type="password" class="form-control" name="password" required>
+                                            <span class="text-danger">
+                                                @error('password')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-12">
