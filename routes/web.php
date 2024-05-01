@@ -18,14 +18,9 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return view('index');
+        return redirect('dashboard');
     });
 });
-
-
-// Route::get('/login', [UserController::class, 'showLoginForm']);
-// Route::post('/login', [UserController::class, 'login'])->name('login');
-
 
 
 Route::controller(AuthenticateController::class)->group(function(){

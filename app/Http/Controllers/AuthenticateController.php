@@ -71,7 +71,9 @@ class AuthenticateController extends Controller
         if (Session::has('loginId')) {
             $data = User::where('id','=', Session::get('loginId'))->first();
         }
-        return view('index',compact('data'));
+        // return $data;
+        
+        return view('index', compact('data'));
     }
     
     ///Logout
@@ -80,7 +82,7 @@ class AuthenticateController extends Controller
         $data = array();
         if (Session::has('loginId')) {
             Session::pull('loginId');
-            return redirect('login');
+            return redirect('login')->with('success', 'Successfully Logged out');
         }
     }
 }
