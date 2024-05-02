@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\LetterController;
+use App\Http\Controllers\SectionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -38,4 +39,6 @@ Route::controller(AuthenticateController::class)->group(function(){
 
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/profile', [UserController::class, 'profileView']);
+
+    Route::get('/sections', [SectionController::class, 'index']);
 });

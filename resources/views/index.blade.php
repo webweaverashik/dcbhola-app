@@ -12,7 +12,6 @@
 
 @section('content')
 <div class="row layout-top-spacing">
-    
     @if (Session::has('success'))
     <div class="col-md-12">
         <div class="alert alert-success alert-dismissible fade show">

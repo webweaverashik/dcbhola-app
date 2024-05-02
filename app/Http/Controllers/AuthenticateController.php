@@ -51,15 +51,21 @@ class AuthenticateController extends Controller
 
         $user = User::where('email','=', $request->email)->first();
 
+        // return $user;
+
         if($user){
             if(Hash::check($request->password, $user->password)) {
+                // storing logged in user data into session variables
                 $request->session()->put('loginId', $user->id);
-                return redirect('dashboard')->with('success', 'Login Successful');
+                $request->session()->put('name', $user->name);
+                $request->session()->put('designation', $user->designation);
+
+                return redirect('dashboard')->with('success', 'লগইন সফল হয়েছে।');
             } else {
-                return back()->with('fail','Password not match!');
+                return back()->with('fail','পাসওয়ার্ড সঠিক নয়!');
             }
         } else {
-            return back()->with('fail','This email is not register.');
+            return back()->with('fail','ইমেইলটি নিবন্ধিত নয়!');
         }        
     }
 
@@ -67,13 +73,20 @@ class AuthenticateController extends Controller
     public function dashboard()
     {
         // return "Welcome to your dashabord.";
-        $data = array();
-        if (Session::has('loginId')) {
-            $data = User::where('id','=', Session::get('loginId'))->first();
-        }
-        // return $data;
+        // $data = array();
+        // if (Session::has('loginId')) {
+        //     $data = User::where('id','=', Session::get('loginId'))->first();
+        // }
 
-        return view('index', compact('data'));
+
+        // return $data;
+        // Session::put([
+        //     'name'      => $data->name,
+        //     'designation'   => $data->designation,
+        // ]);
+
+        // return view('index', compact('data'));
+        return view('index');
     }
     
     ///Logout

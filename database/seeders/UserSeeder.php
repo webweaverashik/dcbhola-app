@@ -14,11 +14,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Arifuzzaman',
+            'name' => 'আরিফুজ্জামান',
             'email' => 'dcbhola@mopa.gov.bd',
             'phone' => '01920869809',
             'password' => bcrypt('123456'),
-            'designation' => 'Deputy Commissioner',
+            'designation' => 'জেলা প্রশাসক',
             'role' => 1,
             'photo_url' => NULL,
         ]);

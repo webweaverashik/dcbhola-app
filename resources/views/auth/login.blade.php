@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>SignIn | DC Bhola </title>
+    <title>লগইন । জেলা প্রশাসন, ভোলা </title>
     <link rel="icon" type="image/x-icon" href="{{ asset('custom/img/bhola-favicon.ico') }}"/>
     <link href="{{ asset('layouts/vertical-light-menu/css/light/loader.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('layouts/vertical-light-menu/css/dark/loader.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('layouts/vertical-light-menu/loader.js') }}"></script>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+
     <link href="{{ asset('src/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     
     <link href="{{ asset('layouts/vertical-light-menu/css/light/plugins.css') }}" rel="stylesheet" type="text/css" />
@@ -24,6 +26,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('src/assets/css/light/elements/alert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('src/assets/css/dark/elements/alert.css') }}">
     <!--  END CUSTOM STYLE FILE  -->
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{{ asset('custom/style.css') }}">
     
 </head>
 <body class="form">
@@ -47,8 +52,8 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     
-                                    <h2>Sign In</h2>
-                                    <p>Enter your email and password to login</p>
+                                    <h2>লগইন</h2>
+                                    <p>অনুগ্রহ করে আপনার ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন</p>
                                     
                                     @if (Session::has('success'))
                                         <div class="alert alert-light-success">
@@ -68,7 +73,7 @@
                                     @csrf
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <label class="form-label">Email</label>
+                                            <label class="form-label">ইমেইল</label>
                                             <input type="email" class="form-control" name="email" required>
                                             <span class="text-danger">
                                                 @error('email')
@@ -79,7 +84,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="mb-4">
-                                            <label class="form-label">Password</label>
+                                            <label class="form-label">পাসওয়ার্ড</label>
                                             <input type="password" class="form-control" name="password" required>
                                             <span class="text-danger">
                                                 @error('password')
@@ -93,7 +98,7 @@
                                             <div class="form-check form-check-primary form-check-inline">
                                                 <input class="form-check-input me-3" type="checkbox" id="form-check-default">
                                                 <label class="form-check-label" for="form-check-default">
-                                                    Remember me
+                                                    মনে রাখুন
                                                 </label>
                                             </div>
                                         </div>
@@ -101,7 +106,7 @@
                                     
                                     <div class="col-12">
                                         <div class="mb-4">
-                                            <button type="submit" class="btn btn-primary w-100">SIGN IN</button>
+                                            <button type="submit" class="btn btn-primary w-100">লগইন করুন</button>
                                         </div>
                                     </div>
 
