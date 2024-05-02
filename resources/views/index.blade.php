@@ -15,7 +15,7 @@
     
     @if (Session::has('success'))
     <div class="col-md-12">
-        <div class="alert alert-success alert-dismissible">
+        <div class="alert alert-success alert-dismissible fade show">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             {{ Session::get('success') }}
         </div>
@@ -556,4 +556,14 @@
         </div>
 
     </div>
+@endsection
+
+
+@section('scripts')
+<script>
+    document.getElementById("dashboard_menu").className += " active";
+    // document.getElementById("letters_all_id").className += " active";
+    // document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
+    // document.getElementById("letters_ul").className += " show";
+</script>
 @endsection

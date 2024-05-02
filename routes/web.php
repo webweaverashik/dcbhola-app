@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\LetterController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -30,4 +31,11 @@ Route::controller(AuthenticateController::class)->group(function(){
     Route::post('/login','loginUser')->name('login');
     Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
     Route::get('/logout','logout');
+
+    Route::get('/letters', [LetterController::class, 'index']);
+    Route::get('/letters/add', [LetterController::class, 'create']);
+
+
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/profile', [UserController::class, 'profileView']);
 });

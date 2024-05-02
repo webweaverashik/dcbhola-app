@@ -72,7 +72,7 @@ class AuthenticateController extends Controller
             $data = User::where('id','=', Session::get('loginId'))->first();
         }
         // return $data;
-        
+
         return view('index', compact('data'));
     }
     

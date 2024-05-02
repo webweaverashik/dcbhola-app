@@ -87,5 +87,8 @@
     <script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+    <!-- Custom Scripts from each page -->
+    @yield('scripts')
+
 </body>
 </html>

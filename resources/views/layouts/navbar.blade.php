@@ -165,7 +165,8 @@
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-container">
                             <div class="avatar avatar-sm avatar-indicators avatar-online">
-                                @if ($data->photo_url == NULL)
+                                {{-- @if ($data->photo_url == NULL) --}}
+                                @if (Session::get('photo_url') == NULL)
                                     <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle">
                                 @else
                                     <img alt="avatar" src="{{ $data->photo_url }}" class="rounded-circle">
@@ -181,8 +182,8 @@
                                     &#x1F44B;
                                 </div>
                                 <div class="media-body">
-                                        <h5>{{ $data->name }}</h5>
-                                        <p>{{ $data->designation }}</p>                                    
+                                        <h5>{{ Session::get('name') }}</h5>
+                                        <p>{{ Session::get('designation') }}</p>                                    
                                 </div>
                             </div>
                         </div>
