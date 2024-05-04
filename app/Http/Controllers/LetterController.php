@@ -29,7 +29,7 @@ class LetterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

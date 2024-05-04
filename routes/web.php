@@ -35,6 +35,7 @@ Route::controller(AuthenticateController::class)->group(function(){
 
     Route::get('/letters', [LetterController::class, 'index']);
     Route::get('/letters/add', [LetterController::class, 'create']);
+    Route::post('/letters/add', [LetterController::class, 'store']);
 
 
     Route::get('/users', [UserController::class, 'index']);
