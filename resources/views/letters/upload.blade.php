@@ -16,40 +16,43 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form class="row g-3">
+                <form class="row g-3" action="{{ url('letters/add') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="col-md-6">
                         <label for="memorandum_no" class="form-label">স্মারক নং</label>
-                        <input type="email" class="form-control" id="memorandum_no" placeholder="৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no">
+                        <input type="email" class="form-control" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no">
                     </div>
                     <div class="col-md-6">
-                        <label for="received_date" class="form-label">Received Date</label>
-                        <input type="date" class="form-control" id="received_date" name="received_date">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress2" class="form-label">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        <label for="received_date" class="form-label">পত্র প্রাপ্তির তারিখ</label><span class="text-danger">*</span>
+                        <input type="date" class="form-control" id="received_date" name="received_date" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputCity" class="form-label">City</label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <label for="sender_name" class="form-label">কোথা হতে প্রাপ্ত</label><span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="sender_name" placeholder="যেমনঃ মোঃ বজলুর রহমান, বোরহানউদ্দিন" name="sender_name" required>
                     </div>
-                    <div class="col-md-4">
-                        <label for="inputState" class="form-label">State</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
+                    <div class="col-md-6">
+                        <label for="sent_date" class="form-label">প্রেরণের তারিখ</label><span class="text-danger">*</span>
+                        <input type="date" class="form-control" id="sent_date" placeholder="Apartment, studio, or floor" name="sent_date" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="short_title" class="form-label">সংক্ষিপ্ত বিষয়</label><span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="short_title" placeholder="যেমনঃ জমি শ্রেণী পরিবর্তনের জন্য আবেদন" name="short_title" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label>
+                        <select id="section_to" class="form-select" name="section_to">
+                            <option selected disabled>নির্বাচন করুন</option>
+                            @foreach ($sections as $section)
+                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                            @endforeach
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <label for="inputZip" class="form-label">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
+                    <div class="col-md-6">           
+                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন</label><span class="text-danger">*</span>
+                        <input type="file" id="file_url" class="form-control file-upload-input" name="file_url" required>                        
                     </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">আপলোড করুন</button>
                     </div>
                 </form>
             </div>
@@ -69,4 +72,5 @@
     document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
     document.getElementById("letters_ul").className += " show";
 </script>
+
 @endsection

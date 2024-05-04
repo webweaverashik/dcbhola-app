@@ -4,6 +4,12 @@
 	===============================
 */
 
-body, body.dark {
-    font-family: "Hind Siliguri", sans-serif;
+@font-face {
+	font-family: SolaimanLipi;
+	src: url(fonts/SolaimanLipi.ttf);
   }
+
+body, body.dark {
+    /* font-family: "Hind Siliguri", sans-serif; */
+	font-family: SolaimanLipi;
+}

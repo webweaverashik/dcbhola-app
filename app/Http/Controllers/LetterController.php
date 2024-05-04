@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class LetterController extends Controller
@@ -19,7 +20,8 @@ class LetterController extends Controller
      */
     public function create()
     {
-        return view('letters.upload');
+        $sections = Section::get();
+        return view('letters.upload', compact('sections'));
     }
 
     /**
