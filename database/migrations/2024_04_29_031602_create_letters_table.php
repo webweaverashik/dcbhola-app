@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('sent_date');
             $table->string('short_title');
             $table->string('memorandum_no')->nullable();
-            $table->string('entry_by');
+            $table->integer('uploaded_by');
             $table->integer('section_to')->nullable();
             $table->string('file_url');
             $table->timestamps();

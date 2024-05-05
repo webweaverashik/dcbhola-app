@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Letter extends Model
 {
     use HasFactory;
+
+    protected $table = 'letters';
+    protected $fillable = [
+        'received_date',
+        'sender_name',
+        'sent_date',
+        'short_title',
+        'memorandum_no',
+        'uploaded_by',
+        'section_to',
+        'file_url'
+    ];
 }

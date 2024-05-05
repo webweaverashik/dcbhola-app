@@ -17,10 +17,20 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'আরিফুজ্জামান',
             'email' => 'dcbhola@mopa.gov.bd',
-            'phone' => '01920869809',
+            'phone' => '০১৯২০৮৬৯৮০৯',
             'password' => bcrypt('123456'),
             'designation' => 'জেলা প্রশাসক',
             'role' => 1,
+            'photo_url' => NULL,
+        ]);
+        
+        User::create([
+            'name' => 'মোঃ নূর নবী',
+            'email' => 'nabinur2001@gmail.com',
+            'phone' => '০১৭১৫৩৮০১০১',
+            'password' => bcrypt('123456'),
+            'designation' => 'অফিস সহকারী কাম-কম্পিউটার মুদ্রাক্ষরিক',
+            'role' => 3,
             'photo_url' => NULL,
         ]);
 

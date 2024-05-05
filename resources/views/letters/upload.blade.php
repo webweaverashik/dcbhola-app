@@ -54,7 +54,7 @@
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">           
-                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন</label><span class="text-danger">*</span>
+                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF)</label><span class="text-danger">*</span>
                         <input type="file" id="file_url" class="form-control file-upload-input" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>

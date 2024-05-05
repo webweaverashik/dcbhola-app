@@ -33,13 +33,13 @@ Route::controller(AuthenticateController::class)->group(function(){
     Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
     Route::get('/logout','logout');
 
-    Route::get('/letters', [LetterController::class, 'index']);
-    Route::get('/letters/add', [LetterController::class, 'create']);
-    Route::post('/letters/add', [LetterController::class, 'store']);
+    Route::get('/letters', [LetterController::class, 'index'])->middleware('isLoggedIn');
+    Route::get('/letters/add', [LetterController::class, 'create'])->middleware('isLoggedIn');
+    Route::post('/letters/add', [LetterController::class, 'store'])->middleware('isLoggedIn');
 
 
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/profile', [UserController::class, 'profileView']);
+    Route::get('/users', [UserController::class, 'index'])->middleware('isLoggedIn');
+    Route::get('/users/profile', [UserController::class, 'profileView'])->middleware('isLoggedIn');
 
-    Route::get('/sections', [SectionController::class, 'index']);
+    Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');
 });

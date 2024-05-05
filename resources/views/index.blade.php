@@ -20,6 +20,15 @@
         </div>
     </div>
     @endif
+
+    @if (Session::has('message'))
+    <div class="col-md-12">
+        <div class="alert alert-info alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ Session::get('message') }}
+        </div>
+    </div>
+    @endif
     
     <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         <div class="widget widget-six">
@@ -559,6 +568,12 @@
 
 
 @section('scripts')
+
+<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+<script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script>
+<script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
+<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
 <script>
     document.getElementById("dashboard_menu").className += " active";
     // document.getElementById("letters_all_id").className += " active";

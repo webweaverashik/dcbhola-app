@@ -82,10 +82,6 @@
     <script src="{{ asset('layouts/vertical-light-menu/app.js') }}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     <!-- Custom Scripts from each page -->
     @yield('scripts')

@@ -44,7 +44,7 @@
         <form class="section general-info" action="" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="info">
-                <h6 class="">সাধারণ তথ্যসমূহ</h6>
+                <h6 class="">আপনার প্রোফাইল</h6>
                 <div class="row">
                     <div class="col-lg-11 mx-auto">
                         <div class="row">
@@ -95,7 +95,7 @@
 
                                         <div class="col-md-12 mt-1">
                                             <div class="form-group text-start">
-                                                <button class="btn btn-secondary" type="submit">সংরক্ষণ করুন</button>
+                                                <button class="btn btn-primary" type="submit">আপডেট করুন</button>
                                             </div>
                                         </div>
                                         
