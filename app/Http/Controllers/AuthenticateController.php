@@ -59,6 +59,7 @@ class AuthenticateController extends Controller
                 $request->session()->put('loginId', $user->id);
                 $request->session()->put('name', $user->name);
                 $request->session()->put('designation', $user->designation);
+                $request->session()->put('role', $user->role);
 
                 return redirect('dashboard')->with('success', 'লগইন সফল হয়েছে।');
             } else {
@@ -72,20 +73,6 @@ class AuthenticateController extends Controller
     //// Dashboard
     public function dashboard()
     {
-        // return "Welcome to your dashabord.";
-        // $data = array();
-        // if (Session::has('loginId')) {
-        //     $data = User::where('id','=', Session::get('loginId'))->first();
-        // }
-
-
-        // return $data;
-        // Session::put([
-        //     'name'      => $data->name,
-        //     'designation'   => $data->designation,
-        // ]);
-
-        // return view('index', compact('data'));
         return view('index');
     }
     
@@ -95,7 +82,10 @@ class AuthenticateController extends Controller
         $data = array();
         if (Session::has('loginId')) {
             Session::pull('loginId');
-            return redirect('login')->with('success', 'Successfully Logged out');
+            return redirect('login')->with('success', 'সফলভাবে লগআউট হয়েছেন।');
+        }
+        else {
+            return redirect('login');
         }
     }
 }

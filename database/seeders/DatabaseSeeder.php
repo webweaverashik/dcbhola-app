@@ -17,10 +17,40 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'আরিফুজ্জামান',
             'email' => 'dcbhola@mopa.gov.bd',
-            'phone' => '০১৯২০৮৬৯৮০৯',
+            'phone' => '০১৭১৫২১১৮৯৯',
             'password' => bcrypt('123456'),
             'designation' => 'জেলা প্রশাসক',
             'role' => 1,
+            'photo_url' => NULL,
+        ]);
+
+        User::create([
+            'name' => 'তামিম আল ইয়ামীন',
+            'email' => 'tamim.al.yiameen@gmail.com',
+            'phone' => '০১৩১৮২৫৯১১৩',
+            'password' => bcrypt('123456'),
+            'designation' => 'অতিরিক্ত জেলা প্রশাসক (রাজস্ব)',
+            'role' => 2,
+            'photo_url' => NULL,
+        ]);
+        
+        User::create([
+            'name' => 'আবুল আলা',
+            'email' => 'abulala@gmail.com',
+            'phone' => '০১৭২৭০৩৮২৬৮',
+            'password' => bcrypt('123456'),
+            'designation' => 'উপ-সহকারী প্রশাসনিক কর্মকর্তা',
+            'role' => 3,
+            'photo_url' => NULL,
+        ]);
+
+        User::create([
+            'name' => 'মো. আলমগীর হোসেন',
+            'email' => 'mahussain07@gmail.com',
+            'phone' => '০১৯২৩০৫১৯০৭',
+            'password' => bcrypt('123456'),
+            'designation' => 'অতিরিক্ত জেলা ম্যাজিস্ট্রেট',
+            'role' => 2,
             'photo_url' => NULL,
         ]);
         
@@ -35,17 +65,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        Section::create(['name' => 'আইসিটি শাখা']);
+        Section::create(['name' => 'রাজস্ব শাখা', 'officer_id' => 2, 'staff_id' => 3]);
+        Section::create(['name' => 'আইসিটি শাখা', 'officer_id' => 4, 'staff_id' => 5]);
+        Section::create(['name' => 'সাধারণ শাখা']);
         Section::create(['name' => 'গোপনীয় শাখা']);
         Section::create(['name' => 'জুডিশিয়াল মুন্সিখানা শাখা']);
         Section::create(['name' => 'ট্রেজারি শাখা']);
         Section::create(['name' => 'তথ্য ও অভিযোগ শাখা']);
         Section::create(['name' => 'নেজারত শাখা']);
         Section::create(['name' => 'ভূমি অধিগ্রহণ শাখা']);
-        Section::create(['name' => 'রাজস্ব শাখা']);
         Section::create(['name' => 'রেকর্ডরুম শাখা']);
         Section::create(['name' => 'শিক্ষা ও কল্যাণ শাখা']);
-        Section::create(['name' => 'সাধারণ শাখা']);
         Section::create(['name' => 'সংস্থাপন শাখা']);
         Section::create(['name' => 'বিচার শাখা']);
         Section::create(['name' => 'স্থানীয় সরকার শাখা']);

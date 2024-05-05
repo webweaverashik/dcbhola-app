@@ -184,8 +184,6 @@
                                 <div class="media-body">
                                         <h5>{{ Session::get('name') }}</h5>
                                         <p>{{ Session::get('designation') }}</p>   
-                                        {{-- <h5>{{ $data->name }}</h5>
-                                        <p>{{ $data->designation }}</p>                                     --}}
                                 </div>
                             </div>
                         </div>

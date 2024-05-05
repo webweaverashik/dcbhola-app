@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('short_title');
             $table->string('memorandum_no')->nullable();
             $table->integer('uploaded_by');
-            $table->integer('section_to')->nullable();
+            $table->integer('section_to');
             $table->string('file_url');
             $table->timestamps();
         });

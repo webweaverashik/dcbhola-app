@@ -7,6 +7,7 @@ use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Query\JoinClause;
 
 class LetterController extends Controller
 {
@@ -15,10 +16,47 @@ class LetterController extends Controller
      */
     public function index()
     {
-        // $letters = 'SELECT * FROM letters l, sections s WHERE l.section_to = s.id';
-        $letters = DB::table('letters')->join('sections', 'letters.section_to', '=', 'sections.id')->join('users', 'letters.uploaded_by', '=', 'users.id')->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')->get();
+        $role = session('role');
+        
+        if ($role == 3) 
+        {
 
-        // return $letters;
+            $letters = DB::table('letters')
+                        ->join('sections', 'letters.section_to', '=', 'sections.id')
+                        // ->join('sections', 'sections.staff_id', '=', 'letters.uploaded_by')
+                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
+                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
+                        ->where('letters.uploaded_by', session('loginId'))
+                        ->get();
+
+                        
+            // return $letters;
+        }
+        elseif ($role == 2) 
+        {
+            $letters = DB::table('letters')
+                        // ->join('sections', 'letters.section_to', '=', 'sections.id')
+                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
+                        ->join('sections', function (JoinClause $join) {
+                                    $join->on('letters.section_to', '=', 'sections.id')
+                                        ->where('sections.officer_id', '=', session('loginId'));
+                                })
+                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
+                        ->get();
+
+                        
+            // return $letters;
+        }
+        else  // DC Role
+        {
+            $letters = DB::table('letters')
+                        ->join('sections', 'letters.section_to', '=', 'sections.id')
+                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
+                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
+                        ->get();
+
+            // return $letters;
+        }
 
         return view('letters.index', compact('letters'));
     }

@@ -44,8 +44,8 @@
                         @error('short_title') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
-                        <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label>
-                        <select id="section_to" class="form-select" name="section_to">
+                        <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label><span class="text-danger">*</span>
+                        <select id="section_to" class="form-select" name="section_to" required>
                             <option selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
                                 <option value="{{ $section->id }}">{{ $section->name }}</option>
@@ -54,7 +54,7 @@
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">           
-                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF)</label><span class="text-danger">*</span>
+                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ মেগাবাইট)</label><span class="text-danger">*</span>
                         <input type="file" id="file_url" class="form-control file-upload-input" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
