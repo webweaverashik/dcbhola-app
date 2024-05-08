@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form class="row g-3" action="{{ url('letters/add') }}" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="{{ url('letters/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="col-md-6">
                         <label for="memorandum_no" class="form-label">স্মারক নং</label>
@@ -48,14 +48,14 @@
                         <select id="section_to" class="form-select" name="section_to" required>
                             <option selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
-                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                <option value="{{ $section->id }}" @if (Session::get('role') == 3) selected @endif>{{ $section->name }}</option>
                             @endforeach
                         </select>
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">           
-                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ মেগাবাইট)</label><span class="text-danger">*</span>
-                        <input type="file" id="file_url" class="form-control file-upload-input" name="file_url" required>
+                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
+                        <input type="file" id="file_url" class="form-control file-upload-input" accept=".pdf" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
                     <div class="col-md-12">

@@ -66,8 +66,37 @@ class LetterController extends Controller
      */
     public function create()
     {
-        $sections = Section::get();
-        return view('letters.upload', compact('sections'));
+        // $sections = Section::get();
+
+
+        $role = session('role');
+        
+        if ($role == 3) 
+        {
+            $sections = DB::table('sections')
+                        ->where('sections.staff_id', session('loginId'))
+                        ->get();
+                        
+            // return $sections;
+        }
+
+        elseif ($role == 2) 
+        {
+            $sections = DB::table('sections')
+                        ->where('sections.officer_id', session('loginId'))
+                        ->get();
+
+            // return $letters;
+        }
+
+        else  // DC Role & Frontdesk
+        {
+            $sections = Section::get();
+
+            // return $sections;
+        }
+
+        return view('letters.create', compact('sections'));
     }
 
     /**
@@ -81,7 +110,7 @@ class LetterController extends Controller
             'sender_name'   => 'required|string',
             'sent_date'     => 'required|date',
             'short_title'   => 'required|string',
-            'section_to'    => 'integer',
+            'section_to'    => 'required|integer',
             'file_url'      => 'required|mimes:pdf|max:3072'
         ]);
 

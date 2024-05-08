@@ -60,6 +60,7 @@ class AuthenticateController extends Controller
                 $request->session()->put('name', $user->name);
                 $request->session()->put('designation', $user->designation);
                 $request->session()->put('role', $user->role);
+                $request->session()->put('photo_url', $user->photo_url);
 
                 return redirect('dashboard')->with('success', 'লগইন সফল হয়েছে।');
             } else {

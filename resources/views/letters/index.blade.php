@@ -65,7 +65,7 @@
                             <td>{{ $letter->received_date }}</td>
                             <td>{{ $letter->sender_name }}</td>
                             <td>{{ $letter->short_title }}</td>
-                            <td>{{ $letter->section_name }}</td>
+                            <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
                             <td><strong>{{ $letter->uploader_user }}</strong><br>{{ $letter->designation }}</td>
                             <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td>
                             <td class="text-center"><span class="shadow-none badge badge-light-primary">Processing</span></td>
@@ -105,7 +105,8 @@
     document.getElementById("letters_ul").className += " show";
 </script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
+<script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
 
 <script>

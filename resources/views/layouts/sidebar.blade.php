@@ -47,7 +47,7 @@
                                 <a href="{{ url('letters') }}"> সকল চিঠি/ডাক </a>
                             </li>
                             <li id="letters_upload_id">
-                                <a href="{{ url('letters/add') }}"> নতুন আপলোড </a>
+                                <a href="{{ url('letters/create') }}"> নতুন আপলোড </a>
                             </li>
                         </ul>
                     </li>

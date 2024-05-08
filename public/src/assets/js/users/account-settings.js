@@ -18,31 +18,31 @@ FilePond.registerPlugin(
   
   // Select the file input and use 
   // create() to turn it into a pond
-  FilePond.create(
-    document.querySelector('.filepond'),
-    {
-      imagePreviewHeight: 170,
-      imageCropAspectRatio: '1:1',
-      imageResizeTargetWidth: 200,
-      imageResizeTargetHeight: 200,
-      stylePanelLayout: 'compact circle',
-      styleLoadIndicatorPosition: 'center bottom',
-      styleProgressIndicatorPosition: 'right bottom',
-      styleButtonRemoveItemPosition: 'left bottom',
-      styleButtonProcessItemPosition: 'right bottom',
-      files: [
-          {
-              // the server file reference
-              source: '../src/assets/img/user-profile.jpeg',
+//   FilePond.create(
+//     document.querySelector('.filepond'),
+//     {
+//       imagePreviewHeight: 170,
+//       imageCropAspectRatio: '1:1',
+//       imageResizeTargetWidth: 200,
+//       imageResizeTargetHeight: 200,
+//       stylePanelLayout: 'compact circle',
+//       styleLoadIndicatorPosition: 'center bottom',
+//       styleProgressIndicatorPosition: 'right bottom',
+//       styleButtonRemoveItemPosition: 'left bottom',
+//       styleButtonProcessItemPosition: 'right bottom',
+//       files: [
+//           {
+//               // the server file reference
+//               source: '{{ $profile->photo_url }}',
 
-              // set type to limbo to tell FilePond this is a temp file
-              options: {
-                  type: 'image/png',
-              },
-          },
-      ],
-    }
-);
+//               // set type to limbo to tell FilePond this is a temp file
+//               options: {
+//                   type: 'image/png',
+//               },
+//           },
+//       ],
+//     }
+// );
 
 // Purge Cache Notification
 document.querySelector('.btn-clear-purge').addEventListener('click', function() {

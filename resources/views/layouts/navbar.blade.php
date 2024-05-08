@@ -5,7 +5,7 @@
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
                     <a href="{{ url('/dashboard') }}">
-                        <img src="{{ asset('custom/img/logo.png') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('custom/img/logo.png') }}" class="" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
@@ -165,17 +165,16 @@
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar-container">
                             <div class="avatar avatar-sm avatar-indicators avatar-online">
-                                {{-- @if ($data->photo_url == NULL) --}}
                                 @if (Session::get('photo_url') == NULL)
                                     <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle">
                                 @else
-                                    <img alt="avatar" src="{{ $data->photo_url }}" class="rounded-circle">
+                                    <img alt="avatar" src="http://127.0.0.1:8000/{{ Session::get('photo_url') }}" class="rounded-circle">
                                 @endif
                             </div>
                         </div>
                     </a>
 
-                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                    <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown" style="max-width: 16rem; min-width: 16rem">
                         <div class="user-profile-section">
                             <div class="media mx-auto">
                                 <div class="emoji me-2">

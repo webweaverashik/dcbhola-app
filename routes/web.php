@@ -34,12 +34,14 @@ Route::controller(AuthenticateController::class)->group(function(){
     Route::get('/logout','logout');
 
     Route::get('/letters', [LetterController::class, 'index'])->middleware('isLoggedIn');
-    Route::get('/letters/add', [LetterController::class, 'create'])->middleware('isLoggedIn');
-    Route::post('/letters/add', [LetterController::class, 'store'])->middleware('isLoggedIn');
+    Route::get('/letters/create', [LetterController::class, 'create'])->middleware('isLoggedIn');
+    Route::post('/letters/create', [LetterController::class, 'store'])->middleware('isLoggedIn');
 
 
     Route::get('/users', [UserController::class, 'index'])->middleware('isLoggedIn');
-    Route::get('/users/profile', [UserController::class, 'profileView'])->middleware('isLoggedIn');
+    // Route::get('/users/profile', [UserController::class, 'show'])->middleware('isLoggedIn');
+    Route::get('/users/profile', [UserController::class, 'edit'])->middleware('isLoggedIn');
+    Route::put('/users/profile', [UserController::class, 'update'])->middleware('isLoggedIn');
 
     Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');
 });
