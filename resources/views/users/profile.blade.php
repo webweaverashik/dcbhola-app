@@ -4,19 +4,12 @@
 
 @section('page-level-custom-css')
     <!--  BEGIN CUSTOM STYLE FILE  -->
-    {{-- <link rel="stylesheet" href="{{ asset('src/plugins/src/filepond/filepond.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('src/plugins/src/filepond/FilePondPluginImagePreview.min.css') }}"> --}}
     
-    {{-- <link href="{{ asset('src/plugins/css/light/filepond/custom-filepond.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('src/assets/css/light/elements/alert.css') }}">
     <link href="{{ asset('src/assets/css/light/users/account-setting.css') }}" rel="stylesheet" type="text/css" />
 
-
-
-    {{-- <link href="{{ asset('src/plugins/css/dark/filepond/custom-filepond.css" rel="stylesheet" type="text/css') }}" /> --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('src/assets/css/dark/elements/alert.css') }}">
-    
-    <link href="{{ asset('src/assets/css/dark/users/account-setting.css" rel="stylesheet') }}" type="text/css" />
+    <link href="{{ asset('src/assets/css/dark/users/account-setting.css') }}" rel="stylesheet" type="text/css" />
 
 
     <!--  END CUSTOM STYLE FILE  -->
@@ -25,7 +18,7 @@
 
 @section('content')
 <div class="row layout-top-spacing">
-    @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
     <div class="col-md-12">
         <div class="alert alert-light-success alert-dismissible fade show">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -34,7 +27,7 @@
             {{ Session::get('success') }}
         </div>
     </div>
-    @endif
+    @endif --}}
 
 
     @if (Session::has('message'))
@@ -58,31 +51,22 @@
                 <div class="row">
                     <div class="col-lg-11 mx-auto">
                         <div class="row">
-                            {{-- <div class="col-xl-4 col-lg-12 col-md-4 mx-auto mb-lg-4">
-                                <div class="profile-image  mt-4 pe-md-4">
-
-                                    <!-- // The classic file input element we'll enhance
-                                    // to a file pond, we moved the configuration
-                                    // properties to JavaScript -->
-                                    <div class="img-uploader-content">
-                                        <input type="file" class="filepond"
-                                        name="photo_url" accept="image/png, image/jpeg, image/jpg, image/jpeg"/>
-                                    </div>
-                
-                                </div>
-                            </div> --}}
-
-
                             <div class="img-uploader-content mb-3">
-                                <img src="http://127.0.0.1:8000/{{ Session::get('photo_url') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
+                                @if (Session::get('photo_url') == NULL) 
+                                    <img src="{{ asset('custom/img/dummy-user.png') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
+                                @else 
+                                    <img src="http://127.0.0.1:8000/{{ Session::get('photo_url') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
+                                @endif
+
+
                             </div>
                 
                             <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
                                 <div class="form">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label>
+                                                <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ২০০ KB)</label>
                                                 <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
                                                 @error('photo_url') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
@@ -98,7 +82,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="designation">পদবী</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control mb-3" id="designation" placeholder="Designer" value="{{ $profile->designation }}" name="designation" name="designation" required>
+                                                <input type="text" class="form-control mb-3" id="designation" placeholder="পদবী" value="{{ $profile->designation }}" name="designation" name="designation" required>
                                                 @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
                                         </div>
@@ -106,17 +90,23 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="phone">ফোন</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control mb-3" id="phone" placeholder="Write your phone number here" value="{{ $profile->phone }}" name="phone" required>
+                                                <input type="text" class="form-control mb-3" id="phone" placeholder="আপনার মোবাইল নং" value="{{ $profile->phone }}" name="phone" required>
                                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="email">ইমেইল</label>
-                                                <input type="text" class="form-control mb-3" id="email" placeholder="Write your email here" value="{{ $profile->email }}" name="email" readonly disabled>
+                                                <input type="text" class="form-control mb-3" id="email" placeholder="আপনার ইমেইল এড্রেস" value="{{ $profile->email }}" name="email" readonly disabled>
                                             </div>
                                         </div> 
-
+                                        {{-- <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="password">পাসওয়ার্ড রিসেট</label>
+                                                <input type="password" class="form-control mb-3" id="password" placeholder="নতুন পাসওয়ার্ড লিখুন" name="password">
+                                                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                                            </div>
+                                        </div>  --}}
 
                                         <div class="col-md-12 mt-4">
                                             <div class="form-group text-start">
@@ -214,50 +204,20 @@
 
 
 @section('scripts')
-    <!--  BEGIN CUSTOM SCRIPTS FILE  -->
-    {{-- <script src="{{ asset('src/plugins/src/filepond/filepond.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginFileValidateType.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginImageExifOrientation.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginImagePreview.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginImageCrop.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginImageResize.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/FilePondPluginImageTransform.min.js') }}"></script>
-    <script src="{{ asset('src/plugins/src/filepond/filepondPluginFileValidateSize.min.js') }}"></script>
-    <script src="{{ asset('src/assets/js/users/account-settings.js') }}"></script> --}}
-    <!--  END CUSTOM SCRIPTS FILE  -->
+    <script>
+        document.getElementById("users_menu").className += " active";
+        document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
+        document.getElementById("users_ul").className += " show";
+        document.getElementById("my_profile_id").className += " active";
+    </script>
 
-<script>
-    document.getElementById("users_menu").className += " active";
-    document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
-    document.getElementById("users_ul").className += " show";
-    document.getElementById("my_profile_id").className += " active";
-</script>
-
-{{-- <script>
-    FilePond.create(
-    document.querySelector('.filepond'),
-    {
-      imagePreviewHeight: 170,
-      imageCropAspectRatio: '1:1',
-      imageResizeTargetWidth: 200,
-      imageResizeTargetHeight: 200,
-      stylePanelLayout: 'compact circle',
-      styleLoadIndicatorPosition: 'center bottom',
-      styleProgressIndicatorPosition: 'right bottom',
-      styleButtonRemoveItemPosition: 'left bottom',
-      styleButtonProcessItemPosition: 'right bottom',
-      files: [
-          {
-              // the server file reference
-              source: '{{ $profile->photo_url }}',
-
-              // set type to limbo to tell FilePond this is a temp file
-              options: {
-                  type: 'image/png',
-              },
-          },
-      ],
-    }
-);
-</script> --}}
+    @if($message = session('success'))
+        <script>
+            Swal.fire(
+            'সাকসেস!',
+            '{{ $message }}',
+            'success',
+            )
+        </script>
+    @endif
 @endsection

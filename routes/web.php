@@ -6,6 +6,7 @@ use App\Http\Controllers\SectionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\Letter;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,15 +34,25 @@ Route::controller(AuthenticateController::class)->group(function(){
     Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
     Route::get('/logout','logout');
 
-    Route::get('/letters', [LetterController::class, 'index'])->middleware('isLoggedIn');
-    Route::get('/letters/create', [LetterController::class, 'create'])->middleware('isLoggedIn');
-    Route::post('/letters/create', [LetterController::class, 'store'])->middleware('isLoggedIn');
+    
+    Route::middleware('isLoggedIn')->group(function (){
+        Route::get('/letters', [LetterController::class, 'index']);
+        Route::get('/letters/create', [LetterController::class, 'create']);
+        Route::get('/letters/{id}/edit', [LetterController::class, 'edit']);
+        Route::post('/letters/create', [LetterController::class, 'store']);
+        Route::put('/letters/{id}/edit', [LetterController::class, 'update']);
+        Route::get('/letters/{id}/delete', [LetterController::class, 'destroy']);
 
 
-    Route::get('/users', [UserController::class, 'index'])->middleware('isLoggedIn');
-    // Route::get('/users/profile', [UserController::class, 'show'])->middleware('isLoggedIn');
-    Route::get('/users/profile', [UserController::class, 'edit'])->middleware('isLoggedIn');
-    Route::put('/users/profile', [UserController::class, 'update'])->middleware('isLoggedIn');
+        Route::get('/users', [UserController::class, 'index']);
+        // Route::get('/users/create', [UserController::class, 'create']);
+        // Route::get('/users/profile', [UserController::class, 'show']);
+        Route::get('/users/profile', [UserController::class, 'edit']);
+        Route::put('/users/profile', [UserController::class, 'update']);
+        Route::get('/users/{id}/delete', [UserController::class, 'destroy']);
 
-    Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');
+
+        Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');
+    });
+
 });

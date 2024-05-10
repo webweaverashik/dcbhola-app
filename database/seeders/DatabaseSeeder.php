@@ -63,6 +63,16 @@ class DatabaseSeeder extends Seeder
             'role' => 3,
             'photo_url' => NULL,
         ]);
+        
+        User::create([
+            'name' => 'ফ্রন্ট ডেস্ক',
+            'email' => 'ashikgsc170@gmail.com',
+            'phone' => '০১৯২০৮৬৯৮০৯',
+            'password' => bcrypt('123456'),
+            'designation' => 'ডাটা আপলোডার',
+            'role' => 4,
+            'photo_url' => NULL,
+        ]);
 
 
         Section::create(['name' => 'রাজস্ব শাখা', 'officer_id' => 2, 'staff_id' => 3]);

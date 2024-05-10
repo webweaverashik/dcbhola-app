@@ -4,7 +4,6 @@
 
 
 @section('page-level-custom-css')
-
 <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
 <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/src/table/datatable/datatables.css') }}">
 
@@ -15,22 +14,12 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/css/dark/table/datatable/custom_dt_custom.css') }}">
 
 <!-- END PAGE LEVEL CUSTOM STYLES -->
-
 @endsection
 
 
 @section('content')
 
 <div class="row layout-top-spacing">
-    @if (Session::has('success'))
-    <div class="col-md-12">
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            {{ Session::get('success') }}
-        </div>
-    </div>
-    @endif
-
     <div class="col-lg-12">
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
@@ -74,12 +63,15 @@
                                     <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="View">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     </a>
-                                    <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                     </a>
-                                    <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                    </a>
+                                    
+                                    @if (Session::get('role') == 1 || Session::get('role') == 2)
+                                        <a href="{{ url('letters/' . $letter->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -109,6 +101,7 @@
 <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
 
+
 <script>
     // var e;
     c3 = $('#style-3').DataTable({
@@ -129,4 +122,38 @@
 
     multiCheck(c3);
 </script>
+
+<script>
+    function deleteWarning(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');
+        console.log(urlToRedirect);
+
+        Swal.fire({
+            title: 'আপনি কি নিশ্চিত?',
+            text: "ডিলিট করলে এই চিঠি/ডাক আর ফিরে পাওয়া যাবে না!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'হ্যাঁ, ডিলিট করবো!',
+            cancelButtonText: "ফিরে যান",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = urlToRedirect;
+            }
+        })
+    }
+</script>
+
+@if($message = session('success'))
+    <script>
+        Swal.fire(
+        'সাকসেস!',
+        '{{ $message }}',
+        'success',
+        )
+    </script>
+@endif
+
 @endsection

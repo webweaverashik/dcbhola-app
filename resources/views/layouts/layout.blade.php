@@ -24,6 +24,12 @@
     @yield('page-level-custom-css')
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
+    <!-- BEGIN SWEET ALERT CSS -->
+    <link rel="stylesheet" href="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.css') }}">
+    <link href="{{ asset('src/plugins/css/light/sweetalerts2/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <!-- END SWEET ALERT CSS -->
+
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="{{ asset('custom/style.css') }}">
 
@@ -82,6 +88,11 @@
     <script src="{{ asset('src/plugins/src/waves/waves.min.js') }}"></script>
     <script src="{{ asset('layouts/vertical-light-menu/app.js') }}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+    <!-- BEGIN SWEET ALERT SCRIPTS -->
+    <script src="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.min.js') }}"></script>
+    <script src="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.min.js') }}"></script>
+    <!-- END SWEET ALERT SCRIPTS -->
 
 
     <!-- Custom Scripts from each page -->
