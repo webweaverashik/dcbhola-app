@@ -37,50 +37,52 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
                             @foreach ($officers as $officer)                                
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="avatar me-3">
-                                            @if ($officer->photo_url != NULL)
-                                                <img alt="avatar" src="http://127.0.0.1:8000/{{ $officer->photo_url }}" class="rounded-circle" />
-                                            @else
-                                                <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle" />
-                                            @endif
-                                        </div>
-                                        <div class="media-body align-self-center">
-                                            <h6 class="mb-0">{{ $officer->name }}</h6>
-                                            <span>{{ $officer->designation }}</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0">{{ $officer->email }}</p>
-                                    <span>{{ $officer->phone }}</span>
-                                </td>
-                                <td class="text-center">
-                                    <p class="mb-0">{{ $officer->created_at }}</p>
-                                </td>
-                                <td class="text-center">
-                                    <span class="badge badge-light-success">শিক্ষা ও আইসিটি</span>
-                                    <span class="badge badge-light-success">এডিএম</span>
-                                </td>
-
-                                @if (Session::get('role') == 1)
-                                    <td class="text-center">
-                                        <div class="action-btns">
-                                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                            </a>
-                                            <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                            </a>
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="avatar me-3">
+                                                @if ($officer->photo_url != NULL)
+                                                    <img alt="avatar" src="http://127.0.0.1:8000/{{ $officer->photo_url }}" class="rounded-circle" />
+                                                @else
+                                                    <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle" />
+                                                @endif
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">{{ $officer->name }}</h6>
+                                                <span>{{ $officer->designation }}</span>
+                                            </div>
                                         </div>
                                     </td>
-                                @endif
+                                    <td>
+                                        <p class="mb-0">{{ $officer->email }}</p>
+                                        <span>{{ $officer->phone }}</span>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $officer->created_at }}</p>
+                                    </td>
+                                    <td>
+                                        @foreach ($sections as $section)
+                                            @if ($section->officer_id == $officer->id)
+                                                <span class="badge badge-light-success">{{ $section->name }}</span>
+                                            @endif
+                                        @endforeach
+                                    </td>
 
-                            </tr>
+                                    @if (Session::get('role') == 1)
+                                        <td class="text-center">
+                                            <div class="action-btns">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                                </a>
+                                                <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -138,11 +140,15 @@
                                         <p class="mb-0">{{ $staff->email }}</p>
                                         <span>{{ $staff->phone }}</span>
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         <p class="mb-0">{{ $staff->created_at }}</p>
                                     </td>
-                                    <td class="text-center">
-                                        <span class="badge badge-light-success">আইসিটি</span>
+                                    <td>
+                                        @foreach ($sections as $section)
+                                            @if ($section->staff_id == $staff->id)
+                                                <span class="badge badge-light-success">{{ $section->name }}</span>
+                                            @endif
+                                        @endforeach
                                     </td>
 
                                     @if (Session::get('role') == 1)

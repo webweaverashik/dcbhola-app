@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('statuses', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->default('pending');
-            $table->string('comment')->nullable();
-            $table->string('comment_by')->nullable();
+            $table->integer('letter_id');
+            $table->string('comment');
+            $table->integer('comment_by');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('comments');
     }
 };

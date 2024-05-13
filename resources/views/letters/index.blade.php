@@ -57,7 +57,7 @@
                             <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
                             <td><strong>{{ $letter->uploader_user }}</strong><br>{{ $letter->designation }}</td>
                             <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td>
-                            <td class="text-center"><span class="shadow-none badge badge-light-primary">Processing</span></td>
+                            <td class="text-center"><span class="shadow-none badge badge-primary">নতুন</span></td>
                             <td class="text-center">
                                 <div class="action-btns">
                                     <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="View">

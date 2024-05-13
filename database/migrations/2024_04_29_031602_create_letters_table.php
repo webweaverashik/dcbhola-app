@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('uploaded_by');
             $table->integer('section_to');
             $table->string('file_url');
+            $table->string('status');
             $table->timestamps();
         });
     }

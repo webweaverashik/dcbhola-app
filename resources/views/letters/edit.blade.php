@@ -60,11 +60,49 @@
                         </select>
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-md-6">           
+                    {{-- <div class="col-md-6">           
                         <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
                         <input type="file" id="file_url" class="form-control file-upload-input" accept=".pdf" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
+                    </div> --}}
+                    <div class="col-md-6">
+                        {{-- <label for="status" class="form-label">পত্রের অবস্থা</label><span class="text-danger">*</span>
+                        <select id="status" class="form-select" name="status" required>
+                            <option selected disabled>নির্বাচন করুন</option>
+                            <option value="new">নতুন</option>
+                            <option value="pending">চলমান</option>
+                            <option value="completed">সম্পন্ন</option>
+                        </select> --}}
+
+                        <label for="status" class="form-label">পত্রের অবস্থা নির্বাচন করুন</label><span class="text-danger">*</span>
+                        <br>
+
+                        <div class="form-check form-check-warning form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-new" checked>
+                            <label class="form-check-label" for="form-check-radio-new">
+                                নতুন
+                            </label>
+                        </div>
+                        <div class="form-check form-check-info form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-pending">
+                            <label class="form-check-label" for="form-check-radio-pending">
+                                চলমান
+                            </label>
+                        </div>
+                        <div class="form-check form-check-success form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-complete">
+                            <label class="form-check-label" for="form-check-radio-complete">
+                                নিষ্পন্ন
+                            </label>
+                        </div>
                     </div>
+
+                    <div class="col-md-6">           
+                        <label for="comment" class="form-label">মন্তব্য</label><span class="text-danger">*</span>
+                        <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                        @error('comment') <span class="text-danger">{{ $message }}</span> @enderror                      
+                    </div>
+
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary">আপডেট করুন</button>
                         <a href="{{ url('/letters') }}" class="btn btn-outline-success">ফিরে যান</a>

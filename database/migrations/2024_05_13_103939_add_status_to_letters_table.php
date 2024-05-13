@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->after('photo_url', function (Blueprint $table) {
-                $table->tinyInteger('is_deleted')->default(0)->comment('0: not deleted, 1: deleted');
+        Schema::table('letters', function (Blueprint $table) {
+            $table->after('is_deleted', function (Blueprint $table) {
+                $table->tinyInteger('status')->default(1)->comment('1: pending, 2: processing, 3: completed');
             });
         });
     }
@@ -23,8 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_deleted');
+        Schema::table('letters', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

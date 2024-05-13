@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->tinyInteger('is_deleted')->default(0);
+            $table->after('file_url', function (Blueprint $table) {
+                $table->tinyInteger('is_deleted')->default(0)->comment('0: not deleted, 1: deleted');
+            });
         });
     }
 

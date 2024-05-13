@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +19,25 @@ class UserController extends Controller
     {
         $officers = User::where('role', 2)->where('is_deleted', 0)->get();
         $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
+        $sections = Section::get();
 
-        // return $staffs;
+        // $officers = DB::table('users')
+        //             ->join('sections', 'sections.officer_id', '=', 'users.id')
+        //             ->select('users.*', 'sections.name as section_name')
+        //             ->where('users.role', 2)
+        //             ->where('users.is_deleted', 0)
+        //             ->get();
 
-        return view('users.index', compact('officers', 'staffs'));
+        // $staffs = DB::table('users')
+        //             ->join('sections', 'sections.staff_id', '=', 'users.id')
+        //             ->select('users.*', 'sections.name as section_name')
+        //             ->whereIn('users.role', [3,4])
+        //             ->where('users.is_deleted', 0)
+        //             ->get();
+
+        // return $sections;
+
+        return view('users.index', compact('officers', 'staffs', 'sections'));
     }
 
     /**
@@ -85,7 +101,7 @@ class UserController extends Controller
             $extension = $image->getClientOriginalExtension();
             
 
-            $filename = time() . '.' . $extension;
+            $filename = 'photo_' . session('loginId') . '.' . $extension;
 
             
             $path = 'uploads/photo/';
