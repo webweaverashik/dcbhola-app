@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('letters', function (Blueprint $table) {
             $table->after('is_deleted', function (Blueprint $table) {
-                $table->tinyInteger('status')->default(1)->comment('1: pending, 2: processing, 3: completed');
+                $table->tinyInteger('status')->default(1)->comment('1: new, 2: processing, 3: completed');
             });
         });
     }

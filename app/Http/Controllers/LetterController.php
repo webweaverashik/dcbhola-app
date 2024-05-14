@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Letter;
+use App\Models\Comment;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class LetterController extends Controller
     {
         $role = session('role');
         
-        if ($role == 3) 
+        if ($role == 4) // frontdesk users
         {
 
             $letters = DB::table('letters')
@@ -27,14 +28,26 @@ class LetterController extends Controller
                         ->join('users', 'letters.uploaded_by', '=', 'users.id')
                         ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
                         ->where('letters.uploaded_by', session('loginId'))
+                        ->where('letters.is_deleted', 0)
+                        ->get();
+                        
+            // return $letters; 
+        }
+        if ($role == 3) // section staff
+        {
+
+            $letters = DB::table('letters')
+                        ->join('sections', 'letters.section_to', '=', 'sections.id')
+                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
+                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
+                        // ->where('letters.uploaded_by', session('loginId'))
                         ->where('sections.staff_id', session('loginId'))
                         ->where('letters.is_deleted', 0)
                         ->get();
 
-                        
-            // return $letters;
+            // return $letters; 
         }
-        elseif ($role == 2) 
+        elseif ($role == 2) // section officers
         {
             $letters = DB::table('letters')
                         // ->join('sections', 'letters.section_to', '=', 'sections.id')
@@ -46,11 +59,8 @@ class LetterController extends Controller
                         ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
                         ->where('letters.is_deleted', 0)
                         ->get();
-
-                        
-            // return $letters;
         }
-        else  // DC Role
+        else // DC Role
         {
             $letters = DB::table('letters')
                         ->join('sections', 'letters.section_to', '=', 'sections.id')
@@ -70,8 +80,6 @@ class LetterController extends Controller
      */
     public function create()
     {
-        // $sections = Section::get();
-
 
         $role = session('role');
         
@@ -166,7 +174,7 @@ class LetterController extends Controller
 
         $role = session('role');
         
-        if ($role == 3) 
+        if ($role == 3)
         {
             $sections = DB::table('sections')
                         ->where('sections.staff_id', session('loginId'))
@@ -197,47 +205,57 @@ class LetterController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'memorandum_no' => 'nullable|string',
-            'received_date' => 'required|date',
-            'sender_name'   => 'required|string',
-            'sent_date'     => 'required|date',
-            'short_title'   => 'required|string',
-            'section_to'    => 'required|integer',
-            'file_url'      => 'required|mimes:pdf|max:3072'
-        ]);
+        // return $request;
 
-        $letter = Letter::findOrfail($id);
+        // admin and officer are allowed to update status and comment on
+        if (Session::get('role') == 1 || Session::get('role') == 2) {
+            $request->validate([
+                'memorandum_no' => 'nullable|string',
+                'received_date' => 'required|date',
+                'sender_name'   => 'required|string',
+                'sent_date'     => 'required|date',
+                'short_title'   => 'required|string',
+                'section_to'    => 'required|integer',
+                'status'        => 'required',
+                'comment'       => 'nullable|string',
+            ]);
 
-        if ($request->has('file_url')) {
-            $file = $request->file('file_url');
-            $extension = $file->getClientOriginalExtension();
+            Letter::findOrfail($id)->update([
+                'memorandum_no'     => $request->memorandum_no,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'section_to'        => $request->section_to,
+                'status'            => $request->status,
+            ]);
 
-            $filename = 'letter_' . date('d-m-Y_H-i-s') . '.' . $extension;
-            
-            $path = 'uploads/files/' . date('M-Y') . '/';
-            $file->move($path, $filename);
-
-            if (File::exists($letter->file_url)) {
-                File::delete($letter->file_url);
-            }
+            Comment::create([
+                'letter_id' => $id,
+                'comment' => $request->comment,
+                'comment_by' => Session::get('loginId'),
+            ]);
         }
-        // else {
-        //     $path = NULL;
-        //     $filename = NULL;
-        // }
+        else {
+            $request->validate([
+                'memorandum_no' => 'nullable|string',
+                'received_date' => 'required|date',
+                'sender_name'   => 'required|string',
+                'sent_date'     => 'required|date',
+                'short_title'   => 'required|string',
+                'section_to'    => 'required|integer',
+            ]);
 
-
-        Letter::findOrfail($id)->update([
-            'memorandum_no'     => $request->memorandum_no,
-            'received_date'     => $request->received_date,
-            'sender_name'       => $request->sender_name,
-            'sent_date'         => $request->sent_date,
-            'short_title'       => $request->short_title,
-            // 'uploaded_by'       => Session::get('loginId'),
-            'section_to'        => $request->section_to,
-            'file_url'          => $path.$filename
-        ]);
+            Letter::findOrfail($id)->update([
+                'memorandum_no'     => $request->memorandum_no,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'section_to'        => $request->section_to,
+            ]);
+        }
+        // return Letter::findOrfail($id);
 
         // $file->move($path, $filename);
 

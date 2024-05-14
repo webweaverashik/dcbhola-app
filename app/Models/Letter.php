@@ -18,6 +18,7 @@ class Letter extends Model
         'memorandum_no',
         'uploaded_by',
         'section_to',
-        'file_url'
+        'file_url',
+        'status'
     ];
 }

@@ -5,7 +5,15 @@
 
 @section('content')
 <div class="row">
-
+@if ($errors->any())
+    <div class="p-2">
+        <ul class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <div class="col-lg-12 layout-spacing layout-top-spacing">
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
@@ -16,7 +24,7 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form class="row g-3" action="{{ url('letters/' . $letter->id . '/edit') }}" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="{{ url('letters/' . $letter->id . '/edit') }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -47,7 +55,6 @@
                     </div>
                     <div class="col-md-6">
                         <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label><span class="text-danger">*</span>
-                        {{-- <p class="form-control" disabled>{{ $letter->section_to }}</p> --}}
                         <select id="section_to" class="form-select" name="section_to" required>
                             <option selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
@@ -60,37 +67,27 @@
                         </select>
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    {{-- <div class="col-md-6">           
-                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
-                        <input type="file" id="file_url" class="form-control file-upload-input" accept=".pdf" name="file_url" required>
-                        @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
-                    </div> --}}
-                    <div class="col-md-6">
-                        {{-- <label for="status" class="form-label">পত্রের অবস্থা</label><span class="text-danger">*</span>
-                        <select id="status" class="form-select" name="status" required>
-                            <option selected disabled>নির্বাচন করুন</option>
-                            <option value="new">নতুন</option>
-                            <option value="pending">চলমান</option>
-                            <option value="completed">সম্পন্ন</option>
-                        </select> --}}
 
+                {{-- Only Admin and Section Officer are allowed to comment and change status --}}
+                @if (session('role') == 1 || session('role') == 2)
+                    <div class="col-md-6">
                         <label for="status" class="form-label">পত্রের অবস্থা নির্বাচন করুন</label><span class="text-danger">*</span>
                         <br>
 
-                        <div class="form-check form-check-warning form-check-inline">
-                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-new" checked>
-                            <label class="form-check-label" for="form-check-radio-new">
+                        <div class="form-check form-check-info form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-pending" @if ($letter->status == 1) checked @endif value="1">
+                            <label class="form-check-label" for="form-check-radio-pending">
                                 নতুন
                             </label>
                         </div>
-                        <div class="form-check form-check-info form-check-inline">
-                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-pending">
-                            <label class="form-check-label" for="form-check-radio-pending">
-                                চলমান
+                        <div class="form-check form-check-warning form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-new" @if ($letter->status == 2) checked @endif value="2">
+                            <label class="form-check-label" for="form-check-radio-new">
+                                প্রক্রিয়াধীন
                             </label>
                         </div>
                         <div class="form-check form-check-success form-check-inline">
-                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-complete">
+                            <input class="form-check-input" type="radio" name="status" id="form-check-radio-complete" @if ($letter->status == 3) checked @endif value="3">
                             <label class="form-check-label" for="form-check-radio-complete">
                                 নিষ্পন্ন
                             </label>
@@ -98,10 +95,11 @@
                     </div>
 
                     <div class="col-md-6">           
-                        <label for="comment" class="form-label">মন্তব্য</label><span class="text-danger">*</span>
+                        <label for="comment" class="form-label">মন্তব্য যুক্ত করুন</label><span class="text-danger">*</span>
                         <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
                         @error('comment') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
+                @endif
 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary">আপডেট করুন</button>
