@@ -27,8 +27,6 @@ Route::middleware('auth')->group(function () {
 
 
 Route::controller(AuthenticateController::class)->group(function(){
-    // Route::get('/registration','registration')->middleware('alreadyLoggedIn');
-    // Route::post('/registration-user','registerUser')->name('register-user');
     Route::get('/login','login')->middleware('alreadyLoggedIn');
     Route::post('/login','loginUser')->name('login');
     Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
@@ -50,7 +48,12 @@ Route::controller(AuthenticateController::class)->group(function(){
         Route::get('/users/profile', [UserController::class, 'edit']);
         Route::put('/users/profile', [UserController::class, 'update']);
         Route::put('/users/profile/password', [UserController::class, 'passwordUpdate']);
-        Route::post('/users/add/{type}', [UserController::class, 'addOfficer']);
+        Route::post('/users/add/officer', [UserController::class, 'addOfficer']);
+        Route::put('/users/edit/officer', [UserController::class, 'updateOfficer']);
+        Route::get('/users/ajax/{id}', [UserController::class, 'ajaxUserInfo']);
+        
+
+        Route::post('/users/add/staff', [UserController::class, 'addStaff']);
         Route::get('/users/{id}/delete', [UserController::class, 'destroy']);
 
 

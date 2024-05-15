@@ -9,33 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class AuthenticateController extends Controller
 {
-    //Registration
-    public function registration()
-    {
-        return view('auth.registration');
-    }
-
-    public function registerUser(Request $request)
-    {
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email:users',
-            'password'=>'required|min:8|max:12'
-        ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-
-        $result = $user->save();
-        if($result){
-            return back()->with('success','You have registered successfully.');
-        } else {
-            return back()->with('fail','Something wrong!');
-        }
-    }
-
     ////Login
     public function login()
     {
@@ -49,7 +22,7 @@ class AuthenticateController extends Controller
             'password'=>'required|min:6'
         ]);
 
-        $user = User::where('email','=', $request->email)->first();
+        $user = User::where('email','=', $request->email)->where('is_deleted', '=', 0)->first();
 
         // return $user;
 

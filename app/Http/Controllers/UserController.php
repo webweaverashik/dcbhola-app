@@ -22,22 +22,6 @@ class UserController extends Controller
         $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
         $sections = Section::get();
 
-        // $officers = DB::table('users')
-        //             ->join('sections', 'sections.officer_id', '=', 'users.id')
-        //             ->select('users.*', 'sections.name as section_name')
-        //             ->where('users.role', 2)
-        //             ->where('users.is_deleted', 0)
-        //             ->get();
-
-        // $staffs = DB::table('users')
-        //             ->join('sections', 'sections.staff_id', '=', 'users.id')
-        //             ->select('users.*', 'sections.name as section_name')
-        //             ->whereIn('users.role', [3,4])
-        //             ->where('users.is_deleted', 0)
-        //             ->get();
-
-        // return $sections;
-
         return view('users.index', compact('officers', 'staffs', 'sections'));
     }
 
@@ -46,7 +30,119 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+    }
+
+    public function addOfficer(Request $request)
+    {
+        $request->validate([
+            'photo_url'     => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
+            'name'          => 'required|min:5|max:100|string',
+            'designation'   => 'required|string',
+            'phone'         => 'required|string',
+            'email'         => 'required|email',
+        ]);
+
+        if ($request->has('photo_url')) 
+        {
+            $image = $request->file('photo_url');
+            $extension = $image->getClientOriginalExtension();
+            
+
+            $filename = 'photo_' . time() . '.' . $extension;
+
+            
+            $path = 'uploads/photo/';
+            $image->move($path, $filename);
+
+            User::create([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'phone'         => $request->phone,
+                'role'          => 2,
+                'password'      => bcrypt('12345678'),
+                'designation'   => $request->designation,
+                'photo_url'     => $path.$filename
+            ]);
+        } 
+        else
+        {
+            User::create([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'phone'         => $request->phone,
+                'role'          => 2,
+                'password'      => bcrypt('12345678'),
+                'designation'   => $request->designation,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'কর্মকর্তা সফলভাবে যুক্ত হয়েছে।');
+    }
+
+    public function addStaff(Request $request)
+    {
+        $request->validate([
+            'photo_url'     => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
+            'name'          => 'required|min:5|max:100|string',
+            'designation'   => 'required|string',
+            'phone'         => 'required|string',
+            'email'         => 'required|email',
+            'role'          => 'required|string',
+        ]);
+
         
+        // Staff Type setting
+        if ($request->role == '3')
+            $role = 3;
+        elseif ($request->role == '4')
+            $role = 4;
+        else
+            $role = 3;
+
+
+        if ($request->has('photo_url')) 
+        {
+            $image = $request->file('photo_url');
+            $extension = $image->getClientOriginalExtension();
+            
+
+            $filename = 'photo_' . time() . '.' . $extension;
+
+            
+            $path = 'uploads/photo/';
+            $image->move($path, $filename);
+
+            User::create([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'phone'         => $request->phone,
+                'role'          => $role,
+                'password'      => bcrypt('12345678'),
+                'designation'   => $request->designation,
+                'photo_url'     => $path.$filename
+            ]);
+        } 
+        else
+        {
+            User::create([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'phone'         => $request->phone,
+                'role'          => $role,
+                'password'      => bcrypt('12345678'),
+                'designation'   => $request->designation,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'কর্মচারী সফলভাবে যুক্ত হয়েছে।');
+    }
+
+    
+    public function ajaxUserInfo(string $id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
     }
 
     /**
@@ -112,46 +208,26 @@ class UserController extends Controller
                 File::delete($user->photo_url);
             }
 
-            if ($request->has('password')) {
-                User::findOrFail($id)->update([
-                    'name' => $request->name,
-                    // 'password' => bcrypt($request->password),
-                    'phone' => $request->phone,
-                    'designation'=> $request->designation,
-                    'photo_url' => $path.$filename
-                ]);
-            } else {
-                User::findOrFail($id)->update([
-                    'name' => $request->name,
-                    'phone' => $request->phone,
-                    'designation'=> $request->designation,
-                    'photo_url' => $path.$filename
-                ]);
-            }
+            User::findOrFail($id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'designation'=> $request->designation,
+                'photo_url' => $path.$filename
+            ]);
 
             session()->put('photo_url', $path.$filename);
         } 
-        else {
+        else
+        {
             $path = NULL;
             $filename = NULL;
 
-
-            if ($request->has('password')) {
-                User::findOrFail($id)->update([
-                    'name' => $request->name,
-                    'password' => bcrypt($request->password),
-                    'phone' => $request->phone,
-                    'designation'=> $request->designation,
-                    // 'photo_url' => $path.$filename
-                ]);
-            } else {
-                User::findOrFail($id)->update([
-                    'name' => $request->name,
-                    'phone' => $request->phone,
-                    'designation'=> $request->designation,
-                    // 'photo_url' => $path.$filename
-                ]);
-            }
+            User::findOrFail($id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'designation'=> $request->designation,
+                // 'photo_url' => $path.$filename
+            ]);
         }
         
         session()->put('name', $request->name);
@@ -177,6 +253,26 @@ class UserController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
+    }
+
+
+    public function updateOfficer(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:5|max:100|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'designation' => 'required|string',
+        ]);
+
+        User::findOrFail($request->id)->update([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'phone'         => $request->phone,
+            'designation'   => $request->designation,
+        ]);
+
+        return redirect()->back()->with('success', 'কর্মকর্তার প্রোফাইল সফলভাবে আপডেট হয়েছে।');
     }
 
     /**

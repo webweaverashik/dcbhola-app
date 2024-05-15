@@ -83,7 +83,7 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
                                                 <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
@@ -114,7 +114,7 @@
                     </div>
                 @if (Session::get('role') == 1)
                     <div class="col-4 col-md-2 col-lg-4 mt-2 px-md-4 d-flex justify-content-end">
-                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addStaffModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             <span class="btn-text-inner">কর্মচারী</span>
                         </button>
@@ -197,6 +197,10 @@
 
 
 @include('modals.users.officer-creation')
+@include('modals.users.staff-creation')
+
+
+@include('modals.users.officer-edit')
 
 
 @endsection
@@ -208,8 +212,7 @@
 @section('scripts')
 
 <!-- BEGIN THEME GLOBAL STYLE -->
-{{-- <script src="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.min.js') }}"></script>
-<script src="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.min.js') }}"></script> --}}
+<script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <!-- END THEME GLOBAL STYLE -->    
 
 <script>
@@ -217,6 +220,34 @@
     document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
     document.getElementById("users_ul").className += " show";
     document.getElementById("all_users_id").className += " active";
+</script>
+
+
+<script>
+    // Officer Modal AJAX
+    $(document).ready(function() {
+        $('.btn-edit').click(function() {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                url: '/users/ajax/' + id,
+                type: 'GET',
+                data: {
+                    'id': id,
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#editOfficerFullName').val(data.name);
+                    $('#editOfficerDesignation').val(data.designation);
+                    $('#editOfficerPhone').val(data.phone);
+                    $('#editOfficerEmail').val(data.email);
+                    $('#editUserId').val(data.id);
+                    $('#editOfficerForm').attr('action', "{{ url('users/edit/"data.id"/officer') }}");
+                    
+                }
+            });            
+        });
+
+    });
 </script>
 
 
