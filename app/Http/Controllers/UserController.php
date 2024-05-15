@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Section;
 use App\Models\User;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -45,7 +46,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        
     }
 
     /**
@@ -89,7 +90,7 @@ class UserController extends Controller
             // 'password' => 'nullable|string|min:6',
             'phone' => 'required|string',
             'designation' => 'required|string',
-            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:200'
+            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100'
         ]);
 
 
@@ -158,6 +159,24 @@ class UserController extends Controller
         // session()->put('photo_url', $path.$filename);
 
         return redirect()->back()->with('success', 'প্রোফাইল সফলভাবে আপডেট হয়েছে।');
+    }
+
+    /**
+     * Update loggedin user password
+     */
+    public function passwordUpdate(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()]
+        ]);
+
+        // return bcrypt($request->password);
+
+        User::findOrFail(session('loginId'))->update([
+            'password' =>  bcrypt($request->password)
+        ]);
+
+        return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
     }
 
     /**

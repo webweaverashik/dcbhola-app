@@ -1,4 +1,7 @@
 @section('page-level-custom-css')
+<link href="{{ asset('src/assets/css/light/components/modal.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('src/assets/css/dark/components/modal.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 
@@ -16,9 +19,17 @@
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
                 <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-8 col-md-10 col-lg-8">
                         <h4>কর্মকর্তাদের প্রোফাইল</h4>
                     </div>
+                @if (Session::get('role') == 1)
+                    <div class="col-4 col-md-2 col-lg-4 mt-2 px-md-4 d-flex justify-content-end">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOfficerModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span class="btn-text-inner">কর্মকর্তা</span>
+                        </button>
+                    </div>
+                @endif   
                 </div>
             </div>
             <div class="widget-content widget-content-area">
@@ -98,9 +109,17 @@
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
                 <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-8 col-md-10 col-lg-8">
                         <h4>কর্মচারীদের প্রোফাইল</h4>
                     </div>
+                @if (Session::get('role') == 1)
+                    <div class="col-4 col-md-2 col-lg-4 mt-2 px-md-4 d-flex justify-content-end">
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span class="btn-text-inner">কর্মচারী</span>
+                        </button>
+                    </div>
+                @endif
                 </div>
             </div>
             <div class="widget-content widget-content-area">
@@ -175,6 +194,10 @@
         </div>
     </div>
 </div>
+
+
+@include('modals.users.officer-creation')
+
 
 @endsection
 

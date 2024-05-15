@@ -66,7 +66,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ২০০ KB)</label>
+                                                <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label>
                                                 <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
                                                 @error('photo_url') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
@@ -100,17 +100,48 @@
                                                 <input type="text" class="form-control mb-3" id="email" placeholder="আপনার ইমেইল এড্রেস" value="{{ $profile->email }}" name="email" readonly disabled>
                                             </div>
                                         </div> 
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="password">পাসওয়ার্ড রিসেট</label>
-                                                <input type="password" class="form-control mb-3" id="password" placeholder="নতুন পাসওয়ার্ড লিখুন" name="password">
-                                                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
-                                            </div>
-                                        </div>  --}}
-
                                         <div class="col-md-12 mt-4">
                                             <div class="form-group text-start">
                                                 <button class="btn btn-primary" type="submit">আপডেট করুন</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="col-xl-4 col-lg-10 col-md-12 layout-spacing">
+        <form class="section general-info" action="{{ url('users/profile/password')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="info">
+                <h6 class="">পাসওয়ার্ড পরিবর্তন</h6>
+                <div class="row">
+                    <div class="col-lg-11 mx-auto">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
+                                <div class="form">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="password">নতুন পাসওয়ার্ড লিখুন</label><span class="text-danger">*</span>
+                                                <input type="password" class="form-control mb-3" id="password" name="password" required>
+                                                @error('password') <span class="text-danger">{{ $message }}</span> @enderror
+                                            </div>
+                                        </div> 
+
+                                        <div class="col-md-12 mt-4">
+                                            <div class="form-group text-start">
+                                                <button class="btn btn-warning" type="submit">আপডেট করুন</button>
                                             </div>
                                         </div>
                                         
