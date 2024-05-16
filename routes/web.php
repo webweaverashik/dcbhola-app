@@ -48,13 +48,15 @@ Route::controller(AuthenticateController::class)->group(function(){
         Route::get('/users/profile', [UserController::class, 'edit']);
         Route::put('/users/profile', [UserController::class, 'update']);
         Route::put('/users/profile/password', [UserController::class, 'passwordUpdate']);
-        Route::post('/users/add/officer', [UserController::class, 'addOfficer']);
-        Route::put('/users/edit/officer', [UserController::class, 'updateOfficer']);
-        Route::get('/users/ajax/{id}', [UserController::class, 'ajaxUserInfo']);
-        
-
-        Route::post('/users/add/staff', [UserController::class, 'addStaff']);
         Route::get('/users/{id}/delete', [UserController::class, 'destroy']);
+
+        Route::post('/users/add/officer', [UserController::class, 'addOfficer']);
+        Route::post('/users/add/staff', [UserController::class, 'addStaff']);
+
+        Route::put('/users/edit/officer', [UserController::class, 'updateOfficer']);
+        Route::put('/users/edit/staff', [UserController::class, 'updateStaff']);
+
+        Route::get('/users/ajax/{id}', [UserController::class, 'ajaxUserInfo']);
 
 
         Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');

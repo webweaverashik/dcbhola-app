@@ -274,6 +274,38 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'কর্মকর্তার প্রোফাইল সফলভাবে আপডেট হয়েছে।');
     }
+    public function updateStaff(Request $request)
+    {
+        $request->validate([
+            'name'          => 'required|min:5|max:100|string',
+            'email'         => 'required|email',
+            'phone'         => 'required|string',
+            'designation'   => 'required|string',
+            'role'          => 'required|string',
+        ]);
+
+        // Staff Type setting
+        if ($request->role == '3')
+            $role = 3;
+        elseif ($request->role == '4')
+            $role = 4;
+        else
+            $role = 3;
+
+        User::findOrFail($request->id)->update([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'phone'         => $request->phone,
+            'designation'   => $request->designation,
+            'role'          => $role,
+        ]);
+
+        if ($role == 4) {
+            Section::where('staff_id', $request->id)->update(['staff_id' => NULL]);
+        }
+
+        return redirect()->back()->with('success', 'কর্মচারির প্রোফাইল সফলভাবে আপডেট হয়েছে।');
+    }
 
     /**
      * Remove the specified resource from storage.

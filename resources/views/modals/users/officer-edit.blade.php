@@ -12,7 +12,7 @@
                 <form class="section general-info" action="{{ url('users/edit/officer') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" id="editUserId">
+                    <input type="hidden" name="id" id="editOfficerId">
                     <div class="info">
                         <div class="row">
                             <div class="col-lg-12 mx-auto">
@@ -22,15 +22,15 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="fullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="editOfficerFullName" placeholder="যেমনঃ মো. আলমগীর হোসেন" name="name" required>
+                                                        <label for="editOfficerFullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="editOfficerFullName" placeholder="কর্মকর্তার নাম" name="name" required>
                                                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
         
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="designation">পদবী</label><span class="text-danger">*</span>
+                                                        <label for="editOfficerDesignation">পদবী</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control mb-3" id="editOfficerDesignation" placeholder="যেমনঃ অতিরিক্ত জেলা প্রশাসক (রাজস্ব)" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
@@ -38,14 +38,14 @@
                                                                                        
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="phone">ফোন</label><span class="text-danger">*</span>
+                                                        <label for="editOfficerPhone">ফোন</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control mb-3" id="editOfficerPhone" placeholder="কর্মকর্তার মোবাইল নং" value="{{ old('phone') }}" name="phone" required>
                                                         @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="email">ইমেইল</label><span class="text-danger">*</span>
+                                                        <label for="editOfficerEmail">ইমেইল</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control mb-3" id="editOfficerEmail" placeholder="কর্মকর্তার ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
                                                         @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>

@@ -83,7 +83,7 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerId" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
                                                 <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
@@ -168,12 +168,16 @@
                                                 <span class="badge badge-light-success">{{ $section->name }}</span>
                                             @endif
                                         @endforeach
+
+                                        @if($staff->role == 4)
+                                            <span class="badge badge-light-warning">ফ্রন্টডেস্ক</span>
+                                        @endif
                                     </td>
 
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnStaffId" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-id="{{ $staff->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
                                                 <a href="{{ url('users/' . $staff->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
@@ -201,6 +205,7 @@
 
 
 @include('modals.users.officer-edit')
+@include('modals.users.staff-edit')
 
 
 @endsection
@@ -226,7 +231,7 @@
 <script>
     // Officer Modal AJAX
     $(document).ready(function() {
-        $('.btn-edit').click(function() {
+        $('.btnOfficerId').click(function() {
             const id = $(this).attr("data-id");
             $.ajax({
                 url: '/users/ajax/' + id,
@@ -240,13 +245,39 @@
                     $('#editOfficerDesignation').val(data.designation);
                     $('#editOfficerPhone').val(data.phone);
                     $('#editOfficerEmail').val(data.email);
-                    $('#editUserId').val(data.id);
-                    $('#editOfficerForm').attr('action', "{{ url('users/edit/"data.id"/officer') }}");
-                    
+                    $('#editOfficerId').val(data.id);
                 }
             });            
         });
+    });
 
+
+    // Staff Modal AJAX
+    $(document).ready(function() {
+        $('.btnStaffId').click(function() {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                url: '/users/ajax/' + id,
+                type: 'GET',
+                data: {
+                    'id': id,
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#editStaffFullName').val(data.name);
+                    $('#editStaffDesignation').val(data.designation);
+                    $('#editStaffPhone').val(data.phone);
+                    $('#editStaffEmail').val(data.email);
+                    $('#editStaffId').val(data.id);
+
+                    if (data.role == 3) {
+                        $('#section-staff-input').prop('checked', true);
+                    } else {
+                        $('#frontdesk-staff-input').prop('checked', true);
+                    }
+                }
+            });            
+        });
     });
 </script>
 
