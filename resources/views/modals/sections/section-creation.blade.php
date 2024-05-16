@@ -1,9 +1,9 @@
 <!-- Section Creation Modal -->
-<div class="modal modal-lg fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addSectionLabel">নতুন শাখা যুক্তকরণ</h5>
+                <h5 class="modal-title" id="addSectionLabel">নতুন শাখা তৈরি</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                   <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
@@ -26,9 +26,9 @@
                                                     </div>
                                                 </div>
         
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <label for="officer_id" class="form-label">দায়িত্বপ্রাপ্ত কর্মকর্তা</label><span class="text-danger">*</span>
-                                                    <select id="officer_id" class="form-select" name="officer_id" required>
+                                                    <select id="officer_id" class="form-select mb-3" name="officer_id" required>
                                                         <option value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($officers as $officer)
                                                         <option value="{{ $officer->id }}">{{ $officer->name . ', ' . $officer->designation}}</option>
@@ -37,7 +37,7 @@
                                                     @error('officer_id') <span class="text-danger">{{ $message }}</span> @enderror
                                                 </div>
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <label for="staff_id" class="form-label">কর্মচারী</label><span class="text-danger">*</span>
                                                     <select id="staff_id" class="form-select" name="staff_id" required>
                                                         <option value="" selected disabled>নির্বাচন করুন</option>
@@ -63,6 +63,14 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light-dark" data-bs-dismiss="modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    বন্ধ করুন
+                </button>
+            </div>
         </div>
     </div>
 </div>

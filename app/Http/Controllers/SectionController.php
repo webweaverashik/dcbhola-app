@@ -113,14 +113,14 @@ class SectionController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'id'    => 'integer|exists:id',
+            // 'id'    => 'integer|exists:id',
             'name' => 'required|string|max:255',
             'officer_id' => 'nullable|integer',
             'staff_id' => 'nullable|integer',
         ]);
 
         // Create a new section entry
-        $section = Section::findOrFail($validatedData['id'])->update([
+        $section = Section::findOrFail($request->id)->update([
             'name' => $validatedData['name'],
             'officer_id' => $validatedData['officer_id'],
             'staff_id' => $validatedData['staff_id'],
