@@ -46,9 +46,9 @@
                     <div class="col-md-6">
                         <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label><span class="text-danger">*</span>
                         <select id="section_to" class="form-select" name="section_to" required>
-                            <option selected disabled>নির্বাচন করুন</option>
+                            <option value="" selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
-                                <option value="{{ $section->id }}" @if (Session::get('role') == 3) selected @endif>{{ $section->name }}</option>
+                                <option value="{{ $section->id }}">{{ $section->name }}</option>
                             @endforeach
                         </select>
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror

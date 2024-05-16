@@ -43,8 +43,6 @@ Route::controller(AuthenticateController::class)->group(function(){
 
 
         Route::get('/users', [UserController::class, 'index']);
-        // Route::get('/users/create', [UserController::class, 'create']);
-        // Route::get('/users/profile', [UserController::class, 'show']);
         Route::get('/users/profile', [UserController::class, 'edit']);
         Route::put('/users/profile', [UserController::class, 'update']);
         Route::put('/users/profile/password', [UserController::class, 'passwordUpdate']);
@@ -57,9 +55,12 @@ Route::controller(AuthenticateController::class)->group(function(){
         Route::put('/users/edit/staff', [UserController::class, 'updateStaff']);
 
         Route::get('/users/ajax/{id}', [UserController::class, 'ajaxUserInfo']);
-
-
-        Route::get('/sections', [SectionController::class, 'index'])->middleware('isLoggedIn');
+        
+        
+        Route::get('/sections', [SectionController::class, 'index']);
+        Route::post('/sections/add', [SectionController::class, 'store']);
+        Route::put('/sections/edit', [SectionController::class, 'update']);
+        Route::get('/sections/ajax/{id}', [SectionController::class, 'fetch']);
     });
 
 });
