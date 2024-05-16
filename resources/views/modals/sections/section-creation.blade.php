@@ -1,5 +1,5 @@
 <!-- Section Creation Modal -->
-<div class="modal modal-lg fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionLabel" aria-hidden="true">
+<div class="modal modal-lg fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,7 +31,7 @@
                                                     <select id="officer_id" class="form-select" name="officer_id" required>
                                                         <option value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($officers as $officer)
-                                                        <option value="{{ $officer->id }}">{{ $officer->name }}</option>
+                                                        <option value="{{ $officer->id }}">{{ $officer->name . ', ' . $officer->designation}}</option>
                                                     @endforeach
                                                     </select>
                                                     @error('officer_id') <span class="text-danger">{{ $message }}</span> @enderror
@@ -42,7 +42,7 @@
                                                     <select id="staff_id" class="form-select" name="staff_id" required>
                                                         <option value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($staffs as $staff)
-                                                        <option value="{{ $staff->id }}">{{ $staff->name }}</option>
+                                                        <option value="{{ $staff->id }}">{{ $staff->name . ', ' . $staff->designation }}</option>
                                                     @endforeach
                                                     </select>
                                                     @error('staff_id') <span class="text-danger">{{ $message }}</span> @enderror

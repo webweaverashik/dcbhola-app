@@ -216,103 +216,103 @@
 
 @section('scripts')
 
-<!-- BEGIN THEME GLOBAL STYLE -->
-<script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
-<!-- END THEME GLOBAL STYLE -->    
+    <!-- BEGIN THEME GLOBAL STYLE -->
+    <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
+    <!-- END THEME GLOBAL STYLE -->    
 
-<script>
-    document.getElementById("users_menu").className += " active";
-    document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
-    document.getElementById("users_ul").className += " show";
-    document.getElementById("all_users_id").className += " active";
-</script>
-
-
-<script>
-    // Officer Modal AJAX
-    $(document).ready(function() {
-        $('.btnOfficerId').click(function() {
-            const id = $(this).attr("data-id");
-            $.ajax({
-                url: '/users/ajax/' + id,
-                type: 'GET',
-                data: {
-                    'id': id,
-                },
-                success: function(data) {
-                    console.log(data);
-                    $('#editOfficerFullName').val(data.name);
-                    $('#editOfficerDesignation').val(data.designation);
-                    $('#editOfficerPhone').val(data.phone);
-                    $('#editOfficerEmail').val(data.email);
-                    $('#editOfficerId').val(data.id);
-                }
-            });            
-        });
-    });
-
-
-    // Staff Modal AJAX
-    $(document).ready(function() {
-        $('.btnStaffId').click(function() {
-            const id = $(this).attr("data-id");
-            $.ajax({
-                url: '/users/ajax/' + id,
-                type: 'GET',
-                data: {
-                    'id': id,
-                },
-                success: function(data) {
-                    console.log(data);
-                    $('#editStaffFullName').val(data.name);
-                    $('#editStaffDesignation').val(data.designation);
-                    $('#editStaffPhone').val(data.phone);
-                    $('#editStaffEmail').val(data.email);
-                    $('#editStaffId').val(data.id);
-
-                    if (data.role == 3) {
-                        $('#section-staff-input').prop('checked', true);
-                    } else {
-                        $('#frontdesk-staff-input').prop('checked', true);
-                    }
-                }
-            });            
-        });
-    });
-</script>
-
-
-<script>
-    function deleteWarning(ev) {
-        ev.preventDefault();
-        var urlToRedirect = ev.currentTarget.getAttribute('href');
-        console.log(urlToRedirect);
-
-        Swal.fire({
-            title: 'আপনি কি নিশ্চিত?',
-            text: "ডিলিট করলে এই ইউজারকে আর ফিরে পাওয়া যাবে না!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'হ্যাঁ, ডিলিট করবো!',
-            cancelButtonText: "ফিরে যান",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = urlToRedirect;
-            }
-        })
-    }
-</script>
-
-@if($message = session('success'))
     <script>
-        Swal.fire(
-        'সাকসেস!',
-        '{{ $message }}',
-        'success',
-        )
+        document.getElementById("users_menu").className += " active";
+        document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
+        document.getElementById("users_ul").className += " show";
+        document.getElementById("all_users_id").className += " active";
     </script>
-@endif
+
+
+    <script>
+        // Officer Modal AJAX
+        $(document).ready(function() {
+            $('.btnOfficerId').click(function() {
+                const id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/users/ajax/' + id,
+                    type: 'GET',
+                    data: {
+                        'id': id,
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        $('#editOfficerFullName').val(data.name);
+                        $('#editOfficerDesignation').val(data.designation);
+                        $('#editOfficerPhone').val(data.phone);
+                        $('#editOfficerEmail').val(data.email);
+                        $('#editOfficerId').val(data.id);
+                    }
+                });            
+            });
+        });
+
+
+        // Staff Modal AJAX
+        $(document).ready(function() {
+            $('.btnStaffId').click(function() {
+                const id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/users/ajax/' + id,
+                    type: 'GET',
+                    data: {
+                        'id': id,
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        $('#editStaffFullName').val(data.name);
+                        $('#editStaffDesignation').val(data.designation);
+                        $('#editStaffPhone').val(data.phone);
+                        $('#editStaffEmail').val(data.email);
+                        $('#editStaffId').val(data.id);
+
+                        if (data.role == 3) {
+                            $('#section-staff-input').prop('checked', true);
+                        } else {
+                            $('#frontdesk-staff-input').prop('checked', true);
+                        }
+                    }
+                });            
+            });
+        });
+    </script>
+
+
+    <script>
+        function deleteWarning(ev) {
+            ev.preventDefault();
+            var urlToRedirect = ev.currentTarget.getAttribute('href');
+            console.log(urlToRedirect);
+
+            Swal.fire({
+                title: 'আপনি কি নিশ্চিত?',
+                text: "ডিলিট করলে এই ইউজারকে আর ফিরে পাওয়া যাবে না!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'হ্যাঁ, ডিলিট করবো!',
+                cancelButtonText: "ফিরে যান",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = urlToRedirect;
+                }
+            })
+        }
+    </script>
+
+    @if($message = session('success'))
+        <script>
+            Swal.fire(
+            'সাকসেস!',
+            '{{ $message }}',
+            'success',
+            )
+        </script>
+    @endif
 
 @endsection

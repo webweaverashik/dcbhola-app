@@ -1,5 +1,5 @@
-<!-- Officer Creation Modal -->
-<div class="modal modal-lg fade" id="editOfficerModal" tabindex="-1" role="dialog" aria-labelledby="editOfficerLabel" aria-hidden="true">
+<!-- Officer Update Modal -->
+<div class="modal modal-lg fade" id="editOfficerModal" tabindex="-1" role="dialog" aria-labelledby="editOfficerLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -69,4 +69,4 @@
         </div>
     </div>
 </div>
-<!-- End of User Creation Modal -->
+<!-- End of User Update Modal -->

@@ -36,12 +36,12 @@ class SectionController extends Controller
         $officers = DB::table('users')
                     ->where('role', 2)
                     ->where('is_deleted', 0)
-                    ->get(['id', 'name']);
+                    ->get(['id', 'name', 'designation']);
 
         $staffs = DB::table('users')
                     ->where('role', 3)
                     ->where('is_deleted', 0)
-                    ->get(['id', 'name']);
+                    ->get(['id', 'name', 'designation']);
 
 
 

@@ -1,5 +1,5 @@
 <!-- Officer Creation Modal -->
-<div class="modal modal-lg fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffLabel" aria-hidden="true">
+<div class="modal modal-lg fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
