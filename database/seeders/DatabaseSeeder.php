@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
         
         User::create([
             'name' => 'ফ্রন্ট ডেস্ক',
-            'email' => 'ashikgsc170@gmail.com',
+            'email' => 'front-desk@gmail.com',
             'phone' => '০১৯২০৮৬৯৮০৯',
             'password' => bcrypt('12345678'),
             'designation' => 'ডাটা আপলোডার',
@@ -75,23 +75,26 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        Section::create(['name' => 'রাজস্ব শাখা', 'officer_id' => 2, 'staff_id' => 3]);
-        Section::create(['name' => 'আইসিটি শাখা', 'officer_id' => 4, 'staff_id' => 5]);
-        Section::create(['name' => 'সাধারণ শাখা']);
         Section::create(['name' => 'গোপনীয় শাখা']);
-        Section::create(['name' => 'জুডিশিয়াল মুন্সিখানা শাখা']);
-        Section::create(['name' => 'ট্রেজারি শাখা']);
-        Section::create(['name' => 'তথ্য ও অভিযোগ শাখা']);
+        Section::create(['name' => 'সাধারণ শাখা']);
         Section::create(['name' => 'নেজারত শাখা']);
-        Section::create(['name' => 'ভূমি অধিগ্রহণ শাখা']);
-        Section::create(['name' => 'রেকর্ডরুম শাখা']);
-        Section::create(['name' => 'শিক্ষা ও কল্যাণ শাখা']);
         Section::create(['name' => 'সংস্থাপন শাখা']);
-        Section::create(['name' => 'বিচার শাখা']);
-        Section::create(['name' => 'স্থানীয় সরকার শাখা']);
-        Section::create(['name' => 'সাধারণ সার্টিফিকেট শাখা']);
         Section::create(['name' => 'ত্রাণ শাখা']);
+        Section::create(['name' => 'ট্রেজারি শাখা']);
+        Section::create(['name' => 'প্রবাসী কল্যাণ শাখা']);
+        Section::create(['name' => 'আইসিটি শাখা', 'officer_id' => 4, 'staff_id' => 5]);
+        Section::create(['name' => 'রাজস্ব শাখা', 'officer_id' => 2, 'staff_id' => 3]);
+        Section::create(['name' => 'সাধারণ সার্টিফিকেট শাখা']);
         Section::create(['name' => 'আরএম শাখা']);
+        Section::create(['name' => 'রেকর্ডরুম শাখা']);
+        Section::create(['name' => 'রাজস্ব (এসএ) শাখা']);
+        Section::create(['name' => 'এডিএম শাখা']);
+        Section::create(['name' => 'জুডিশিয়াল মুন্সিখানা শাখা']);
+        Section::create(['name' => 'স্থানীয় সরকার শাখা']);
+        Section::create(['name' => 'ভূমি অধিগ্রহণ শাখা']);
+        Section::create(['name' => 'লাইব্রেরী শাখা']);
+        Section::create(['name' => 'শিক্ষা ও কল্যাণ শাখা']);
+        Section::create(['name' => 'বিচার শাখা']);
         Section::create(['name' => 'এলএ শাখা']);
     }
 }

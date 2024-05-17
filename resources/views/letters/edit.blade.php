@@ -96,7 +96,7 @@
 
                     <div class="col-md-6">           
                         <label for="comment" class="form-label">মন্তব্য যুক্ত করুন</label><span class="text-danger">*</span>
-                        <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                        <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
                         @error('comment') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
                 @endif
