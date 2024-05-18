@@ -40,12 +40,10 @@
                     <thead>
                         <tr>
                             <th>ক্রমিক নং</th>
-                            <th>স্মারক নং</th>
                             <th>পত্র প্রাপ্তির তারিখ</th>
                             <th>কোথা হতে প্রাপ্ত</th>
                             <th>সংক্ষিপ্ত বিষয়</th>
                             <th>সংশ্লিষ্ট শাখা</th>
-                            <th>আপলোডকারি</th>
                             <th>ফাইল</th>
                             <th>অবস্থা</th>
                             <th class="dt-no-sorting">কার্যক্রম</th>
@@ -55,12 +53,10 @@
                         @foreach ($letters as $letter)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td class="text-break">{{ $letter->memorandum_no }}</td>
                             <td>{{ $letter->received_date }}</td>
-                            <td class="text-break">{{ $letter->sender_name }}</td>
-                            <td class="text-break">{{ $letter->short_title }}</td>
+                            <td class="text-wrap">{{ $letter->sender_name }}</td>
+                            <td class="text-wrap">{{ $letter->short_title }}</td>
                             <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
-                            <td><strong>{{ $letter->uploader_user }}</strong><br>{{ $letter->designation }}</td>
                             <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td>
                             <td>
                                 @if ($letter->status == 1)
@@ -73,7 +69,7 @@
                             </td>
                             <td>
                                 <div class="action-btns">
-                                    <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#viewLetterModal">
+                                    <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2 btnViewLetter" data-toggle="tooltip" data-placement="top" title="View" data-bs-toggle="modal" data-bs-target="#viewLetterModal" data-id="{{ $letter->id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     </a>
                                 
@@ -133,8 +129,8 @@
     // var e;
     c3 = $('#style-3').DataTable({
         "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-    "<'table-responsive'tr>" +
-    "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "<'table-responsive'tr>" +
+        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
         "oLanguage": {
             "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
             "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
@@ -172,6 +168,56 @@
         })
     }
 </script>
+
+<script src="{{ asset('custom/ajax.js') }}"></script>
+
+{{-- <script>
+    // Officer Modal AJAX
+    $(document).ready(function() {
+        $('.btnViewLetter').click(function() {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                url: '/letters/ajax/' + id,
+                type: 'GET',
+                result: {
+                    'id': id,
+                },
+                success: function(result) {
+                    console.log(result);
+                    $('#viewShortTitle').html(result.short_title);
+                    $('#viewSectionName').html(result.section_name);
+
+                    if (result.status == 1) {
+                        $('#statusNew').removeClass('d-none');
+                        $('#statusProcessing').addClass('d-none');
+                        $('#statusCompleted').addClass('d-none');
+                    }
+                    else if (result.status == 2) {
+                        $('#statusNew').addClass('d-none');
+                        $('#statusProcessing').removeClass('d-none');
+                        $('#statusCompleted').addClass('d-none');
+                    }
+                    else if (result.status == 3) {
+                        $('#statusNew').addClass('d-none');
+                        $('#statusProcessing').addClass('d-none');
+                        $('#statusCompleted').removeClass('d-none');
+                    }
+
+                    $('#viewUploadTime').html('<span class="fw-bold">আপলোডের সময়ঃ </span>' + result.created_at);
+                    $('#viewMemorandum').html('<span class="fw-bold">চিঠি/স্মারক নংঃ </span>' + result.memorandum_no);
+                    $('#viewReceivedDate').html('<span class="fw-bold">পত্র প্রাপ্তির তারিখঃ </span>' + result.received_date);
+                    $('#viewSenderName').html('<span class="fw-bold">কোথা হতে প্রাপ্তঃ </span>' + result.sender_name);
+                    $('#viewSentDate').html('<span class="fw-bold">প্রেরণের তারিখঃ </span>' + result.sent_date);
+                    $('#viewUploader').html('<span class="fw-bold text-wrap">আপলোডকারিঃ </span>' + result.uploader_name + ', ' + result.uploader_designation);
+
+
+                }
+            });            
+        });
+    });
+</script> --}}
+
+
 
 @if($message = session('success'))
     <script>

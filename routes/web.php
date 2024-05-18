@@ -40,6 +40,7 @@ Route::controller(AuthenticateController::class)->group(function(){
         Route::post('/letters/create', [LetterController::class, 'store']);
         Route::put('/letters/{id}/edit', [LetterController::class, 'update']);
         Route::get('/letters/{id}/delete', [LetterController::class, 'destroy']);
+        Route::get('/letters/ajax/{id}', [LetterController::class, 'ajaxLetterInfo']);
 
 
         Route::get('/users', [UserController::class, 'index']);

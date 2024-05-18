@@ -165,6 +165,54 @@ class LetterController extends Controller
     {
         //
     }
+    /**
+     * AJAX request for letters
+     */
+    public function ajaxLetterInfo(string $id)
+    {
+        $letter = DB::table('letters as l')
+                ->join('sections as s', 'l.section_to', '=', 's.id')
+                ->join('users as u', 'l.uploaded_by', '=', 'u.id')
+                ->select(
+                    'l.id',
+                    'l.received_date',
+                    'l.sender_name',
+                    'l.sent_date',
+                    'l.short_title',
+                    'l.memorandum_no',
+                    'u.name as uploader_name',
+                    'u.designation as uploader_designation',
+                    's.name as section_name',
+                    'l.file_url',
+                    'l.is_deleted',
+                    'l.status',
+                    'l.created_at',
+                    'l.updated_at'
+                )
+                ->where('l.id', $id)
+                ->first();
+
+        $comments = DB::table('comments as c')
+                    ->join('users as u', 'c.comment_by', '=', 'u.id')
+                    ->select(
+                        'c.id as comment_id',
+                        'c.comment',
+                        'u.name as comment_by_name',
+                        'u.designation as commenter_designation',
+                        'c.created_at',
+                        'c.updated_at'
+                    )
+                    ->where('c.letter_id', $id)
+                    ->orderBy('c.created_at', 'desc')
+                    ->get();
+
+        $output = [
+            'letter' => $letter,
+            'comments' => $comments
+        ];
+        
+        return $output;
+    }
 
     /**
      * Show the form for editing the specified resource.
