@@ -17,6 +17,7 @@
             <div class="modal-body" >
                 <div id="letter-details">
                 </div>
+                
                 <div id="comments">
                 </div>
             </div>

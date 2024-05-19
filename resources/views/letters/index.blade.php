@@ -50,10 +50,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            // Define an array mapping English digits to Bengali digits
+                            $engToBng = ['0' => '০', '1' => '১', '2' => '২', '3' => '৩', '4' => '৪', '5' => '৫', '6' => '৬', '7' => '৭', '8' => '৮', '9' => '৯'];
+                        @endphp
+                        
                         @foreach ($letters as $letter)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $letter->received_date }}</td>
+                            {{-- <td>{{ $loop->iteration }}</td> --}}
+                            <!-- Use the iteration number and convert it to Bengali -->
+                            <td>{{ strtr($loop->iteration, $engToBng) }}</td>
+                            <td>{{ $letter->received_date_bn }}</td>
                             <td class="text-wrap">{{ $letter->sender_name }}</td>
                             <td class="text-wrap">{{ $letter->short_title }}</td>
                             <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
@@ -170,52 +177,6 @@
 </script>
 
 <script src="{{ asset('custom/ajax.js') }}"></script>
-
-{{-- <script>
-    // Officer Modal AJAX
-    $(document).ready(function() {
-        $('.btnViewLetter').click(function() {
-            const id = $(this).attr("data-id");
-            $.ajax({
-                url: '/letters/ajax/' + id,
-                type: 'GET',
-                result: {
-                    'id': id,
-                },
-                success: function(result) {
-                    console.log(result);
-                    $('#viewShortTitle').html(result.short_title);
-                    $('#viewSectionName').html(result.section_name);
-
-                    if (result.status == 1) {
-                        $('#statusNew').removeClass('d-none');
-                        $('#statusProcessing').addClass('d-none');
-                        $('#statusCompleted').addClass('d-none');
-                    }
-                    else if (result.status == 2) {
-                        $('#statusNew').addClass('d-none');
-                        $('#statusProcessing').removeClass('d-none');
-                        $('#statusCompleted').addClass('d-none');
-                    }
-                    else if (result.status == 3) {
-                        $('#statusNew').addClass('d-none');
-                        $('#statusProcessing').addClass('d-none');
-                        $('#statusCompleted').removeClass('d-none');
-                    }
-
-                    $('#viewUploadTime').html('<span class="fw-bold">আপলোডের সময়ঃ </span>' + result.created_at);
-                    $('#viewMemorandum').html('<span class="fw-bold">চিঠি/স্মারক নংঃ </span>' + result.memorandum_no);
-                    $('#viewReceivedDate').html('<span class="fw-bold">পত্র প্রাপ্তির তারিখঃ </span>' + result.received_date);
-                    $('#viewSenderName').html('<span class="fw-bold">কোথা হতে প্রাপ্তঃ </span>' + result.sender_name);
-                    $('#viewSentDate').html('<span class="fw-bold">প্রেরণের তারিখঃ </span>' + result.sent_date);
-                    $('#viewUploader').html('<span class="fw-bold text-wrap">আপলোডকারিঃ </span>' + result.uploader_name + ', ' + result.uploader_designation);
-
-
-                }
-            });            
-        });
-    });
-</script> --}}
 
 
 

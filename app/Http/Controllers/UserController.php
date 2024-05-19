@@ -10,19 +10,78 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
+use Rakibhstu\Banglanumber\NumberToBangla;
+
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $officers = User::where('role', 2)->where('is_deleted', 0)->get();
+    //     $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
+    //     $sections = Section::get();
+
+    //     return view('users.index', compact('officers', 'staffs', 'sections'));
+    // }
+
     public function index()
     {
         $officers = User::where('role', 2)->where('is_deleted', 0)->get();
         $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
+
+        // Create an instance of the NumberToBangla class
+        $numToBangla = new NumberToBangla();
+
+        // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
+        $officers->transform(function ($officer) use ($numToBangla) {
+            $officer->created_at_bn = $this->convertDateTimeToBangla($officer->created_at, $numToBangla);
+            
+            return $officer;
+        });
+
+        $staffs->transform(function ($staff) use ($numToBangla) {
+            $staff->created_at_bn = $this->convertDateTimeToBangla($staff->created_at, $numToBangla);
+            
+            return $staff;
+        });
+
+
         $sections = Section::get();
 
         return view('users.index', compact('officers', 'staffs', 'sections'));
+    }
+
+
+
+    private function convertDateTimeToBangla($dateTime, $numToBangla)
+    {
+        // Extract date components
+        $year = $numToBangla->bnNum($dateTime->format('Y'));
+        $month = $numToBangla->bnNum($dateTime->format('m'));
+        $day = $numToBangla->bnNum($dateTime->format('d'));
+        $hourB = $numToBangla->bnNum($dateTime->format('h'));
+        $minute = $numToBangla->bnNum($dateTime->format('i'));
+        $second = $numToBangla->bnNum($dateTime->format('s'));
+
+        $hour = date("H", strtotime($dateTime));
+        $period = '';
+        if ($hour >= 5 && $hour < 12) {
+            $period = 'সকাল';
+        } elseif ($hour >= 12 && $hour < 17) {
+            $period = 'দুপুর';
+        } elseif ($hour >= 17 && $hour < 19) {
+            $period = 'বিকাল';
+        } elseif ($hour >= 19 && $hour < 21) {
+            $period = 'সন্ধ্যা';
+        } else {
+            $period = 'রাত';
+        }
+
+        // Construct Bangla date string
+        return "{$day}-{$month}-{$year}, {$period} {$hourB}:{$minute}";
     }
 
     /**

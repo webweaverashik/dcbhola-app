@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Query\JoinClause;
+use Rakibhstu\Banglanumber\NumberToBangla;
+
 
 class LetterController extends Controller
 {
@@ -72,9 +74,64 @@ class LetterController extends Controller
             // return $letters;
         }
 
+        // Create an instance of the NumberToBangla class
+        $numToBangla = new NumberToBangla();
+
+        // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
+        $letters->transform(function ($letter) use ($numToBangla) {
+            $letter->received_date_bn = $this->convertDateToBangla(new \DateTime($letter->received_date), $numToBangla);
+            
+            return $letter;
+        });
+
         return view('letters.index', compact('letters'));
     }
 
+    public function convertDateTimeToBangla($dateTime, $numToBangla)
+    {
+        $hour = date("H", strtotime($dateTime));
+
+        if (is_string($dateTime)) {
+            // Convert the string to a DateTime object
+            $dateTime = new \DateTime($dateTime);
+        }
+        
+        // Extract date components
+        $year = $numToBangla->bnNum($dateTime->format('Y'));
+        $month = $numToBangla->bnNum($dateTime->format('m'));
+        $day = $numToBangla->bnNum($dateTime->format('d'));
+        $hourB = $numToBangla->bnNum($dateTime->format('h'));
+        $minute = $numToBangla->bnNum($dateTime->format('i'));
+        $second = $numToBangla->bnNum($dateTime->format('s'));
+
+        // $hour = date("H", strtotime($dateTime));
+        $period = '';
+        if ($hour >= 5 && $hour < 12) {
+            $period = 'সকাল';
+        } elseif ($hour >= 12 && $hour < 17) {
+            $period = 'দুপুর';
+        } elseif ($hour >= 17 && $hour < 19) {
+            $period = 'বিকাল';
+        } elseif ($hour >= 19 && $hour < 21) {
+            $period = 'সন্ধ্যা';
+        } else {
+            $period = 'রাত';
+        }
+
+        // Construct Bangla date string
+        return "{$day}-{$month}-{$year}, {$period} {$hourB}:{$minute}";
+    }
+
+    public function convertDateToBangla($date, $numToBangla)
+    {
+        // Extract date components
+        $year = $numToBangla->bnNum($date->format('Y'));
+        $month = $numToBangla->bnNum($date->format('m'));
+        $day = $numToBangla->bnNum($date->format('d'));
+
+        // Construct Bangla date string
+        return "{$day}-{$month}-{$year}";
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -168,6 +225,70 @@ class LetterController extends Controller
     /**
      * AJAX request for letters
      */
+    // public function ajaxLetterInfo(string $id)
+    // {
+    //     $letter = DB::table('letters as l')
+    //             ->join('sections as s', 'l.section_to', '=', 's.id')
+    //             ->join('users as u', 'l.uploaded_by', '=', 'u.id')
+    //             ->select(
+    //                 'l.id',
+    //                 'l.received_date',
+    //                 'l.sender_name',
+    //                 'l.sent_date',
+    //                 'l.short_title',
+    //                 'l.memorandum_no',
+    //                 'u.name as uploader_name',
+    //                 'u.designation as uploader_designation',
+    //                 's.name as section_name',
+    //                 'l.file_url',
+    //                 'l.is_deleted',
+    //                 'l.status',
+    //                 'l.created_at',
+    //                 'l.updated_at'
+    //             )
+    //             ->where('l.id', $id)
+    //             ->first();
+
+    //     $comments = DB::table('comments as c')
+    //                 ->join('users as u', 'c.comment_by', '=', 'u.id')
+    //                 ->select(
+    //                     'c.id as comment_id',
+    //                     'c.comment',
+    //                     'u.name as comment_by_name',
+    //                     'u.designation as commenter_designation',
+    //                     'c.created_at',
+    //                     'c.updated_at'
+    //                 )
+    //                 ->where('c.letter_id', $id)
+    //                 ->orderBy('c.created_at', 'desc')
+    //                 ->get();
+
+    //     // Create an instance of the NumberToBangla class
+    //     $numToBangla = new NumberToBangla();
+
+    //     // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
+    //     $letter->transform(function ($letter) use ($numToBangla) {
+    //         $letter->created_at_bn = $this->convertDateTimeToBangla($letter->created_at, $numToBangla);
+    //         $letter->sent_date_bn = $this->convertDateToBangla(new \DateTime($letter->sent_date), $numToBangla);
+    //         $letter->received_date_bn = $this->convertDateToBangla(new \DateTime($letter->received_date), $numToBangla);
+
+    //         return $letter;
+    //     });
+
+    //     $comments->transform(function ($comment) use ($numToBangla) {
+    //         $comment->created_at_bn = $this->convertDateTimeToBangla($comment->created_at, $numToBangla);
+            
+    //         return $comment;
+    //     });
+        
+
+    //     $output = [
+    //         'letter' => $letter,
+    //         'comments' => $comments
+    //     ];
+        
+    //     return $output;
+    // }
     public function ajaxLetterInfo(string $id)
     {
         $letter = DB::table('letters as l')
@@ -205,6 +326,20 @@ class LetterController extends Controller
                     ->where('c.letter_id', $id)
                     ->orderBy('c.created_at', 'desc')
                     ->get();
+
+        // Create an instance of the NumberToBangla class
+        $numToBangla = new NumberToBangla();
+
+        // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
+        // Convert dates to Bangla
+        $letter->created_at_bn = $this->convertDateTimeToBangla($letter->created_at, $numToBangla);
+        $letter->sent_date_bn = $this->convertDateToBangla(new \DateTime($letter->sent_date), $numToBangla);
+        $letter->received_date_bn = $this->convertDateToBangla(new \DateTime($letter->received_date), $numToBangla);
+
+        foreach ($comments as $comment) {
+            $comment->created_at_bn = $this->convertDateTimeToBangla($comment->created_at, $numToBangla);
+        }
+        
 
         $output = [
             'letter' => $letter,

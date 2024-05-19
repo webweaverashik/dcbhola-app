@@ -89,7 +89,7 @@
                                                                                
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="phone">ফোন</label><span class="text-danger">*</span>
+                                                <label for="phone">মোবাইল নং (বাংলায়)</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control mb-3" id="phone" placeholder="আপনার মোবাইল নং" value="{{ $profile->phone }}" name="phone" required>
                                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>

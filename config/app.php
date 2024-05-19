@@ -185,6 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Rakibhstu\Banglanumber\NumberToBanglaServiceProvider::class,
 
         /*
          * Application Service Providers...

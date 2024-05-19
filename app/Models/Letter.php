@@ -21,4 +21,5 @@ class Letter extends Model
         'file_url',
         'status'
     ];
+
 }

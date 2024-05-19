@@ -70,7 +70,7 @@
                                         <span>{{ $officer->phone }}</span>
                                     </td>
                                     <td>
-                                        <p class="mb-0">{{ $officer->created_at }}</p>
+                                        <p class="mb-0">{{ $officer->created_at_bn }}</p>
                                     </td>
                                     <td>
                                         @foreach ($sections as $section)
@@ -160,7 +160,7 @@
                                         <span>{{ $staff->phone }}</span>
                                     </td>
                                     <td>
-                                        <p class="mb-0">{{ $staff->created_at }}</p>
+                                        <p class="mb-0">{{ $staff->created_at_bn }}</p>
                                     </td>
                                     <td>
                                         @foreach ($sections as $section)
