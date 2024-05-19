@@ -57,11 +57,13 @@ $(document).ready(function() {
                         $('#statusNew').addClass('d-none');
                         $('#statusProcessing').removeClass('d-none');
                         $('#statusCompleted').addClass('d-none');
+                        $('#comments').removeClass('d-none');
                     }
                     else if (`${letter.status}` == 3) {
                         $('#statusNew').addClass('d-none');
                         $('#statusProcessing').addClass('d-none');
                         $('#statusCompleted').removeClass('d-none');
+                        $('#comments').removeClass('d-none');
                     }
 
                 // Handle the comments

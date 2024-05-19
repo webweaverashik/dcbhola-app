@@ -55,7 +55,7 @@
                                 @if (Session::get('photo_url') == NULL) 
                                     <img src="{{ asset('custom/img/dummy-user.png') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
                                 @else 
-                                    <img src="http://127.0.0.1:8000/{{ Session::get('photo_url') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
+                                    <img src="{{ url('/') . '/' . Session::get('photo_url') }}" alt="{{ Session::get('name') }}" width="80" height="80" class="rounded-circle border">
                                 @endif
 
 

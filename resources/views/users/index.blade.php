@@ -54,7 +54,7 @@
                                         <div class="media">
                                             <div class="avatar me-3">
                                                 @if ($officer->photo_url != NULL)
-                                                    <img alt="avatar" src="http://127.0.0.1:8000/{{ $officer->photo_url }}" class="rounded-circle" />
+                                                    <img alt="avatar" src="{{ url('/') . '/' . $officer->photo_url }}" class="rounded-circle" />
                                                 @else
                                                     <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle" />
                                                 @endif
@@ -144,7 +144,7 @@
                                         <div class="media">
                                             <div class="avatar me-3">
                                                 @if ($staff->photo_url != NULL)
-                                                    <img alt="avatar" src="http://127.0.0.1:8000/{{ $staff->photo_url }}" class="rounded-circle" />
+                                                    <img alt="avatar" src="{{ url('/') . '/' . $staff->photo_url }}" class="rounded-circle" />
                                                 @else
                                                     <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle" />
                                                 @endif

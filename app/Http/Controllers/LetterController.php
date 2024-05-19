@@ -31,6 +31,7 @@ class LetterController extends Controller
                         ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
                         ->where('letters.uploaded_by', session('loginId'))
                         ->where('letters.is_deleted', 0)
+                        ->orderBy('created_at', 'DESC')
                         ->get();
                         
             // return $letters; 
@@ -45,6 +46,7 @@ class LetterController extends Controller
                         // ->where('letters.uploaded_by', session('loginId'))
                         ->where('sections.staff_id', session('loginId'))
                         ->where('letters.is_deleted', 0)
+                        ->orderBy('created_at', 'DESC')
                         ->get();
 
             // return $letters; 
@@ -60,6 +62,7 @@ class LetterController extends Controller
                                 })
                         ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
                         ->where('letters.is_deleted', 0)
+                        ->orderBy('created_at', 'DESC')
                         ->get();
         }
         else // DC Role
@@ -69,6 +72,7 @@ class LetterController extends Controller
                         ->join('users', 'letters.uploaded_by', '=', 'users.id')
                         ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
                         ->where('letters.is_deleted', 0)
+                        ->orderBy('created_at', 'DESC')
                         ->get();
 
             // return $letters;

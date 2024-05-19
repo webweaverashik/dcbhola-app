@@ -18,15 +18,6 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $officers = User::where('role', 2)->where('is_deleted', 0)->get();
-    //     $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
-    //     $sections = Section::get();
-
-    //     return view('users.index', compact('officers', 'staffs', 'sections'));
-    // }
-
     public function index()
     {
         $officers = User::where('role', 2)->where('is_deleted', 0)->get();
@@ -241,8 +232,6 @@ class UserController extends Controller
         
         $request->validate([
             'name' => 'required|min:5|max:100|string',
-            // 'email' => 'required|email',
-            // 'password' => 'nullable|string|min:6',
             'phone' => 'required|string',
             'designation' => 'required|string',
             'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100'
@@ -251,7 +240,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        if ($request->has('photo_url')) 
+        if ($request->has('photo_url'))
         {
             $image = $request->file('photo_url');
             $extension = $image->getClientOriginalExtension();
