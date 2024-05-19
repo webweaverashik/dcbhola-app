@@ -236,6 +236,7 @@
 
 @section('scripts')
     <script>
+        document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item"><a href="{{ url('/users') }}">ইউজার</a></li>' + '<li class="breadcrumb-item active" aria-current="page">প্রোফাইল সংশোধন</li>';
         document.getElementById("users_menu").className += " active";
         document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
         document.getElementById("users_ul").className += " show";

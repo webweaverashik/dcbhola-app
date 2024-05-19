@@ -74,6 +74,7 @@
 
 @section('scripts')
 <script>
+    document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item"><a href="{{ url('/letters') }}">চিঠি\/ডাক</a></li>' + '<li class="breadcrumb-item active" aria-current="page">নতুন আপলোড</li>';
     document.getElementById("letters_menu").className += " active";
     document.getElementById("letters_upload_id").className += " active";
     document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);

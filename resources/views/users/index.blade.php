@@ -221,6 +221,8 @@
     <!-- END THEME GLOBAL STYLE -->    
 
     <script>
+        // Sidebar styles
+        document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item"><a href="{{ url('/users') }}">ইউজার</a></li>' + '<li class="breadcrumb-item active" aria-current="page">সকল ইউজার</li>';
         document.getElementById("users_menu").className += " active";
         document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
         document.getElementById("users_ul").className += " show";

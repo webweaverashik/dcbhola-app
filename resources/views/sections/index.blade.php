@@ -113,6 +113,7 @@
 <!-- END THEME GLOBAL STYLE -->    
 
 <script>
+    document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item active" aria-current="page">সকল শাখা</li>';
     document.getElementById("sections_menu").className += " active";
 </script>
 

@@ -576,6 +576,7 @@
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <script>
+    document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item active">ড্যাশবোর্ড</li>';
     document.getElementById("dashboard_menu").className += " active";
     // document.getElementById("letters_all_id").className += " active";
     // document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);

@@ -374,9 +374,20 @@ class UserController extends Controller
         User::where('id', $id)->update([
             'is_deleted' => 1,
         ]);
-        
-        // DB::table('users')->where('id', $id)->update(['is_deleted' => 1]);
 
+        $user = User::findOrFail($id);
+        
+        if ($user->role == 2) {
+            Section::where('officer_id', $id)->update([
+               'officer_id' => NULL
+            ]);
+        }
+        elseif ($user->role == 3) {
+            Section::where('staff_id', $id)->update([
+               'staff_id' => NULL
+            ]);
+        }
+        
         return redirect()->back()->with('success', 'ইউজার সফলভাবে ডিলিট হয়েছে।');
     }
 }
