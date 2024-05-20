@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LetterController;
 use App\Http\Controllers\SectionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\Letter;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +31,12 @@ Route::middleware('auth')->group(function () {
 Route::controller(AuthenticateController::class)->group(function(){
     Route::get('/login','login')->middleware('alreadyLoggedIn');
     Route::post('/login','loginUser')->name('login');
-    Route::get('/dashboard','dashboard')->middleware('isLoggedIn');
     Route::get('/logout','logout');
-
+    
     
     Route::middleware('isLoggedIn')->group(function (){
+        Route::get('/dashboard', [DashboardController::class, 'index']);
+
         Route::get('/letters', [LetterController::class, 'index']);
         Route::get('/letters/create', [LetterController::class, 'create']);
         Route::get('/letters/{id}/edit', [LetterController::class, 'edit']);
