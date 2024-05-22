@@ -9,7 +9,7 @@
 	src: url(fonts/SolaimanLipi.ttf);
   }
 
-body, body.dark {
-    /* font-family: "Hind Siliguri", sans-serif; */
-	font-family: 'SolaimanLipi';
+* {
+    /* font-family: "Hind Siliguri", sans-serif !important; */
+	font-family: 'SolaimanLipi' !important;
 }

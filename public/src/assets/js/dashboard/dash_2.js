@@ -945,6 +945,13 @@ window.addEventListener("load", function(){
   );
   
   chart.render();
+
+  var chartx = new ApexCharts(
+      document.querySelector("#chart-x"),
+      options
+  );
+  
+  chartx.render();
   
   /*
       =============================================

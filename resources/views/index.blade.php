@@ -1,9 +1,16 @@
 @section('page-level-custom-css')
     <link href="{{ asset('src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('src/assets/css/light/components/list-group.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/light/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('src/assets/css/light/components/tabs.css') }}" rel="stylesheet" type="text/css" />
+
+
+    <link href="{{ asset('src/assets/css/dark/components/list-group.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/dark/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('src/assets/css/dark/components/tabs.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 
@@ -38,41 +45,106 @@
         @endif
     </div>
 
-    {{-- <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div id="tabsSimple" class="col-xl-12 col-12 layout-spacing">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-content widget-content-area border-0 p-0">
+                <div class="simple-tab">
+                    
+                    <ul class="nav nav-tabs mb-1" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab-icon" data-bs-toggle="tab" data-bs-target="#home-tab-icon-pane" type="button" role="tab" aria-controls="home-tab-icon-pane" aria-selected="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> শাখা ভিত্তিক
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab-icon" data-bs-toggle="tab" data-bs-target="#profile-tab-icon-pane" type="button" role="tab" aria-controls="profile-tab-icon-pane" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                অবস্থা ভিত্তিক
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pie-tab-icon" data-bs-toggle="tab" data-bs-target="#pie-tab-icon-pane" type="button" role="tab" aria-controls="pie-tab-icon-pane" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                পাই চার্ট
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home-tab-icon-pane" role="tabpanel" aria-labelledby="home-tab-icon" tabindex="0">
+                            <div class="widget widget-table-two border-0">
 
-    </div> --}}
+                                <div class="widget-heading">
+                                    <h5 class="">শাখাভিত্তিক সকল পত্রের সংখ্যা</h5>
+                                </div>
+                    
+                                <div class="widget-content">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><div class="th-content">শাখার নাম</div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-primary">নতুন</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-warning">প্রক্রিয়াধীন</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-success">নিষ্পন্ন</span></div></th>
+                                                    <th><div class="th-content text-center">মোট</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($results as $result)
+                                                <tr>
+                                                    <td class="text-left"><span class="badge badge-light-success">{{ $result->section_name }}</td>
+                                                    <td class="text-center">{{ strtr($result->status_1_count, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->status_2_count, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->status_3_count, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->total_count, $engToBng) }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-tab-icon-pane" role="tabpanel" aria-labelledby="profile-tab-icon" tabindex="0">
+                            <div class="widget widget-chart-three border-0">
+                                <div class="widget-heading">
+                                    <div class="">
+                                        <h5 class="">নতুন/প্রক্রিয়াধীন পত্রের অবস্থা</h5>
+                                    </div>
+                                </div>
+                    
+                                <div class="widget-content">
+                                    <div id="statusBarChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pie-tab-icon-pane" role="tabpanel" aria-labelledby="pie-tab-icon" tabindex="0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="widget widget-chart-two">
+                                        <div class="widget-heading">
+                                            <h5 class="">Sales by Category</h5>
+                                        </div>
+                                        <div class="widget-content">
+                                            <div id="chart-2" class=""></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="widget widget-chart-two">
+                                        <div class="widget-heading">
+                                            <h5 class="">Sales by Category</h5>
+                                        </div>
+                                        <div class="widget-content">
+                                            <div id="chart-x" class=""></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-table-two">
-
-            <div class="widget-heading">
-                <h5 class="">শাখাভিত্তিক সকল পত্রের অবস্থা</h5>
-            </div>
-
-            <div class="widget-content">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th><div class="th-content">শাখার নাম</div></th>
-                                <th><div class="th-content text-center"><span class="badge badge-primary">নতুন</span></div></th>
-                                <th><div class="th-content text-center"><span class="badge badge-warning">প্রক্রিয়াধীন</span></div></th>
-                                <th><div class="th-content text-center"><span class="badge badge-success">নিষ্পন্ন</span></div></th>
-                                <th><div class="th-content text-center">মোট</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($results as $result)
-                            <tr>
-                                <td class="text-left"><span class="badge badge-light-success">{{ $result->section_name }}</td>
-                                <td class="text-center">{{ strtr($result->status_1_count, $engToBng) }}</td>
-                                <td class="text-center">{{ strtr($result->status_2_count, $engToBng) }}</td>
-                                <td class="text-center">{{ strtr($result->status_3_count, $engToBng) }}</td>
-                                <td class="text-center">{{ strtr($result->total_count, $engToBng) }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -80,6 +152,7 @@
 
    
     <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+        
         <div class="widget widget-six">
                 <div class="widget-heading">
                     <h6 class="">Statistics</h6>
@@ -1314,7 +1387,7 @@
 <script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
 <script src="{{ asset('src/assets/js/dashboard/dash_2.js') }}"></script>
 
-{{-- <script src="{{ asset('custom/dashboard.js') }}"></script> --}}
+<script src="{{ asset('custom/dashboard.js') }}"></script>
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <script>

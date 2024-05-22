@@ -36,6 +36,12 @@ Route::controller(AuthenticateController::class)->group(function(){
     
     Route::middleware('isLoggedIn')->group(function (){
         Route::get('/dashboard', [DashboardController::class, 'index']);
+        Route::get('/sections-data', [DashboardController::class, 'getSectionsData']);
+
+
+
+
+
 
         Route::get('/letters', [LetterController::class, 'index']);
         Route::get('/letters/create', [LetterController::class, 'create']);
