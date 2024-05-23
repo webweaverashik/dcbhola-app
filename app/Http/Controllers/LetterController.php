@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Letter;
 use App\Models\Comment;
 use App\Models\Section;
@@ -87,8 +88,10 @@ class LetterController extends Controller
             
             return $letter;
         });
+        
+        $users = User::where('is_deleted', 0)->whereIn('role', [3, 4])->get();
 
-        return view('letters.index', compact('letters'));
+        return view('letters.index', compact('letters', 'users'));
     }
 
     public function convertDateTimeToBangla($dateTime, $numToBangla)

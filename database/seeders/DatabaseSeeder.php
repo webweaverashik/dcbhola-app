@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'মো. আলমগীর হোসেন',
+            'name' => 'মো. আলমগীর হুসাইন',
             'email' => 'mahussain07@gmail.com',
             'phone' => '০১৯২৩০৫১৯০৭',
             'password' => bcrypt('12345678'),

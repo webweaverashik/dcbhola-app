@@ -122,7 +122,7 @@
                         <div class="tab-pane fade" id="pie-tab-icon-pane" role="tabpanel" aria-labelledby="pie-tab-icon" tabindex="0">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="widget widget-chart-two">
+                                    <div class="widget widget-chart-two border-0">
                                         <div class="widget-heading">
                                             <h5 class="">Sales by Category</h5>
                                         </div>
@@ -132,7 +132,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="widget widget-chart-two">
+                                    <div class="widget widget-chart-two border-0">
                                         <div class="widget-heading">
                                             <h5 class="">Sales by Category</h5>
                                         </div>

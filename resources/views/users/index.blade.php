@@ -50,7 +50,7 @@
                         <tbody>
                             @foreach ($officers as $officer)                                
                                 <tr>
-                                    <td>
+                                    <td class="text-wrap">
                                         <div class="media">
                                             <div class="avatar me-3">
                                                 @if ($officer->photo_url != NULL)
@@ -72,10 +72,10 @@
                                     <td>
                                         <p class="mb-0">{{ $officer->created_at_bn }}</p>
                                     </td>
-                                    <td>
+                                    <td class="text-wrap">
                                         @foreach ($sections as $section)
                                             @if ($section->officer_id == $officer->id)
-                                                <span class="badge badge-light-success">{{ $section->name }}</span>
+                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span>
                                             @endif
                                         @endforeach
                                     </td>
@@ -140,7 +140,7 @@
                         <tbody>
                             @foreach ($staffs as $staff)                                
                                 <tr>
-                                    <td>
+                                    <td class="text-wrap">
                                         <div class="media">
                                             <div class="avatar me-3">
                                                 @if ($staff->photo_url != NULL)
@@ -155,7 +155,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="text-wrap">
                                         <p class="mb-0">{{ $staff->email }}</p>
                                         <span>{{ $staff->phone }}</span>
                                     </td>
