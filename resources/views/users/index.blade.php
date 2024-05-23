@@ -14,6 +14,17 @@
 
 
 @section('content')
+@if ($errors->any())
+    <div class="p-2">
+        <ul class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="row">
     <div class="col-lg-12 col-12 layout-spacing layout-top-spacing">
         <div class="statbox widget box box-shadow">
@@ -38,7 +49,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">নাম ও পদবি</th>
+                                <th scope="col" class="w-50">নাম ও পদবি</th>
                                 <th scope="col">ইমেইল ও ফোন</th>
                                 <th scope="col">একাউন্ট তৈরির সময়</th>
                                 <th scope="col">দায়িত্বপ্রাপ্ত শাখা</th>
@@ -83,10 +94,13 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerId" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
-                                                <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnPasswordReset" data-toggle="tooltip" data-placement="top" title="পাসওয়ার্ড রিসেট" data-bs-toggle="modal" data-bs-target="#btnPasswordModal" data-id="{{ $officer->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-key"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                                </a>
+                                                <a href="{{ url('users/' . $officer->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="মুছুন" onclick="deleteWarning(event)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                                 </a>
                                             </div>
@@ -128,7 +142,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">নাম ও পদবি</th>
+                                <th scope="col" class="w-50">নাম ও পদবি</th>
                                 <th scope="col">ইমেইল ও ফোন</th>
                                 <th scope="col">একাউন্ট তৈরির সময়</th>
                                 <th scope="col">সংশ্লিষ্ট শাখা</th>
@@ -177,10 +191,13 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnStaffId" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-id="{{ $staff->id }}">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnStaffId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-id="{{ $staff->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
-                                                <a href="{{ url('users/' . $staff->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteWarning(event)">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnPasswordReset" data-toggle="tooltip" data-placement="top" title="পাসওয়ার্ড রিসেট" data-bs-toggle="modal" data-bs-target="#btnPasswordModal" data-id="{{ $staff->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-key"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                                </a>
+                                                <a href="{{ url('users/' . $staff->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="মুছুন" onclick="deleteWarning(event)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                                 </a>
                                             </div>
@@ -206,6 +223,9 @@
 
 @include('modals.users.officer-edit')
 @include('modals.users.staff-edit')
+
+
+@include('modals.users.password-reset')
 
 
 @endsection
@@ -277,6 +297,27 @@
                         } else {
                             $('#frontdesk-staff-input').prop('checked', true);
                         }
+                    }
+                });            
+            });
+        });
+
+
+        // User Password Reset Modal
+        $(document).ready(function() {
+            $('.btnPasswordReset').click(function() {
+                const id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/users/ajax/' + id,
+                    type: 'GET',
+                    data: {
+                        'id': id,
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        $('#resetUserId').val(data.id);
+                        $('#resetUserName').html(data.name);
+                        $('#resetUserDesignation').html(data.designation);
                     }
                 });            
             });

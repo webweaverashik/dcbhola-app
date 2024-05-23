@@ -303,6 +303,24 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
     }
 
+    /**
+     * Reset user password from admin interface
+     */
+    public function passwordReset(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()]
+        ]);
+
+        // return bcrypt($request->password);
+
+        User::findOrFail($request->id)->update([
+            'password' =>  bcrypt($request->password)
+        ]);
+
+        return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
+    }
+
 
     public function updateOfficer(Request $request)
     {

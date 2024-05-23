@@ -46,31 +46,31 @@
                                                 </div>                                    
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="fullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="fullName" placeholder="যেমনঃ মো. নূরনবী" value="{{ old('name') }}" name="name" required>
+                                                        <label for="staffFullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="staffFullName" placeholder="যেমনঃ মো. নূরনবী" value="{{ old('name') }}" name="name" required>
                                                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
         
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="designation">পদবী</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="designation" placeholder="যেমনঃ অফিস সহকারী কাম কম্পিউটার অপারেটর" value="{{ old('designation') }}" name="designation" name="designation" required>
+                                                        <label for="staffDesignation">পদবী</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="staffDesignation" placeholder="যেমনঃ অফিস সহকারী কাম কম্পিউটার অপারেটর" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
                                                                                        
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="phone">ফোন</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="phone" placeholder="কর্মচারীর মোবাইল নং" value="{{ old('phone') }}" name="phone" required>
+                                                        <label for="staffPhone">ফোন</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="staffPhone" placeholder="কর্মচারীর মোবাইল নং" value="{{ old('phone') }}" name="phone" required>
                                                         @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="email">ইমেইল</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="email" placeholder="কর্মচারীর ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
+                                                        <label for="staffEmail">ইমেইল</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="staffEmail" placeholder="কর্মচারীর ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
                                                     </div>
                                                 </div> 
                                                 <div class="col-md-12 mt-4">

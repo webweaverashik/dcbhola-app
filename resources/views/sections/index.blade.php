@@ -50,8 +50,8 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="fw-bold">শাখার নাম</th>
-                                <th scope="col" class="fw-bold">কর্মকর্তার নাম ও পদবী</th>
-                                <th scope="col" class="fw-bold">কর্মচারির নাম ও পদবী</th>
+                                <th scope="col" class="fw-bold w-50">কর্মকর্তার নাম ও পদবী</th>
+                                <th scope="col" class="fw-bold w-50">কর্মচারির নাম ও পদবী</th>
                             @if (Session::get('role') == 1) 
                                 <th class="text-center" scope="col">কার্যক্রম</th> 
                             @endif
@@ -63,11 +63,11 @@
                                     <td>
                                         <span class="badge badge-light-success">{{ $section->section_name }}</span>
                                     </td>
-                                    <td>
+                                    <td class="text-wrap">
                                         <p class="mb-0 fw-bold">{{ $section->officer_name }}</p>
                                         <span>{{ $section->officer_designation }}</span>
                                     </td>
-                                    <td>
+                                    <td class="text-wrap">
                                         <p class="mb-0 fw-bold">{{ $section->staff_name }}</p>
                                         <span>{{ $section->staff_designation }}</span>
                                     </td>
@@ -75,8 +75,8 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnEditSection" data-toggle="tooltip" data-placement="top" title="Edit" data-bs-toggle="modal" data-bs-target="#editSectionModal" data-id="{{ $section->section_id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnEditSection" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editSectionModal" data-id="{{ $section->section_id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                                 </a>
                                             </div>
                                         </td>

@@ -17,31 +17,20 @@
 
 
 @section('content')
+
+@if ($errors->any())
+    <div class="p-2">
+        <ul class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+
 <div class="row layout-top-spacing">
-    {{-- @if (Session::has('success'))
-    <div class="col-md-12">
-        <div class="alert alert-light-success alert-dismissible fade show">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ab55" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> 
-            </button>
-            {{ Session::get('success') }}
-        </div>
-    </div>
-    @endif --}}
-
-
-    @if (Session::has('message'))
-    <div class="col-md-12">
-        <div class="alert alert-light-danger alert-dismissible fade show">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e7515a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            {{ Session::get('message') }}
-        </div>
-    </div>
-    @endif
-
-
     <div class="col-xl-8 col-lg-10 col-md-12 layout-spacing">
         <form class="section general-info" action="{{ url('users/profile') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -133,13 +122,22 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="password">নতুন পাসওয়ার্ড লিখুন</label><span class="text-danger">*</span>
-                                                <input type="password" class="form-control mb-3" id="password" name="password" required>
+                                                <label for="password">নতুন পাসওয়ার্ড লিখুন (সর্বনিম্ন ৮ ডিজিট এবং ছোট-বড় অক্ষর, সংখ্যা ও চিহ্ন সম্বলিত)</label><span class="text-danger">*</span>
+                                                <div class="input-group mb-3">
+                                                    <input type="password" class="form-control" id="resetPassword" name="password" required>
+                                                    <button class="btn border-0" type="button" id="togglePassword">
+                                                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                            <circle cx="12" cy="12" r="3"></circle>
+                                                        </svg>
+                                                        <svg id="eyeOffIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off d-none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                                    </button>
+                                                </div>
                                                 @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                                             </div>
                                         </div> 
 
-                                        <div class="col-md-12 mt-4">
+                                        <div class="col-md-12">
                                             <div class="form-group text-start">
                                                 <button class="btn btn-warning" type="submit">আপডেট করুন</button>
                                             </div>
@@ -228,6 +226,7 @@
         </div>
     </div> --}}
 </div>
+
 @endsection
 
 
@@ -241,6 +240,23 @@
         document.getElementById("users_menu_dropdown").setAttribute("aria-expanded", true);
         document.getElementById("users_ul").className += " show";
         document.getElementById("my_profile_id").className += " active";
+    </script>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            var passwordInput = document.getElementById('resetPassword');
+            var eyeIcon = document.getElementById('eyeIcon');
+            var eyeOffIcon = document.getElementById('eyeOffIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.add('d-none');
+                eyeOffIcon.classList.remove('d-none');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('d-none');
+                eyeOffIcon.classList.add('d-none');
+            }
+        });
     </script>
 
     @if($message = session('success'))

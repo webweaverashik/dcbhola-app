@@ -24,34 +24,34 @@
                                                         <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
                                                         @error('photo_url') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
-                                                </div>                                    
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="fullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="fullName" placeholder="যেমনঃ মো. আলমগীর হোসেন" value="{{ old('name') }}" name="name" required>
+                                                        <label for="officerFullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="officerFullName" placeholder="যেমনঃ মো. আলমগীর হোসেন" value="{{ old('name') }}" name="name" required>
                                                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
         
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="designation">পদবী</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="designation" placeholder="যেমনঃ অতিরিক্ত জেলা প্রশাসক (রাজস্ব)" value="{{ old('designation') }}" name="designation" name="designation" required>
+                                                        <label for="officerDesignation">পদবী</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="officerDesignation" placeholder="যেমনঃ অতিরিক্ত জেলা প্রশাসক (রাজস্ব)" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
                                                                                        
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="phone">ফোন</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="phone" placeholder="কর্মকর্তার মোবাইল নং" value="{{ old('phone') }}" name="phone" required>
+                                                        <label for="officerPhone">ফোন</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="officerPhone" placeholder="কর্মকর্তার মোবাইল নং" value="{{ old('phone') }}" name="phone" required>
                                                         @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="email">ইমেইল</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="email" placeholder="কর্মকর্তার ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
+                                                        <label for="officerEmail">ইমেইল</label><span class="text-danger">*</span>
+                                                        <input type="text" class="form-control mb-3" id="officerEmail" placeholder="কর্মকর্তার ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
                                                     </div>
                                                 </div> 
                                                 <div class="col-md-12 mt-4">

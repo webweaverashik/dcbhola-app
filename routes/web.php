@@ -56,6 +56,7 @@ Route::controller(AuthenticateController::class)->group(function(){
         Route::get('/users/profile', [UserController::class, 'edit']);
         Route::put('/users/profile', [UserController::class, 'update']);
         Route::put('/users/profile/password', [UserController::class, 'passwordUpdate']);
+        Route::put('/users/reset/password', [UserController::class, 'passwordReset']);
         Route::get('/users/{id}/delete', [UserController::class, 'destroy']);
 
         Route::post('/users/add/officer', [UserController::class, 'addOfficer']);
