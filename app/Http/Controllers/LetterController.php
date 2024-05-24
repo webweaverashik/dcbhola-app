@@ -35,11 +35,10 @@ class LetterController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
                         
-            // return $letters; 
+            $sections = Section::all();
         }
-        if ($role == 3) // section staff
+        elseif ($role == 3) // section staff
         {
-
             $letters = DB::table('letters')
                         ->join('sections', 'letters.section_to', '=', 'sections.id')
                         ->join('users', 'letters.uploaded_by', '=', 'users.id')
@@ -50,7 +49,7 @@ class LetterController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
 
-            // return $letters; 
+            $sections = Section::where('staff_id', '=', session('loginId'))->get();
         }
         elseif ($role == 2) // section officers
         {
@@ -65,6 +64,8 @@ class LetterController extends Controller
                         ->where('letters.is_deleted', 0)
                         ->orderBy('created_at', 'DESC')
                         ->get();
+
+            $sections = Section::where('officer_id', '=', session('loginId'))->get();
         }
         else // DC Role
         {
@@ -76,7 +77,7 @@ class LetterController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
 
-            // return $letters;
+            $sections = Section::all();
         }
 
         // Create an instance of the NumberToBangla class
@@ -89,9 +90,9 @@ class LetterController extends Controller
             return $letter;
         });
         
-        $users = User::where('is_deleted', 0)->whereIn('role', [3, 4])->get();
+        $users = User::where('is_deleted', 0)->whereIn('role', [3, 4])->get(); // uploaded_by filter
 
-        return view('letters.index', compact('letters', 'users'));
+        return view('letters.index', compact('letters', 'users', 'sections'));
     }
 
     public function convertDateTimeToBangla($dateTime, $numToBangla)

@@ -51,6 +51,16 @@
                                 </div>
                             </div>
 
+                            <!-- Section Name Filter -->
+                            <div class="col-12 col-md-auto">
+                                <select id="section_name" class="form-control">
+                                    <option value="">সকল শাখা</option>
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <!-- Date Range Filter -->
                             <div class="col-12 col-md-auto">
                                 <label for="start_date" class="form-label fw-bold">পত্র প্রাপ্তির তারিখঃ</label>
@@ -58,7 +68,7 @@
                             <div class="col-12 col-md-auto">
                                 <select id="date_range" class="form-control">
                                     <option value="last_7_days">গত ৭ দিন</option>
-                                    <option value="this_month">এই মাস</option>
+                                    <option value="this_month">চলতি মাস</option>
                                     <option value="custom">কাস্টম রেঞ্জ</option>
                                 </select>
                             </div>
@@ -70,7 +80,7 @@
                             </div>
 
                             <!-- Uploaded By Filter -->
-                            <div class="col-12 col-md-auto">
+                            <div class="col-12 col-md-auto @if(session('role') == 4) d-none @endif">
                                 <select id="uploaded_by" class="form-control">
                                     <option value="">চিঠি আপলোডকারি</option>
                                     @foreach ($users as $user)
@@ -104,6 +114,7 @@
                             <th>পত্র প্রাপ্তির তারিখ</th>
                             <th>কোথা হতে প্রাপ্ত</th>
                             <th>সংক্ষিপ্ত বিষয়</th>
+                            <th class="d-none">সংশ্লিষ্ট শাখা (en)</th>
                             <th>সংশ্লিষ্ট শাখা</th>
                             <th>ফাইল</th>
                             <th>অবস্থা</th>
@@ -125,9 +136,12 @@
                             <td>{{ $letter->received_date_bn }}</td>
                             <td class="text-wrap">{{ $letter->sender_name }}</td>
                             <td class="text-wrap">{{ $letter->short_title }}</td>
+                            <td class="d-none"><span class="badge badge-light-success">{{ $letter->section_to }}</span></td>
                             <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
+
                             {{-- <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td> --}}
                             <td><a href="{{ $letter->file_url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a1a1a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></td>
+
                             <td>
                                 @if ($letter->status == 1)
                                     <span class="shadow-none badge badge-primary">নতুন</span>
@@ -243,7 +257,7 @@
 
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
-                var status = data[7];
+                var status = data[8];
                 var status1 = $('#status-1').is(':checked');
                 var status2 = $('#status-2').is(':checked');
                 var status3 = $('#status-3').is(':checked');
@@ -251,6 +265,18 @@
                 if ((status1 && status === 'নতুন') || 
                     (status2 && status === 'প্রক্রিয়াধীন') || 
                     (status3 && status === 'নিষ্পন্ন')) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var section_name = $('#section_name').val();
+                var section_name_data = data[5]; // Adjust according to the actual data index
+
+                if (section_name === "" || section_name_data === section_name) {
                     return true;
                 }
                 return false;
@@ -295,7 +321,7 @@
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
                 var uploaded_by = $('#uploaded_by').val();
-                var uploaded_by_data = data[8]; // Adjust according to the actual data index
+                var uploaded_by_data = data[9]; // Adjust according to the actual data index
 
                 if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
                     return true;
@@ -316,12 +342,13 @@
             table.draw();
         });
 
-        $('#status-1, #status-2, #status-3, #start_date, #end_date, #uploaded_by').on('change', function() {
+        $('#status-1, #status-2, #status-3, #start_date, #end_date, #uploaded_by, #section_name').on('change', function() {
             table.draw();
         });
 
         $('#clear_filters').on('click', function() {
             $('#status-1, #status-2, #status-3').prop('checked', true);
+            $('#section_name').val('');
             $('#date_range').val('last_7_days');
             setCustomRangeToThisMonth();
             $('#start_date, #end_date').addClass('d-none');

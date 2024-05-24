@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\DashboardController;
+use App\Models\User;
+use App\Models\Letter;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LetterController;
 use App\Http\Controllers\SectionController;
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Models\Letter;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AuthenticateController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -35,9 +36,16 @@ Route::controller(AuthenticateController::class)->group(function(){
     
     
     Route::middleware('isLoggedIn')->group(function (){
+        Route::get('/', function () { return redirect('dashboard');}); // to handle 404 redirect
         Route::get('/dashboard', [DashboardController::class, 'index']);
-        Route::get('/sections-data', [DashboardController::class, 'getSectionsData']);
+        Route::get('/sections-data', [DashboardController::class, 'getSectionsData']); // AJAX request
 
+
+        // To run artisan command if cPanel does not support shell access
+        // Route::get('/runcmd', function() {
+        //     $clearview = Artisan::call('make:migration create_officers_table');
+        //     echo "Migration File Created";
+        // });
 
 
 
