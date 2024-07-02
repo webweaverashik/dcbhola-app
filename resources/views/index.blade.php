@@ -62,12 +62,12 @@
                                 অবস্থা ভিত্তিক
                             </button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pie-tab-icon" data-bs-toggle="tab" data-bs-target="#pie-tab-icon-pane" type="button" role="tab" aria-controls="pie-tab-icon-pane" aria-selected="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                                 পাই চার্ট
                             </button>
-                        </li>
+                        </li> --}}
                     </ul>
                     
                     <div class="tab-content" id="myTabContent">
@@ -119,12 +119,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pie-tab-icon-pane" role="tabpanel" aria-labelledby="pie-tab-icon" tabindex="0">
+                        {{-- <div class="tab-pane fade" id="pie-tab-icon-pane" role="tabpanel" aria-labelledby="pie-tab-icon" tabindex="0">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="widget widget-chart-two border-0">
                                         <div class="widget-heading">
-                                            <h5 class="">Sales by Category</h5>
+                                            <h5 class="">পত্রের অবস্থা</h5>
                                         </div>
                                         <div class="widget-content">
                                             <div id="chart-2" class=""></div>
@@ -134,11 +134,112 @@
                                 <div class="col-md-6">
                                     <div class="widget widget-chart-two border-0">
                                         <div class="widget-heading">
-                                            <h5 class="">Sales by Category</h5>
+                                            <h5 class="">দিনভিত্তিক অবস্থা</h5>
                                         </div>
                                         <div class="widget-content">
                                             <div id="chart-x" class=""></div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tabsSimple2" class="col-xl-12 col-12 layout-spacing">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-content widget-content-area border-0 p-0">
+                <div class="simple-tab">
+                    
+                    <ul class="nav nav-tabs mb-1" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab-icon" data-bs-toggle="tab" data-bs-target="#home-tab-icon-pane2" type="button" role="tab" aria-controls="home-tab-icon-pane2" aria-selected="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg> নতুন পত্র
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab-icon" data-bs-toggle="tab" data-bs-target="#profile-tab-icon-pane2" type="button" role="tab" aria-controls="profile-tab-icon-pane2" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg> প্রক্রিয়াধীন পত্র
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="myTabContent2">
+                        <div class="tab-pane fade show active" id="home-tab-icon-pane2" role="tabpanel" aria-labelledby="home-tab-icon" tabindex="0">
+                            <div class="widget widget-table-two border-0">
+
+                                <div class="widget-heading">
+                                    <h5 class="">নতুন পত্রের দিনভিত্তিক অবস্থা</h5>
+                                </div>
+                    
+                                <div class="widget-content">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><div class="th-content">শাখার নাম</div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-secondary">৩ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিনের বেশি</span></div></th>
+                                                    <th><div class="th-content text-center">মোট</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($new_letters_duration as $result)
+                                                <tr>
+                                                    <td class="text-left"><span class="badge badge-light-success">{{ $result->section_name }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_3_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->more_than_15_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->total, $engToBng) }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-tab-icon-pane2" role="tabpanel" aria-labelledby="profile-tab-icon" tabindex="0">
+                            <div class="widget widget-table-two border-0">
+
+                                <div class="widget-heading">
+                                    <h5 class="">প্রক্রিয়াধীন পত্রের দিনভিত্তিক অবস্থা</h5>
+                                </div>
+                    
+                                <div class="widget-content">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th><div class="th-content">শাখার নাম</div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-secondary">৩ দিন</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭ দিন</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিন</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিনের বেশি</span></div></th>
+                                                    <th><div class="th-content text-center">মোট</div></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($processing_letters_duration as $result)
+                                                <tr>
+                                                    <td class="text-left"><span class="badge badge-light-success">{{ $result->section_name }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_3_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->more_than_15_days, $engToBng) }}</td>
+                                                    <td class="text-center">{{ strtr($result->total, $engToBng) }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

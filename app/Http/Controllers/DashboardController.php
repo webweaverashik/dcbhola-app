@@ -23,7 +23,39 @@ class DashboardController extends Controller
                 ->orderByDesc('status_1_count')
                 ->get();
 
-        return view('index', compact('results'));
+        $new_letters_duration = DB::table('letters as l')
+                ->join('sections as s', 'l.section_to', '=', 's.id')
+                ->select(
+                    's.name as section_name',
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) <= 3 THEN 1 END) as up_to_3_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 3 AND DATEDIFF(NOW(), l.created_at) <= 7 THEN 1 END) as up_to_7_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 7 AND DATEDIFF(NOW(), l.created_at) <= 15 THEN 1 END) as up_to_15_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 15 THEN 1 END) as more_than_15_days'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->where('l.status', 1)
+                ->where('l.is_deleted', 0)
+                ->groupBy('s.name')
+                ->orderByDesc('total')
+                ->get();
+
+        $processing_letters_duration = DB::table('letters as l')
+                ->join('sections as s', 'l.section_to', '=', 's.id')
+                ->select(
+                    's.name as section_name',
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) <= 3 THEN 1 END) as up_to_3_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 3 AND DATEDIFF(NOW(), l.created_at) <= 7 THEN 1 END) as up_to_7_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 7 AND DATEDIFF(NOW(), l.created_at) <= 15 THEN 1 END) as up_to_15_days'),
+                    DB::raw('COUNT(CASE WHEN DATEDIFF(NOW(), l.created_at) > 15 THEN 1 END) as more_than_15_days'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->where('l.status', 2)
+                ->where('l.is_deleted', 0)
+                ->groupBy('s.name')
+                ->orderByDesc('total')
+                ->get();
+
+        return view('index', compact('results', 'new_letters_duration', 'processing_letters_duration'));
     }
 
     public function getSectionsData()
@@ -38,4 +70,6 @@ class DashboardController extends Controller
 
         return response()->json($sectionsData);
     }
+
+    
 }
