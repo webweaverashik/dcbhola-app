@@ -27,6 +27,7 @@
 @endphp
 
 <div class="row layout-top-spacing">
+    {{-- Alert Section Starts --}}
     <div class="col-md-12">
         @if (Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show">
@@ -44,8 +45,9 @@
             </div>
         @endif
     </div>
+    {{-- Alert Section Ends --}}
 
-    <div id="tabsSimple" class="col-xl-12 col-12 layout-spacing">
+    {{-- <div id="tabsSimple" class="col-xl-12 col-12 layout-spacing">
         <div class="statbox widget box box-shadow">
             <div class="widget-content widget-content-area border-0 p-0">
                 <div class="simple-tab">
@@ -62,12 +64,6 @@
                                 অবস্থা ভিত্তিক
                             </button>
                         </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pie-tab-icon" data-bs-toggle="tab" data-bs-target="#pie-tab-icon-pane" type="button" role="tab" aria-controls="pie-tab-icon-pane" aria-selected="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                                পাই চার্ট
-                            </button>
-                        </li> --}}
                     </ul>
                     
                     <div class="tab-content" id="myTabContent">
@@ -119,36 +115,12 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="tab-pane fade" id="pie-tab-icon-pane" role="tabpanel" aria-labelledby="pie-tab-icon" tabindex="0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="widget widget-chart-two border-0">
-                                        <div class="widget-heading">
-                                            <h5 class="">পত্রের অবস্থা</h5>
-                                        </div>
-                                        <div class="widget-content">
-                                            <div id="chart-2" class=""></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="widget widget-chart-two border-0">
-                                        <div class="widget-heading">
-                                            <h5 class="">দিনভিত্তিক অবস্থা</h5>
-                                        </div>
-                                        <div class="widget-content">
-                                            <div id="chart-x" class=""></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
 
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <div id="tabsSimple2" class="col-xl-12 col-12 layout-spacing">
@@ -252,7 +224,7 @@
     </div>
 
    
-    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    {{-- <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
         
         <div class="widget widget-six">
                 <div class="widget-heading">
@@ -1477,7 +1449,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 
