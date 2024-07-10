@@ -51,7 +51,7 @@
                             <tr>
                                 <th scope="col" class="w-50">নাম ও পদবি</th>
                                 <th scope="col">ইমেইল ও ফোন</th>
-                                <th scope="col">একাউন্ট তৈরির সময়</th>
+                                {{-- <th scope="col">একাউন্ট তৈরির সময়</th> --}}
                                 <th scope="col">দায়িত্বপ্রাপ্ত শাখা</th>
                                 @if (Session::get('role') == 1) 
                                     <th class="text-center" scope="col">কার্যক্রম</th> 
@@ -80,13 +80,13 @@
                                         <p class="mb-0">{{ $officer->email }}</p>
                                         <span>{{ $officer->phone }}</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <p class="mb-0">{{ $officer->created_at_bn }}</p>
-                                    </td>
-                                    <td class="text-wrap">
+                                    </td> --}}
+                                    <td>
                                         @foreach ($sections as $section)
                                             @if ($section->officer_id == $officer->id)
-                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span>
+                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span><br>
                                             @endif
                                         @endforeach
                                     </td>
@@ -144,7 +144,7 @@
                             <tr>
                                 <th scope="col" class="w-50">নাম ও পদবি</th>
                                 <th scope="col">ইমেইল ও ফোন</th>
-                                <th scope="col">একাউন্ট তৈরির সময়</th>
+                                {{-- <th scope="col">একাউন্ট তৈরির সময়</th> --}}
                                 <th scope="col">সংশ্লিষ্ট শাখা</th>
                                 @if (Session::get('role') == 1)
                                     <th class="text-center" scope="col">কার্যক্রম</th>
@@ -173,13 +173,13 @@
                                         <p class="mb-0">{{ $staff->email }}</p>
                                         <span>{{ $staff->phone }}</span>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <p class="mb-0">{{ $staff->created_at_bn }}</p>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         @foreach ($sections as $section)
                                             @if ($section->staff_id == $staff->id)
-                                                <span class="badge badge-light-success">{{ $section->name }}</span>
+                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span><br>
                                             @endif
                                         @endforeach
                                     </td>

@@ -43,8 +43,6 @@ class SectionController extends Controller
                     ->where('is_deleted', 0)
                     ->get(['id', 'name', 'designation']);
 
-
-
         return view('sections.index', compact('sections', 'officers', 'staffs'));
     }
 

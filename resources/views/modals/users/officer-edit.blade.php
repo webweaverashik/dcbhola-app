@@ -30,7 +30,7 @@
         
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="editOfficerDesignation">পদবী</label><span class="text-danger">*</span>
+                                                        <label for="editOfficerDesignation">পদবি</label><span class="text-danger">*</span>
                                                         <input type="text" class="form-control mb-3" id="editOfficerDesignation" placeholder="পদবী লিখুন" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>

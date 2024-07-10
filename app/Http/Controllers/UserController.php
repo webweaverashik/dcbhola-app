@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->get();
+        $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->orderBy('role', 'asc')->get();
         $staffs = User::where('role', 4)->where('is_deleted', 0)->get();
 
         // Create an instance of the NumberToBangla class
@@ -93,6 +93,14 @@ class UserController extends Controller
             'email'         => 'required|email',
         ]);
 
+        // Officer Role Type setting
+        if ($request->role == '2')
+            $role = 2;
+        elseif ($request->role == '3')
+            $role = 3;
+        else
+            $role = 3;
+
         if ($request->has('photo_url')) 
         {
             $image = $request->file('photo_url');
@@ -109,7 +117,7 @@ class UserController extends Controller
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
-                'role'          => 2,
+                'role'          => $role,
                 'password'      => bcrypt('12345678'),
                 'designation'   => $request->designation,
                 'photo_url'     => $path.$filename
@@ -121,7 +129,7 @@ class UserController extends Controller
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
-                'role'          => 2,
+                'role'          => $role,
                 'password'      => bcrypt('12345678'),
                 'designation'   => $request->designation,
             ]);
@@ -140,17 +148,7 @@ class UserController extends Controller
             'email'         => 'required|email',
             'role'          => 'required|string',
         ]);
-
-        
-        // Staff Type setting
-        if ($request->role == '3')
-            $role = 3;
-        elseif ($request->role == '4')
-            $role = 4;
-        else
-            $role = 3;
-
-
+      
         if ($request->has('photo_url')) 
         {
             $image = $request->file('photo_url');
@@ -167,7 +165,7 @@ class UserController extends Controller
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
-                'role'          => $role,
+                'role'          => 4,
                 'password'      => bcrypt('12345678'),
                 'designation'   => $request->designation,
                 'photo_url'     => $path.$filename
@@ -179,7 +177,7 @@ class UserController extends Controller
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
-                'role'          => $role,
+                'role'          => 4,
                 'password'      => bcrypt('12345678'),
                 'designation'   => $request->designation,
             ]);

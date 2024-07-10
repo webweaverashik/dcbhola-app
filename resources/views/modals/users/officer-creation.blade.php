@@ -18,7 +18,25 @@
                                     <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
                                         <div class="form">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <label for="role" class="form-label">কর্মকর্তার ধরন</label><span class="text-danger">*</span>
+                                                    <br>
+                                                    <div class="form-check form-check-info form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="role" id="adc-user-input" value="2">
+                                                        <label class="form-check-label" for="adc-user-input">
+                                                            অতিরিক্ত জেলা প্রশাসক
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-warning form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="role" id="section-officer-input" value="3" checked>
+                                                        <label class="form-check-label" for="section-officer-input">
+                                                            সহকারী কমিশনার
+                                                        </label>
+                                                    </div>
+                                                    @error('role') <span class="text-danger">{{ $message }}</span> @enderror
+                                                </div>
+
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label>
                                                         <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
@@ -51,7 +69,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="officerEmail">ইমেইল</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="officerEmail" placeholder="কর্মকর্তার ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
+                                                        <input type="email" class="form-control mb-3" id="officerEmail" placeholder="কর্মকর্তার ইমেইল এড্রেস" value="{{ old('email') }}" name="email">
                                                     </div>
                                                 </div> 
                                                 <div class="col-md-12 mt-4">

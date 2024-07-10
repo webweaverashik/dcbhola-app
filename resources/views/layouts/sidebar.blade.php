@@ -46,14 +46,14 @@
                             <li id="letters_all_id">
                                 <a href="{{ url('letters') }}"> সকল চিঠি/ডাক </a>
                             </li>
-                            @if (Session::get('role') == 3)
+                            @if (Session::get('role') == 4)
                             <li id="letters_upload_id">
                                 <a href="{{ url('letters/create') }}"> নতুন আপলোড </a>
                             </li>
                             @endif
                         </ul>
                     </li>
-
+                    @if (Session::get('role') == 1)
                     <li class="menu" id="users_menu">
                         <a href="#users_ul" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="users_menu_dropdown">
                             <div class="">
@@ -74,6 +74,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
 
                     <li class="menu" id="sections_menu">
                         <a href="{{ url('sections') }}" aria-expanded="false" class="dropdown-toggle">
