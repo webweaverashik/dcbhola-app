@@ -18,26 +18,7 @@
                                     <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
                                         <div class="form">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <label for="role" class="form-label">কর্মচারীর ধরন</label><span class="text-danger">*</span>
-                                                    <br>
-                                                    <div class="form-check form-check-info form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="role" id="form-check-radio-section-staff" value="3" checked>
-                                                        <label class="form-check-label" for="form-check-radio-section-staff">
-                                                            শাখা কর্মচারী
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check form-check-warning form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="role" id="form-check-radio-front-desk" value="4">
-                                                        <label class="form-check-label" for="form-check-radio-front-desk">
-                                                            ফ্রন্ট ডেস্ক
-                                                        </label>
-                                                    </div>
-                                                    @error('role') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </div>
-
-
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label><span class="text-danger">*</span>
                                                         <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
@@ -47,7 +28,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="staffFullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="staffFullName" placeholder="যেমনঃ মো. নূরনবী" value="{{ old('name') }}" name="name" required>
+                                                        <input type="text" class="form-control mb-3" id="staffFullName" placeholder="কর্মচারীর সম্পূর্ণ নাম লিখুন" value="{{ old('name') }}" name="name" required>
                                                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
@@ -55,7 +36,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="staffDesignation">পদবী</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="staffDesignation" placeholder="যেমনঃ অফিস সহকারী কাম কম্পিউটার অপারেটর" value="{{ old('designation') }}" name="designation" name="designation" required>
+                                                        <input type="text" class="form-control mb-3" id="staffDesignation" placeholder="কর্মচারীর পদবী লিখুন" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>

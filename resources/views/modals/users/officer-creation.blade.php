@@ -28,7 +28,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="officerFullName">সম্পূর্ণ নাম</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="officerFullName" placeholder="যেমনঃ মো. আলমগীর হোসেন" value="{{ old('name') }}" name="name" required>
+                                                        <input type="text" class="form-control mb-3" id="officerFullName" placeholder="কর্মকর্তার সম্পুর্ণ নাম লিখুন" value="{{ old('name') }}" name="name" required>
                                                         @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>
@@ -36,7 +36,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="officerDesignation">পদবী</label><span class="text-danger">*</span>
-                                                        <input type="text" class="form-control mb-3" id="officerDesignation" placeholder="যেমনঃ অতিরিক্ত জেলা প্রশাসক (রাজস্ব)" value="{{ old('designation') }}" name="designation" name="designation" required>
+                                                        <input type="text" class="form-control mb-3" id="officerDesignation" placeholder="পদবী লিখুন" value="{{ old('designation') }}" name="designation" name="designation" required>
                                                         @error('designation') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
                                                 </div>

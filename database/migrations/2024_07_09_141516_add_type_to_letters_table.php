@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('letters', function (Blueprint $table) {
             $table->after('short_title', function (Blueprint $table) {
-                $table->tinyInteger('type')->default(1)->comment('1: official, 2: civil');
+                $table->tinyInteger('type')->comment('1: official, 2: civil');
             });
         });
     }

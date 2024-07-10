@@ -17,11 +17,11 @@ class SectionController extends Controller
         $sections = DB::table('sections as s')
                     ->leftJoin('users as u_officer', function($join) {
                         $join->on('s.officer_id', '=', 'u_officer.id')
-                            ->where('u_officer.role', '=', 2);
+                            ->where('u_officer.role', '=', 3);
                     })
                     ->leftJoin('users as u_staff', function($join) {
                         $join->on('s.staff_id', '=', 'u_staff.id')
-                            ->where('u_staff.role', '=', 3);
+                            ->where('u_staff.role', '=', 4);
                     })
                     ->select(
                         's.id as section_id',
@@ -34,12 +34,12 @@ class SectionController extends Controller
                     ->get();
 
         $officers = DB::table('users')
-                    ->where('role', 2)
+                    ->where('role', 3)
                     ->where('is_deleted', 0)
                     ->get(['id', 'name', 'designation']);
 
         $staffs = DB::table('users')
-                    ->where('role', 3)
+                    ->where('role', 4)
                     ->where('is_deleted', 0)
                     ->get(['id', 'name', 'designation']);
 

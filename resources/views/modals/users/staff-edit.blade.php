@@ -20,7 +20,7 @@
                                     <div class="col-xl-12 col-lg-12 col-md-8 mt-md-0 mt-4">
                                         <div class="form">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                {{-- <div class="col-md-12">
                                                     <label for="role" class="form-label">কর্মচারীর ধরন</label><span class="text-danger">*</span>
                                                     <br>
                                                     <div class="form-check form-check-info form-check-inline">
@@ -36,7 +36,7 @@
                                                         </label>
                                                     </div>
                                                     @error('role') <span class="text-danger">{{ $message }}</span> @enderror
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">

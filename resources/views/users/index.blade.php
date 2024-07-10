@@ -94,7 +94,7 @@
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerEditId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $officer->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
                                                 <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnPasswordReset" data-toggle="tooltip" data-placement="top" title="পাসওয়ার্ড রিসেট" data-bs-toggle="modal" data-bs-target="#btnPasswordModal" data-id="{{ $officer->id }}">
@@ -182,16 +182,12 @@
                                                 <span class="badge badge-light-success">{{ $section->name }}</span>
                                             @endif
                                         @endforeach
-
-                                        @if($staff->role == 4)
-                                            <span class="badge badge-light-warning">ফ্রন্টডেস্ক</span>
-                                        @endif
                                     </td>
 
                                     @if (Session::get('role') == 1)
                                         <td class="text-center">
                                             <div class="action-btns">
-                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnStaffId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-id="{{ $staff->id }}">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnStaffEditId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-id="{{ $staff->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                 </a>
                                                 <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnPasswordReset" data-toggle="tooltip" data-placement="top" title="পাসওয়ার্ড রিসেট" data-bs-toggle="modal" data-bs-target="#btnPasswordModal" data-id="{{ $staff->id }}">
@@ -251,9 +247,9 @@
 
 
     <script>
-        // Officer Modal AJAX
+        // Officer Edit Modal AJAX
         $(document).ready(function() {
-            $('.btnOfficerId').click(function() {
+            $('.btnOfficerEditId').click(function() {
                 const id = $(this).attr("data-id");
                 $.ajax({
                     url: '/users/ajax/' + id,
@@ -274,9 +270,9 @@
         });
 
 
-        // Staff Modal AJAX
+        // Staff Edit Modal AJAX
         $(document).ready(function() {
-            $('.btnStaffId').click(function() {
+            $('.btnStaffEditId').click(function() {
                 const id = $(this).attr("data-id");
                 $.ajax({
                     url: '/users/ajax/' + id,
@@ -292,11 +288,11 @@
                         $('#editStaffEmail').val(data.email);
                         $('#editStaffId').val(data.id);
 
-                        if (data.role == 3) {
-                            $('#section-staff-input').prop('checked', true);
-                        } else {
-                            $('#frontdesk-staff-input').prop('checked', true);
-                        }
+                        // if (data.role == 3) {
+                        //     $('#section-staff-input').prop('checked', true);
+                        // } else {
+                        //     $('#frontdesk-staff-input').prop('checked', true);
+                        // }
                     }
                 });            
             });

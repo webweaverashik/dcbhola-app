@@ -20,8 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $officers = User::where('role', 2)->where('is_deleted', 0)->get();
-        $staffs = User::whereIn('role', [3, 4])->where('is_deleted', 0)->get();
+        $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->get();
+        $staffs = User::where('role', 4)->where('is_deleted', 0)->get();
 
         // Create an instance of the NumberToBangla class
         $numToBangla = new NumberToBangla();
