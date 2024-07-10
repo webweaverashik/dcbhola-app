@@ -18,11 +18,38 @@
             <div class="widget-content widget-content-area">
                 <form class="row g-3" action="{{ url('letters/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    
+                    <div class="col-md-6">
+                        <label class="form-label">পত্রের ধরন</label><span class="text-danger">*</span><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="type" value="1" id="official_letter" checked required>
+                            <label class="form-check-label" for="official_letter">
+                              দাপ্তরিক ডাক
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="type" value="2" id="civil_letter" required>
+                            <label class="form-check-label" for="civil_letter">
+                              নাগরিক ডাক
+                            </label>
+                        </div>
+                        
+                        {{-- <input type="radio" class="form-control" id="type" name="type" value="{{ old('type') }}"> --}}
+                        @error('type') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
                     <div class="col-md-6">
                         <label for="memorandum_no" class="form-label">স্মারক নং</label>
                         <input type="text" class="form-control" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no" value="{{ old('memorandum_no') }}">
                         @error('memorandum_no') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-md-6">
+                        <label for="serial_no" class="form-label">ক্রমিক নং</label>
+                        <input type="text" class="form-control" id="serial_no" placeholder="পত্র গ্রহণ রেজিস্টারের ক্রমিক নং লিখুন" name="serial_no" value="{{ old('serial_no') }}">
+                        @error('serial_no') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+
                     <div class="col-md-6">
                         <label for="received_date" class="form-label">পত্র প্রাপ্তির তারিখ</label><span class="text-danger">*</span>
                         <input type="date" class="form-control" id="received_date" name="received_date" value="{{ old('received_date') }}" required>
@@ -30,7 +57,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="sender_name" class="form-label">কোথা হতে প্রাপ্ত</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="sender_name" placeholder="যেমনঃ মোঃ বজলুর রহমান, বোরহানউদ্দিন" name="sender_name" value="{{ old('sender_name') }}" required>
+                        <input type="text" class="form-control" id="sender_name" placeholder="প্রেরণকারী ব্যক্তি বা দপ্তরের নাম লিখুন" name="sender_name" value="{{ old('sender_name') }}" required>
                         @error('sender_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
@@ -40,7 +67,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="short_title" class="form-label">সংক্ষিপ্ত বিষয়</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="short_title" placeholder="যেমনঃ জমি শ্রেণী পরিবর্তনের জন্য আবেদন" name="short_title" value="{{ old('short_title') }}" required>
+                        <input type="text" class="form-control" id="short_title" placeholder="পত্রের বিষয়টি সংক্ষেপে লিখুন" name="short_title" value="{{ old('short_title') }}" required>
                         @error('short_title') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
@@ -54,7 +81,7 @@
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">           
-                        <label for="file_url" class="form-label">ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
+                        <label for="file_url" class="form-label">স্ক্যানকৃত ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
                         <input type="file" id="file_url" class="form-control file-upload-input" accept=".pdf" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
@@ -79,6 +106,33 @@
     document.getElementById("letters_upload_id").className += " active";
     document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
     document.getElementById("letters_ul").className += " show";
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const officialLetterRadio = document.getElementById('official_letter');
+    const civilLetterRadio = document.getElementById('civil_letter');
+    const memorandumNoField = document.getElementById('memorandum_no').parentElement;
+    const serialNoField = document.getElementById('serial_no').parentElement;
+
+    function toggleFields() {
+        if (officialLetterRadio.checked) {
+            memorandumNoField.style.display = 'block';
+            serialNoField.style.display = 'none';
+        } else if (civilLetterRadio.checked) {
+            memorandumNoField.style.display = 'none';
+            serialNoField.style.display = 'block';
+        }
+    }
+
+    // Initial call to set the correct state on page load
+    toggleFields();
+
+    // Event listeners for the radio buttons
+    officialLetterRadio.addEventListener('change', toggleFields);
+    civilLetterRadio.addEventListener('change', toggleFields);
+});
+
 </script>
 
 @endsection

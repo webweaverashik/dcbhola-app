@@ -181,8 +181,12 @@ class LetterController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
+
         $request->validate([
+            'type'          => 'required|integer',
             'memorandum_no' => 'nullable|string',
+            'serial_no'     => 'nullable|string',
             'received_date' => 'required|date',
             'sender_name'   => 'required|string',
             'sent_date'     => 'required|date',
@@ -206,16 +210,36 @@ class LetterController extends Controller
         }
 
 
-        Letter::create([
-            'memorandum_no'     => $request->memorandum_no,
-            'received_date'     => $request->received_date,
-            'sender_name'       => $request->sender_name,
-            'sent_date'         => $request->sent_date,
-            'short_title'       => $request->short_title,
-            'uploaded_by'       => Session::get('loginId'),
-            'section_to'        => $request->section_to,
-            'file_url'          => $path.$filename
-        ]);
+        // Letter type entry
+        if ($request->type == '1') {
+            Letter::create([
+                'type'              => 1,
+                'memorandum_no'     => $request->memorandum_no,
+                'serial_no'         => NULL,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'uploaded_by'       => Session::get('loginId'),
+                'section_to'        => $request->section_to,
+                'file_url'          => $path.$filename
+            ]);
+        }
+        elseif ($request->type == '2') {
+            Letter::create([
+                'type'              => 2,
+                'memorandum_no'     => NULL,
+                'serial_no'         => $request->serial_no,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'uploaded_by'       => Session::get('loginId'),
+                'section_to'        => $request->section_to,
+                'file_url'          => $path.$filename
+            ]);
+        }
+        // letter type entry ends
 
         $file->move($path, $filename);
 
@@ -233,70 +257,6 @@ class LetterController extends Controller
     /**
      * AJAX request for letters
      */
-    // public function ajaxLetterInfo(string $id)
-    // {
-    //     $letter = DB::table('letters as l')
-    //             ->join('sections as s', 'l.section_to', '=', 's.id')
-    //             ->join('users as u', 'l.uploaded_by', '=', 'u.id')
-    //             ->select(
-    //                 'l.id',
-    //                 'l.received_date',
-    //                 'l.sender_name',
-    //                 'l.sent_date',
-    //                 'l.short_title',
-    //                 'l.memorandum_no',
-    //                 'u.name as uploader_name',
-    //                 'u.designation as uploader_designation',
-    //                 's.name as section_name',
-    //                 'l.file_url',
-    //                 'l.is_deleted',
-    //                 'l.status',
-    //                 'l.created_at',
-    //                 'l.updated_at'
-    //             )
-    //             ->where('l.id', $id)
-    //             ->first();
-
-    //     $comments = DB::table('comments as c')
-    //                 ->join('users as u', 'c.comment_by', '=', 'u.id')
-    //                 ->select(
-    //                     'c.id as comment_id',
-    //                     'c.comment',
-    //                     'u.name as comment_by_name',
-    //                     'u.designation as commenter_designation',
-    //                     'c.created_at',
-    //                     'c.updated_at'
-    //                 )
-    //                 ->where('c.letter_id', $id)
-    //                 ->orderBy('c.created_at', 'desc')
-    //                 ->get();
-
-    //     // Create an instance of the NumberToBangla class
-    //     $numToBangla = new NumberToBangla();
-
-    //     // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
-    //     $letter->transform(function ($letter) use ($numToBangla) {
-    //         $letter->created_at_bn = $this->convertDateTimeToBangla($letter->created_at, $numToBangla);
-    //         $letter->sent_date_bn = $this->convertDateToBangla(new \DateTime($letter->sent_date), $numToBangla);
-    //         $letter->received_date_bn = $this->convertDateToBangla(new \DateTime($letter->received_date), $numToBangla);
-
-    //         return $letter;
-    //     });
-
-    //     $comments->transform(function ($comment) use ($numToBangla) {
-    //         $comment->created_at_bn = $this->convertDateTimeToBangla($comment->created_at, $numToBangla);
-            
-    //         return $comment;
-    //     });
-        
-
-    //     $output = [
-    //         'letter' => $letter,
-    //         'comments' => $comments
-    //     ];
-        
-    //     return $output;
-    // }
     public function ajaxLetterInfo(string $id)
     {
         $letter = DB::table('letters as l')

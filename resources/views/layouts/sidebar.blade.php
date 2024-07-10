@@ -46,9 +46,11 @@
                             <li id="letters_all_id">
                                 <a href="{{ url('letters') }}"> সকল চিঠি/ডাক </a>
                             </li>
+                            @if (Session::get('role') == 3)
                             <li id="letters_upload_id">
                                 <a href="{{ url('letters/create') }}"> নতুন আপলোড </a>
                             </li>
+                            @endif
                         </ul>
                     </li>
 

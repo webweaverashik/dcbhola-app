@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('designation');
-            $table->integer('role')->default(3)->comment('1: admin, 2: officer, 3: section staff, 4: front desk');
+            $table->integer('role')->comment('1: DC, 2: ADC, 3: AC, 4: CO');
             $table->string('photo_url')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

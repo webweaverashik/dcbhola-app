@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->after('is_deleted', function (Blueprint $table) {
-                $table->tinyInteger('status')->default(1)->comment('1: pending, 2: resolved');
+            $table->after('memorandum_no', function (Blueprint $table) {
+                $table->string('serial_no')->nullable();
             });
         });
     }
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn('serial_no');
         });
     }
 };

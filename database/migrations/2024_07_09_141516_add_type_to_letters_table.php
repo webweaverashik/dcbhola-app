@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->after('is_deleted', function (Blueprint $table) {
-                $table->tinyInteger('status')->default(1)->comment('1: pending, 2: resolved');
+            $table->after('short_title', function (Blueprint $table) {
+                $table->tinyInteger('type')->default(1)->comment('1: official, 2: civil');
             });
         });
     }
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('letters', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn('type');
         });
     }
 };
