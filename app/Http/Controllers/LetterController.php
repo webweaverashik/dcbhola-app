@@ -23,21 +23,7 @@ class LetterController extends Controller
     {
         $role = session('role');
         
-        if ($role == 4) // frontdesk users
-        {
-
-            $letters = DB::table('letters')
-                        ->join('sections', 'letters.section_to', '=', 'sections.id')
-                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
-                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
-                        ->where('letters.uploaded_by', session('loginId'))
-                        ->where('letters.is_deleted', 0)
-                        ->orderBy('created_at', 'DESC')
-                        ->get();
-                        
-            $sections = Section::all();
-        }
-        elseif ($role == 3) // section staff
+        if ($role == 4) // section staff
         {
             $letters = DB::table('letters')
                         ->join('sections', 'letters.section_to', '=', 'sections.id')
@@ -51,7 +37,7 @@ class LetterController extends Controller
 
             $sections = Section::where('staff_id', '=', session('loginId'))->get();
         }
-        elseif ($role == 2) // section officers
+        elseif ($role == 3) // section officers
         {
             $letters = DB::table('letters')
                         // ->join('sections', 'letters.section_to', '=', 'sections.id')
@@ -90,7 +76,7 @@ class LetterController extends Controller
             return $letter;
         });
         
-        $users = User::where('is_deleted', 0)->whereIn('role', [3, 4])->get(); // uploaded_by filter
+        $users = User::where('is_deleted', 0)->where('role', 4)->get(); // uploaded_by filter
 
         return view('letters.index', compact('letters', 'users', 'sections'));
     }
@@ -143,34 +129,55 @@ class LetterController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    // public function create()
+    // {
+
+    //     $role = session('role');
+        
+    //     if ($role == 3) 
+    //     {
+    //         $sections = DB::table('sections')
+    //                     ->where('sections.staff_id', session('loginId'))
+    //                     ->get();
+                        
+    //         // return $sections;
+    //     }
+
+    //     elseif ($role == 2) 
+    //     {
+    //         $sections = DB::table('sections')
+    //                     ->where('sections.officer_id', session('loginId'))
+    //                     ->get();
+
+    //         // return $letters;
+    //     }
+
+    //     else  // DC Role & Frontdesk
+    //     {
+    //         $sections = Section::get();
+
+    //         // return $sections;
+    //     }
+
+    //     return view('letters.create', compact('sections'));
+    // }
+
     public function create()
     {
 
         $role = session('role');
         
-        if ($role == 3) 
+        if ($role == 4)
         {
             $sections = DB::table('sections')
                         ->where('sections.staff_id', session('loginId'))
                         ->get();
-                        
             // return $sections;
         }
 
-        elseif ($role == 2) 
+        else  // Other users are unable to create
         {
-            $sections = DB::table('sections')
-                        ->where('sections.officer_id', session('loginId'))
-                        ->get();
-
-            // return $letters;
-        }
-
-        else  // DC Role & Frontdesk
-        {
-            $sections = Section::get();
-
-            // return $sections;
+            return back()->with('warning', 'ঐ পেজে আপনার অনুমতি নেই।');
         }
 
         return view('letters.create', compact('sections'));
@@ -181,7 +188,7 @@ class LetterController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
 
         $request->validate([
             'type'          => 'required|integer',
@@ -213,7 +220,7 @@ class LetterController extends Controller
         // Letter type entry
         if ($request->type == '1') {
             Letter::create([
-                'type'              => 1,
+                'type'              => $request->type,
                 'memorandum_no'     => $request->memorandum_no,
                 'serial_no'         => NULL,
                 'received_date'     => $request->received_date,
@@ -227,7 +234,7 @@ class LetterController extends Controller
         }
         elseif ($request->type == '2') {
             Letter::create([
-                'type'              => 2,
+                'type'              => $request->type,
                 'memorandum_no'     => NULL,
                 'serial_no'         => $request->serial_no,
                 'received_date'     => $request->received_date,
@@ -325,14 +332,14 @@ class LetterController extends Controller
 
         $role = session('role');
         
-        if ($role == 3)
+        if ($role == 4)
         {
             $sections = DB::table('sections')
                         ->where('sections.staff_id', session('loginId'))
                         ->get();
         }
 
-        elseif ($role == 2) 
+        elseif ($role == 3) 
         {
             $sections = DB::table('sections')
                         ->where('sections.officer_id', session('loginId'))
@@ -341,7 +348,7 @@ class LetterController extends Controller
 
         else  // DC Role & Frontdesk
         {
-            $sections = Section::get();
+            return back()->with('warning', 'ঐ পেজে আপনার অনুমতি নেই।');
         }
 
         $letter = Letter::findOrFail($id);

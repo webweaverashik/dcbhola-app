@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title>404 Not Found</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -313,10 +313,10 @@
                 position: absolute;
                 top: 80%;
                 left: 50%;
-                transform: translate(-80%, -50%);
+                transform: translate(-75%, -50%);
                 /* Optional: Adjust the width to make sure the button doesn't overflow on small screens */
                 width: 100%;
-                max-width: 150px; /* Adjust according to your button size */
+                max-width: 250px; /* Adjust according to your button size */
                 text-align: center;
             }
 
@@ -325,6 +325,9 @@
             }
 
         </style>
+
+        <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{{ asset('custom/style.css') }}">
     </head>
 
     <body>
@@ -509,7 +512,7 @@
              
         
         <div class="center-button">
-            <a href="{{ url('/') }}" class="btn btn-success">Go Home</a>
+            <a href="{{ url('/') }}" class="btn btn-success">মূল পাতায় ফিরে যান</a>
         </div>
 
         <!-- Bootstrap JavaScript Libraries -->

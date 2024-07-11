@@ -99,5 +99,30 @@
     <!-- Custom Scripts from each page -->
     @yield('scripts')
 
+    @if($message = session('success'))
+        <script>
+            Swal.fire({
+                title: 'সাকসেস!',
+                text: '{{ $message }}',
+                icon: 'success',
+                confirmButtonText: 'ওকে',
+                timer: 2000,
+                timerProgressBar: true,
+            });
+        </script>
+    @endif
+
+    @if($message = session('warning'))
+        <script>
+            Swal.fire({
+                title: 'সতর্কতা!',
+                text: '{{ $message }}',
+                icon: 'warning',
+                confirmButtonText: 'ওকে',
+                timer: 2000,
+                timerProgressBar: true,
+            });
+        </script>
+    @endif
 </body>
 </html>

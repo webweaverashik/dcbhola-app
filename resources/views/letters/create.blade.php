@@ -22,13 +22,13 @@
                     <div class="col-md-6">
                         <label class="form-label">পত্রের ধরন</label><span class="text-danger">*</span><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="type" value="1" id="official_letter" checked required>
+                            <input class="form-check-input" type="radio" name="type" value="1" id="official_letter" checked>
                             <label class="form-check-label" for="official_letter">
                               দাপ্তরিক ডাক
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="type" value="2" id="civil_letter" required>
+                            <input class="form-check-input" type="radio" name="type" value="2" id="civil_letter">
                             <label class="form-check-label" for="civil_letter">
                               নাগরিক ডাক
                             </label>

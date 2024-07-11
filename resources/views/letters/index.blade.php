@@ -39,15 +39,11 @@
                             <div class="col-12 col-md-auto d-flex flex-wrap align-items-center">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="status-1" checked>
-                                    <label class="form-check-label" for="status-1">নতুন</label>
+                                    <label class="form-check-label" for="status-1">চলমান</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="status-2" checked>
-                                    <label class="form-check-label" for="status-2">প্রক্রিয়াধীন</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="status-3" checked>
-                                    <label class="form-check-label" for="status-3">নিষ্পন্ন</label>
+                                    <label class="form-check-label" for="status-2">সম্পন্ন</label>
                                 </div>
                             </div>
 
@@ -67,7 +63,7 @@
                             </div>
                             <div class="col-12 col-md-auto">
                                 <select id="date_range" class="form-control">
-                                    <option value="last_7_days">গত ৭ দিন</option>
+                                    <option value="last_15_days">গত ১৫ দিন</option>
                                     <option value="this_month">চলতি মাস</option>
                                     <option value="custom">কাস্টম রেঞ্জ</option>
                                 </select>
@@ -116,7 +112,7 @@
                             <th>সংক্ষিপ্ত বিষয়</th>
                             <th class="d-none">সংশ্লিষ্ট শাখা (en)</th>
                             <th>সংশ্লিষ্ট শাখা</th>
-                            <th>ফাইল</th>
+                            {{-- <th>ফাইল</th> --}}
                             <th>অবস্থা</th>
                             <th class="d-none">আপলোডকারি</th>
                             <th class="dt-no-sorting">কার্যক্রম</th>
@@ -140,15 +136,15 @@
                             <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
 
                             {{-- <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td> --}}
-                            <td><a href="{{ $letter->file_url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a1a1a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></td>
+                            {{-- <td>
+                                <a href="{{ $letter->file_url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a1a1a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
+                            </td> --}}
 
                             <td>
                                 @if ($letter->status == 1)
-                                    <span class="shadow-none badge badge-primary">নতুন</span>
+                                    <span class="shadow-none badge badge-warning">চলমান</span>
                                 @elseif ($letter->status == 2)
-                                    <span class="shadow-none badge badge-warning">প্রক্রিয়াধীন</span>
-                                @elseif ($letter->status == 3)
-                                    <span class="shadow-none badge badge-success">নিষ্পন্ন</span>
+                                    <span class="shadow-none badge badge-success">সম্পন্ন</span>
                                 @endif
                             </td>
                             {{-- @foreach ($users as $user)
@@ -159,13 +155,18 @@
                             <td class="text-wrap d-none">{{ $letter->uploaded_by }}</td>
                             <td>
                                 <div class="action-btns">
-                                    <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2 btnViewLetter" data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" data-bs-target="#viewLetterModal" data-id="{{ $letter->id }}">
+                                    
+                                    <a href="{{ $letter->file_url }}" target="_blank" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="ডাউনলোড">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    </a>  {{-- File Download Button --}}
+
+                                    <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2 btnViewLetter" data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" data-bs-target="#viewLetterModal" data-id="{{ $letter->id }}" title="দেখুন">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    </a>
+                                    </a> {{-- View Button --}}
                                 
-                                @if ($letter->status != 3)
+                                {{-- @if ($letter->status != 3)
                                     @if ($letter->status == 1)
-                                        <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top">
+                                        <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="সংশোধন">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                         </a>
                                     @elseif ($letter->status == 2 && session('role') == 2 || session('role') == 1)
@@ -173,15 +174,21 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                             </a>
                                     @endif            
+                                @endif --}}
+
+
+
+                                
+                                @if ($letter->status == 1 && session('role') == 3)
+                                    <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                    </a> {{-- Edit Button --}}
+
+                                    <a href="{{ url('letters/' . $letter->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" onclick="deleteWarning(event)" title="মুছুন">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    </a> {{-- Delete Button --}}
                                 @endif
 
-                                @if (Session::get('role') == 1 || Session::get('role') == 2)
-                                    @if ($letter->status == 1)
-                                        <a href="{{ url('letters/' . $letter->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" onclick="deleteWarning(event)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                        </a>
-                                    @endif
-                                @endif
                                 </div>
                             </td>
                         </tr>
@@ -217,18 +224,20 @@
 
 <script>
     $(document).ready(function() {
-        function getLast7Days() {
+        function getLast15Days() {
             var today = new Date();
-            var last7Days = new Date();
-            last7Days.setDate(today.getDate() - 7);
-            return { start: last7Days, end: today };
+            var last15DaysStart = new Date();
+            last15DaysStart.setDate(today.getDate() - 14); // Subtract 14 to include today
+            return { start: last15DaysStart, end: today };
         }
 
         function getThisMonth() {
-            var today = new Date();
-            var firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-            var lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-            return { start: firstDay, end: lastDay };
+            var start = new Date();
+            start.setDate(1); // Set to the first day of the month
+            var end = new Date();
+            end.setMonth(end.getMonth() + 1);
+            end.setDate(0); // Set to the last day of the month
+            return { start: start, end: end };
         }
 
         function setCustomRangeToThisMonth() {
@@ -257,14 +266,12 @@
 
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
-                var status = data[8];
+                var status = data[7];
                 var status1 = $('#status-1').is(':checked');
                 var status2 = $('#status-2').is(':checked');
-                var status3 = $('#status-3').is(':checked');
 
-                if ((status1 && status === 'নতুন') || 
-                    (status2 && status === 'প্রক্রিয়াধীন') || 
-                    (status3 && status === 'নিষ্পন্ন')) {
+                if ((status1 && status === 'চলমান') || 
+                    (status2 && status === 'সম্পন্ন')) {
                     return true;
                 }
                 return false;
@@ -288,10 +295,10 @@
                 var dateRange = $('#date_range').val();
                 var minDate, maxDate;
 
-                if (dateRange === 'last_7_days') {
-                    var last7Days = getLast7Days();
-                    minDate = last7Days.start;
-                    maxDate = last7Days.end;
+                if (dateRange === 'last_15_days') {
+                    var last15Days = getLast15Days();
+                    minDate = last15Days.start;
+                    maxDate = last15Days.end;
                 } else if (dateRange === 'this_month') {
                     var thisMonth = getThisMonth();
                     minDate = thisMonth.start;
@@ -303,7 +310,7 @@
 
                 var date = new Date(data[1]);
                 if (
-                    (dateRange === 'last_7_days' || dateRange === 'this_month') &&
+                    (dateRange === 'last_15_days' || dateRange === 'this_month') &&
                     date >= minDate && date <= maxDate
                 ) {
                     return true;
@@ -342,14 +349,14 @@
             table.draw();
         });
 
-        $('#status-1, #status-2, #status-3, #start_date, #end_date, #uploaded_by, #section_name').on('change', function() {
+        $('#status-1, #status-2, #start_date, #end_date, #uploaded_by, #section_name').on('change', function() {
             table.draw();
         });
 
         $('#clear_filters').on('click', function() {
-            $('#status-1, #status-2, #status-3').prop('checked', true);
+            $('#status-1, #status-2').prop('checked', true);
             $('#section_name').val('');
-            $('#date_range').val('last_7_days');
+            $('#date_range').val('last_15_days');
             setCustomRangeToThisMonth();
             $('#start_date, #end_date').addClass('d-none');
             $('#uploaded_by').val('');
@@ -510,14 +517,9 @@
 
 
 
-@if($message = session('success'))
-    <script>
-        Swal.fire(
-        'সাকসেস!',
-        '{{ $message }}',
-        'success',
-        )
-    </script>
-@endif
+
+
+
+
 
 @endsection

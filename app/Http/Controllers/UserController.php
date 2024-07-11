@@ -20,6 +20,13 @@ class UserController extends Controller
      */
     public function index()
     {
+        $role = session('role');
+        if ($role != 1) // Only DC has permissions to visit this page
+        {
+            return back()->with('warning', 'ঐ পেজে শুধুমাত্র ডিসি স্যারের অনুমতি আছে।');
+        }
+
+
         $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->orderBy('role', 'asc')->get();
         $staffs = User::where('role', 4)->where('is_deleted', 0)->get();
 
