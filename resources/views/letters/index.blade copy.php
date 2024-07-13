@@ -37,12 +37,12 @@
                         <div class="row g-2 d-flex justify-content-end align-items-center">
                             <!-- Status Filter -->
                             <div class="col-12 col-md-auto d-flex flex-wrap align-items-center">
-                                <div class="form-check form-switch form-check-inline form-switch-warning">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-1" checked>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="status-1" checked>
                                     <label class="form-check-label" for="status-1">চলমান</label>
                                 </div>
-                                <div class="form-check form-switch form-check-inline form-switch-success">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-2" checked>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="status-2" checked>
                                     <label class="form-check-label" for="status-2">সম্পন্ন</label>
                                 </div>
                             </div>
@@ -330,7 +330,7 @@
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
                 var uploaded_by = $('#uploaded_by').val();
-                var uploaded_by_data = data[8]; // Adjust according to the actual data index
+                var uploaded_by_data = data[9]; // Adjust according to the actual data index
 
                 if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
                     return true;
@@ -422,18 +422,24 @@
                 $('#viewShortTitle').html(`${letter.short_title}`);
                 $('#viewSectionName').html(`${letter.section_name}`);
 
-                if (`${letter.status}` == 1) {
-                    $('#statusNew').addClass('d-none');
-                    $('#statusProcessing').removeClass('d-none');
-                    $('#statusCompleted').addClass('d-none');
-                    $('#comments').removeClass('d-none');
-                }
-                else if (`${letter.status}` == 2) {
-                    $('#statusNew').addClass('d-none');
-                    $('#statusProcessing').addClass('d-none');
-                    $('#statusCompleted').removeClass('d-none');
-                    $('#comments').removeClass('d-none');
-                }
+                    if (`${letter.status}` == 1) {
+                        $('#statusNew').removeClass('d-none');
+                        $('#statusProcessing').addClass('d-none');
+                        $('#statusCompleted').addClass('d-none');
+                        $('#comments').addClass('d-none');
+                    }
+                    else if (`${letter.status}` == 2) {
+                        $('#statusNew').addClass('d-none');
+                        $('#statusProcessing').removeClass('d-none');
+                        $('#statusCompleted').addClass('d-none');
+                        $('#comments').removeClass('d-none');
+                    }
+                    else if (`${letter.status}` == 3) {
+                        $('#statusNew').addClass('d-none');
+                        $('#statusProcessing').addClass('d-none');
+                        $('#statusCompleted').removeClass('d-none');
+                        $('#comments').removeClass('d-none');
+                    }
 
                 // Handle the comments
                 var comments = response.comments;
@@ -479,7 +485,7 @@
             }
         });
     });
-    // ------- Letter View Modal Data Showing Ends -------
+
     
 </script>
 

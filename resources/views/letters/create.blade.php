@@ -109,30 +109,29 @@
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const officialLetterRadio = document.getElementById('official_letter');
-    const civilLetterRadio = document.getElementById('civil_letter');
-    const memorandumNoField = document.getElementById('memorandum_no').parentElement;
-    const serialNoField = document.getElementById('serial_no').parentElement;
+    document.addEventListener('DOMContentLoaded', function () {
+        const officialLetterRadio = document.getElementById('official_letter');
+        const civilLetterRadio = document.getElementById('civil_letter');
+        const memorandumNoField = document.getElementById('memorandum_no').parentElement;
+        const serialNoField = document.getElementById('serial_no').parentElement;
 
-    function toggleFields() {
-        if (officialLetterRadio.checked) {
-            memorandumNoField.style.display = 'block';
-            serialNoField.style.display = 'none';
-        } else if (civilLetterRadio.checked) {
-            memorandumNoField.style.display = 'none';
-            serialNoField.style.display = 'block';
+        function toggleFields() {
+            if (officialLetterRadio.checked) {
+                memorandumNoField.style.display = 'block';
+                serialNoField.style.display = 'none';
+            } else if (civilLetterRadio.checked) {
+                memorandumNoField.style.display = 'none';
+                serialNoField.style.display = 'block';
+            }
         }
-    }
 
-    // Initial call to set the correct state on page load
-    toggleFields();
+        // Initial call to set the correct state on page load
+        toggleFields();
 
-    // Event listeners for the radio buttons
-    officialLetterRadio.addEventListener('change', toggleFields);
-    civilLetterRadio.addEventListener('change', toggleFields);
-});
-
+        // Event listeners for the radio buttons
+        officialLetterRadio.addEventListener('change', toggleFields);
+        civilLetterRadio.addEventListener('change', toggleFields);
+    });
 </script>
 
 @endsection

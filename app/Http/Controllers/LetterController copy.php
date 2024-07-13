@@ -332,14 +332,24 @@ class LetterController extends Controller
 
         $role = session('role');
         
-        if ($role != 3) // Only section officer is allowed to edit the letter
+        if ($role == 4)
+        {
+            $sections = DB::table('sections')
+                        ->where('sections.staff_id', session('loginId'))
+                        ->get();
+        }
+
+        elseif ($role == 3) 
+        {
+            $sections = DB::table('sections')
+                        ->where('sections.officer_id', session('loginId'))
+                        ->get();
+        }
+
+        else  // DC Role & Frontdesk
         {
             return back()->with('warning', 'ঐ পেজে আপনার অনুমতি নেই।');
         }
-
-        $sections = DB::table('sections')
-                        ->where('sections.officer_id', session('loginId'))
-                        ->get();
 
         $letter = Letter::findOrFail($id);
 
@@ -356,7 +366,7 @@ class LetterController extends Controller
         // return $request;
 
         // admin and officer are allowed to update status and comment on
-        if (Session::get('role') == 3) {
+        if (Session::get('role') == 1 || Session::get('role') == 2) {
             $request->validate([
                 'type'          => 'required|integer',
                 'memorandum_no' => 'nullable|string',
@@ -370,33 +380,17 @@ class LetterController extends Controller
                 'comment'       => 'nullable|string',
             ]);
 
-            // Letter type entry
-            if ($request->type == '1') { // দাপ্তরিক ডাক
-                Letter::findOrfail($id)->update([
-                    'type'              => $request->type,
-                    'memorandum_no'     => $request->memorandum_no,
-                    'serial_no'         => NULL,
-                    'received_date'     => $request->received_date,
-                    'sender_name'       => $request->sender_name,
-                    'sent_date'         => $request->sent_date,
-                    'short_title'       => $request->short_title,
-                    'section_to'        => $request->section_to,
-                    'status'            => $request->status,
-                ]);
-            }
-            elseif ($request->type == '2') {  // নাগরিক ডাক
-                Letter::findOrfail($id)->update([
-                    'type'              => $request->type,
-                    'memorandum_no'     => NULL,
-                    'serial_no'         => $request->memorandum_no,
-                    'received_date'     => $request->received_date,
-                    'sender_name'       => $request->sender_name,
-                    'sent_date'         => $request->sent_date,
-                    'short_title'       => $request->short_title,
-                    'section_to'        => $request->section_to,
-                    'status'            => $request->status,
-                ]);
-            }
+            Letter::findOrfail($id)->update([
+                'type'              => $request->type,
+                'memorandum_no'     => $request->memorandum_no,
+                'serial_no'         => $request->serial_no,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'section_to'        => $request->section_to,
+                'status'            => $request->status,
+            ]);
 
             Comment::create([
                 'letter_id' => $id,
@@ -405,9 +399,29 @@ class LetterController extends Controller
             ]);
         }
         else {
-            return redirect('/letters')->with('warning', 'আপনার এই কার্যক্রমের অনুমতি নেই।');
-        }
+            $request->validate([
+                'memorandum_no' => 'nullable|string',
+                'received_date' => 'required|date',
+                'sender_name'   => 'required|string',
+                'sent_date'     => 'required|date',
+                'short_title'   => 'required|string',
+                'section_to'    => 'required|integer',
+            ]);
 
+            Letter::findOrfail($id)->update([
+                'memorandum_no'     => $request->memorandum_no,
+                'received_date'     => $request->received_date,
+                'sender_name'       => $request->sender_name,
+                'sent_date'         => $request->sent_date,
+                'short_title'       => $request->short_title,
+                'section_to'        => $request->section_to,
+            ]);
+        }
+        // return Letter::findOrfail($id);
+
+        // $file->move($path, $filename);
+
+        
         return redirect('/letters')->with('success', 'পত্রটি সফলভাবে আপডেট করা হয়েছে।');
     }
 
