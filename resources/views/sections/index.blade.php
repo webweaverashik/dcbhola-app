@@ -61,7 +61,7 @@
                             @foreach ($sections as $section)                                
                                 <tr>
                                     <td>
-                                        <span class="badge badge-light-success">{{ $section->section_name }}</span>
+                                        <span class="badge badge-light-info">{{ $section->section_name }}</span>
                                     </td>
                                     <td class="text-wrap">
                                         <p class="mb-0 fw-bold">{{ $section->officer_name }}</p>

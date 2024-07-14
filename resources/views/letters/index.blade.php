@@ -112,7 +112,6 @@
                             <th>সংক্ষিপ্ত বিষয়</th>
                             <th class="d-none">সংশ্লিষ্ট শাখা (en)</th>
                             <th>সংশ্লিষ্ট শাখা</th>
-                            {{-- <th>ফাইল</th> --}}
                             <th>অবস্থা</th>
                             <th class="d-none">আপলোডকারি</th>
                             <th class="dt-no-sorting">কার্যক্রম</th>
@@ -127,19 +126,21 @@
                         @foreach ($letters as $letter)
                         <tr>
                             <!-- Use the iteration number and convert it to Bengali -->
-                            <td>{{ strtr($loop->iteration, $engToBng) }}</td>
+                            <td>
+                                {{ strtr($loop->iteration, $engToBng) }}
+
+                                @if ($letter->type == 1)
+                                    <svg title="দাপ্তরিক ডাক" id="Front-Desk-Table-Meeting--Streamline-Atlas" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 24 24" height="24" width="24"><desc>Front Desk Table Meeting Streamline Icon: https://streamlinehq.com</desc><defs></defs><path d="m5.729166666666666 21.56 0 -7.030833333333333 -0.8799999999999999 -1.7508333333333332 0 -6.150833333333333 5.270833333333333 0 0 6.150833333333333 -0.8799999999999999 1.7508333333333332 0 7.030833333333333" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="M12.76 10.138333333333334v-0.9166666666666666a2.6308333333333334 2.6308333333333334 0 0 1 2.6308333333333334 -2.6308333333333334 2.6399999999999997 2.6399999999999997 0 0 1 2.6399999999999997 2.6308333333333334v0.9166666666666666" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="M13.630833333333332 3.1166666666666663a1.7599999999999998 1.7599999999999998 0 1 0 3.5199999999999996 0 1.7599999999999998 1.7599999999999998 0 1 0 -3.5199999999999996 0" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="M5.729166666666666 3.1166666666666663a1.7599999999999998 1.7599999999999998 0 1 0 3.5199999999999996 0 1.7599999999999998 1.7599999999999998 0 1 0 -3.5199999999999996 0" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="m19.781666666666663 21.56 0 -10.541666666666666 -9.661666666666665 0" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="m4.849166666666666 11.018333333333333 -2.6308333333333334 0 0 10.541666666666666" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="m21.541666666666664 11.018333333333333 -1.7599999999999998 0 -9.661666666666665 0" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></path><path d="m4.849166666666666 11.018333333333333 -2.6308333333333334 0 -1.7599999999999998 0" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1"></path></svg>
+                                @elseif ($letter->type == 2)
+                                    <svg title="নাগরিক ডাক" id="Heart-Mail--Streamline-Atlas" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 24 24" height="24" width="24"><desc>Heart Mail Streamline Icon: https://streamlinehq.com</desc><defs></defs><path d="M12.594999999999999 6.6275A2.0166666666666666 2.0166666666666666 0 0 0 11 7.333333333333333a2.0166666666666666 2.0166666666666666 0 0 0 -1.595 -0.7058333333333333A1.7691666666666666 1.7691666666666666 0 0 0 7.498333333333333 8.25c0 2.355833333333333 3.5016666666666665 3.6666666666666665 3.5016666666666665 3.6666666666666665s3.5016666666666665 -1.3108333333333333 3.5016666666666665 -3.6666666666666665a1.7691666666666666 1.7691666666666666 0 0 0 -1.9066666666666667 -1.6225Z" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"></path><path d="m18.874166666666667 9.249166666666666 0 11.375833333333333 -15.748333333333333 0 0 -11.375833333333333" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"></path><path d="M18.874166666666667 8.378333333333334v0.8708333333333332l-6.416666666666666 6.416666666666666a2.1266666666666665 2.1266666666666665 0 0 1 -1.4941666666666664 0.6233333333333334 2.1266666666666665 2.1266666666666665 0 0 1 -1.4941666666666664 -0.6233333333333334l-6.416666666666666 -6.416666666666666v-0.8708333333333332l6.416666666666666 -6.416666666666666a2.0991666666666666 2.0991666666666666 0 0 1 2.988333333333333 0Z" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"></path><path d="m18.874166666666667 20.625 -5.683333333333334 -5.683333333333334" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"></path><path d="m8.809166666666666 14.941666666666666 -5.683333333333334 5.683333333333334" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="1"></path></svg>
+                                @endif
+                            </td>
                             <td class="d-none">{{ $letter->received_date }}</td>
                             <td>{{ $letter->received_date_bn }}</td>
                             <td class="text-wrap">{{ $letter->sender_name }}</td>
                             <td class="text-wrap">{{ $letter->short_title }}</td>
-                            <td class="d-none"><span class="badge badge-light-success">{{ $letter->section_to }}</span></td>
-                            <td><span class="badge badge-light-success">{{ $letter->section_name }}</span></td>
-
-                            {{-- <td><a href="{{ $letter->file_url }}" target="_blank"><img src="{{ asset('custom/img/pdf-icon.png') }}" alt="Download" width="40"></a></td> --}}
-                            {{-- <td>
-                                <a href="{{ $letter->file_url }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a1a1a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></a>
-                            </td> --}}
-
+                            <td class="d-none"><span class="badge badge-light-info">{{ $letter->section_to }}</span></td>
+                            <td><span class="badge badge-light-info">{{ $letter->section_name }}</span></td>
                             <td>
                                 @if ($letter->status == 1)
                                     <span class="shadow-none badge badge-warning">চলমান</span>
@@ -147,11 +148,6 @@
                                     <span class="shadow-none badge badge-success">সম্পন্ন</span>
                                 @endif
                             </td>
-                            {{-- @foreach ($users as $user)
-                                @if ($letter->uploaded_by == $user->id)
-                                    <td class="text-wrap">{{ $user->name }}</td>
-                                    @endif
-                                    @endforeach --}}
                             <td class="text-wrap d-none">{{ $letter->uploaded_by }}</td>
                             <td>
                                 <div class="action-btns">
@@ -163,22 +159,7 @@
                                     <a href="javascript:void(0);" class="action-btn btn-view bs-tooltip me-2 btnViewLetter" data-toggle="tooltip" data-placement="top" data-bs-toggle="modal" data-bs-target="#viewLetterModal" data-id="{{ $letter->id }}" title="দেখুন">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     </a> {{-- View Button --}}
-                                
-                                {{-- @if ($letter->status != 3)
-                                    @if ($letter->status == 1)
-                                        <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="সংশোধন">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                        </a>
-                                    @elseif ($letter->status == 2 && session('role') == 2 || session('role') == 1)
-                                            <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                            </a>
-                                    @endif            
-                                @endif --}}
-
-
-
-                                
+                                                               
                                 @if ($letter->status == 1 && session('role') == 3)
                                     <a href="{{ url('letters/' . $letter->id . '/edit') }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="সংশোধন">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
@@ -397,17 +378,22 @@
             method: 'GET',
             success: function(response) {
                 // Handle the letter details
-
                 var letter = response.letter;
+                // var typeText = letter.type === 1 ? "দাপ্তরিক ডাক" : "নাগরিক ডাক";
+                var typeText = letter.type === 1 ? '<span class="badge outline-badge-primary">দাপ্তরিক ডাক</span>' : "<span class='badge outline-badge-secondary'>নাগরিক ডাক</span>";
+                var serialNoDisplay = letter.type === 1 ? "none" : "";
+                var memorandumNoDisplay = letter.type === 2 ? "none" : "";
+
                 var letterHtml = `
-                    
                     <table class="table table-bordered">
                         <tr>
-                            <td colspan="2"><span class="fw-bold">আপলোডের সময়ঃ </span>${letter.created_at_bn}</td>
+                            <td><span class="fw-bold">আপলোডের সময়ঃ </span>${letter.created_at_bn}</td>
+                            <td><span class="fw-bold">পত্রের ধরণঃ </span>${typeText}</td>
                         </tr>
                         <tr>
-                            <td class="w-50"><span class="fw-bold">চিঠি/স্মারক নংঃ </span>${letter.memorandum_no}</td>
-                            <td class="w-50" ><span class="fw-bold">পত্র প্রাপ্তির তারিখঃ </span>${letter.received_date_bn}</td>
+                            <td class="w-50" style="display: ${memorandumNoDisplay};"><span class="fw-bold">স্মারক নংঃ </span>${letter.memorandum_no}</td>
+                            <td class="w-50" style="display: ${serialNoDisplay};"><span class="fw-bold">ক্রমিক নংঃ </span>${letter.serial_no}</td>
+                            <td class="w-50"><span class="fw-bold">পত্র প্রাপ্তির তারিখঃ </span>${letter.received_date_bn}</td>
                         </tr>
                         <tr>
                             <td class="w-50 text-wrap"><span class="fw-bold">কোথা হতে প্রাপ্তঃ </span>${letter.sender_name}</td>
@@ -423,13 +409,11 @@
                 $('#viewSectionName').html(`${letter.section_name}`);
 
                 if (`${letter.status}` == 1) {
-                    $('#statusNew').addClass('d-none');
                     $('#statusProcessing').removeClass('d-none');
                     $('#statusCompleted').addClass('d-none');
                     $('#comments').removeClass('d-none');
                 }
                 else if (`${letter.status}` == 2) {
-                    $('#statusNew').addClass('d-none');
                     $('#statusProcessing').addClass('d-none');
                     $('#statusCompleted').removeClass('d-none');
                     $('#comments').removeClass('d-none');
@@ -437,47 +421,52 @@
 
                 // Handle the comments
                 var comments = response.comments;
-                var commentsHtml = `
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <td colspan="4" class="text-center border-0"><h6 class="fw-bold">মন্তব্য সমূহঃ</h6></td>
-                            </tr>
-                        <tr>
-                            <th scope="col">ক্রমিক</th>
-                            <th scope="col">সময়</th>
-                            <th scope="col">মন্তব্য</th>
-                            <th scope="col">কর্মকর্তা</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                `;
-
-                comments.forEach(function(comment, index) {
-                    var serialNo = index + 1;
-                    var serialNoBn = convertToBengali(serialNo); // Convert serial number to Bengali
-                    var badgeHtml = (index === 0) ? '<span class="badge bg-light-primary">সর্বশেষ</span>' : '';
-                    commentsHtml += `
-                        <tr>
-                            <td>${serialNoBn}</td>
-                            <td>${comment.created_at_bn}</td>
-                            <td>${comment.comment} ${badgeHtml}</td>
-                            <td>${comment.comment_by_name}, ${comment.commenter_designation}</td>
-                        </tr>
+                if (comments.length === 0) {
+                    $('#comments').addClass('d-none');
+                } else {
+                    $('#comments').removeClass('d-none');
+                    var commentsHtml = `
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="4" class="text-center border-0"><h6 class="fw-bold">মন্তব্য সমূহঃ</h6></td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">ক্রমিক</th>
+                                    <th scope="col">সময়</th>
+                                    <th scope="col">মন্তব্য</th>
+                                    <th scope="col">কর্মকর্তা</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                     `;
-                });
 
-                commentsHtml += `
-                        </tbody>
-                    </table>
-                `;
+                    comments.forEach(function(comment, index) {
+                        var serialNo = index + 1;
+                        var serialNoBn = convertToBengali(serialNo); // Convert serial number to Bengali
+                        var badgeHtml = (index === 0) ? '<span class="badge bg-light-primary">সর্বশেষ</span>' : '';
+                        commentsHtml += `
+                            <tr>
+                                <td>${serialNoBn}</td>
+                                <td>${comment.created_at_bn}</td>
+                                <td>${comment.comment} ${badgeHtml}</td>
+                                <td>${comment.comment_by_name}, ${comment.commenter_designation}</td>
+                            </tr>
+                        `;
+                    });
 
-                $('#comments').html(commentsHtml);
+                    commentsHtml += `
+                            </tbody>
+                        </table>
+                    `;
+                    $('#comments').html(commentsHtml);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('An error occurred:', status, error);
             }
         });
+
     });
     // ------- Letter View Modal Data Showing Ends -------
     
