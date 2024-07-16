@@ -52,6 +52,7 @@ Route::controller(AuthenticateController::class)->group(function(){
 
 
         Route::get('/letters', [LetterController::class, 'index']);
+        Route::get('/letters/show', [LetterController::class, 'show']);
         Route::get('/letters/create', [LetterController::class, 'create']);
         Route::get('/letters/{id}/edit', [LetterController::class, 'edit']);
         Route::post('/letters/create', [LetterController::class, 'store']);

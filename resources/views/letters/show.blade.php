@@ -32,70 +32,6 @@
                     <div class="col-md-auto col-12">
                         <h4>সকল ডাক/চিঠি</h4>
                     </div>
-
-                    <div class="col-md-auto col-12 my-2">
-                        <div class="row g-2 d-flex justify-content-end align-items-center">
-                            <!-- Status Filter -->
-                            <div class="col-12 col-md-auto d-flex flex-wrap align-items-center">
-                                <div class="form-check form-switch form-check-inline form-switch-warning">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-1" checked>
-                                    <label class="form-check-label" for="status-1">চলমান</label>
-                                </div>
-                                <div class="form-check form-switch form-check-inline form-switch-success">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-2" checked>
-                                    <label class="form-check-label" for="status-2">সম্পন্ন</label>
-                                </div>
-                            </div>
-
-                            <!-- Section Name Filter -->
-                            <div class="col-12 col-md-auto">
-                                <select id="section_name" class="form-control">
-                                    <option value="">সকল শাখা</option>
-                                    @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Date Range Filter -->
-                            <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">পত্র প্রাপ্তির তারিখঃ</label>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <select id="date_range" class="form-control">
-                                    <option value="last_15_days">গত ১৫ দিন</option>
-                                    <option value="this_month">চলতি মাস</option>
-                                    <option value="custom">কাস্টম রেঞ্জ</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <input type="date" id="start_date" class="form-control d-none" placeholder="শুরু তারিখ">
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <input type="date" id="end_date" class="form-control d-none" placeholder="শেষ তারিখ">
-                            </div>
-
-                            <!-- Uploaded By Filter -->
-                            <div class="col-12 col-md-auto @if(session('role') == 4) d-none @endif">
-                                <select id="uploaded_by" class="form-control">
-                                    <option value="">চিঠি আপলোডকারি</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}, {{ $user->designation }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Clear Filters Button -->
-                            <div class="col-12 col-md-auto">
-                                <button id="clear_filters" class="btn btn-outline-secondary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                                    <span class="btn-text-inner">রিসেট</span>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -291,7 +227,7 @@
 <script>
     document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item"><a href="{{ url('/letters') }}">চিঠি\/ডাক</a></li>' + '<li class="breadcrumb-item active" aria-current="page">সকল চিঠি/ডাক</li>';
     document.getElementById("letters_menu").className += " active";
-    document.getElementById("letters_all_id").className += " active";
+    // document.getElementById("letters_all_id").className += " active";
     document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
     document.getElementById("letters_ul").className += " show";
 </script>
@@ -304,30 +240,6 @@
 
     // ------- Letter Filter Buttons JS Codes Starts -------
     $(document).ready(function() {
-        function getLast15Days() {
-            var today = new Date();
-            var last15DaysStart = new Date();
-            last15DaysStart.setDate(today.getDate() - 14); // Subtract 14 to include today
-            return { start: last15DaysStart, end: today };
-        }
-
-        function getThisMonth() {
-            var start = new Date();
-            start.setDate(1); // Set to the first day of the month
-            var end = new Date();
-            end.setMonth(end.getMonth() + 1);
-            end.setDate(0); // Set to the last day of the month
-            return { start: start, end: end };
-        }
-
-        function setCustomRangeToThisMonth() {
-            var thisMonth = getThisMonth();
-            $('#start_date').val(thisMonth.start.toISOString().split('T')[0]);
-            $('#end_date').val(thisMonth.end.toISOString().split('T')[0]);
-        }
-
-        setCustomRangeToThisMonth();
-
         var table = $('#style-3').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
@@ -342,105 +254,6 @@
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10,
-        });
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var status = data[7];
-                var status1 = $('#status-1').is(':checked');
-                var status2 = $('#status-2').is(':checked');
-
-                if ((status1 && status === 'চলমান') || 
-                    (status2 && status === 'সম্পন্ন')) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var section_name = $('#section_name').val();
-                var section_name_data = data[5]; // Adjust according to the actual data index
-
-                if (section_name === "" || section_name_data === section_name) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var dateRange = $('#date_range').val();
-                var minDate, maxDate;
-
-                if (dateRange === 'last_15_days') {
-                    var last15Days = getLast15Days();
-                    minDate = last15Days.start;
-                    maxDate = last15Days.end;
-                } else if (dateRange === 'this_month') {
-                    var thisMonth = getThisMonth();
-                    minDate = thisMonth.start;
-                    maxDate = thisMonth.end;
-                } else if (dateRange === 'custom') {
-                    minDate = new Date($('#start_date').val());
-                    maxDate = new Date($('#end_date').val());
-                }
-
-                var date = new Date(data[1]);
-                if (
-                    (dateRange === 'last_15_days' || dateRange === 'this_month') &&
-                    date >= minDate && date <= maxDate
-                ) {
-                    return true;
-                } else if (
-                    dateRange === 'custom' &&
-                    (!isNaN(minDate.getTime()) && date >= minDate) &&
-                    (!isNaN(maxDate.getTime()) && date <= maxDate)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var uploaded_by = $('#uploaded_by').val();
-                var uploaded_by_data = data[8]; // Adjust according to the actual data index
-
-                if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
-        $('#date_range').on('change', function() {
-            if ($(this).val() === 'custom') {
-                $('#start_date, #end_date').removeClass('d-none');
-            } else {
-                $('#start_date, #end_date').addClass('d-none');
-                if ($(this).val() === 'this_month') {
-                    setCustomRangeToThisMonth();
-                }
-            }
-            table.draw();
-        });
-
-        $('#status-1, #status-2, #start_date, #end_date, #uploaded_by, #section_name').on('change', function() {
-            table.draw();
-        });
-
-        $('#clear_filters').on('click', function() {
-            $('#status-1, #status-2').prop('checked', true);
-            $('#section_name').val('');
-            $('#date_range').val('last_15_days');
-            setCustomRangeToThisMonth();
-            $('#start_date, #end_date').addClass('d-none');
-            $('#uploaded_by').val('');
-            table.draw();
         });
 
         // Trigger initial draw
@@ -697,12 +510,6 @@
 </script>
 
 {{-- <script src="{{ asset('custom/ajax.js') }}"></script> --}}
-
-
-
-
-
-
 
 
 @endsection

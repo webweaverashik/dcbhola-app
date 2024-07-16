@@ -257,9 +257,29 @@ class LetterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $letters = DB::table('letters')
+                        ->join('sections', 'letters.section_to', '=', 'sections.id')
+                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
+                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
+                        ->where('letters.is_deleted', 0)
+                        ->orderBy('created_at', 'DESC')
+                        ->get();
+
+
+        // Create an instance of the NumberToBangla class
+        $numToBangla = new NumberToBangla();
+
+        // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
+        $letters->transform(function ($letter) use ($numToBangla) {
+            $letter->received_date_bn = $this->convertDateToBangla(new \DateTime($letter->received_date), $numToBangla);
+            
+            return $letter;
+        });
+        
+
+        return view('letters.show', compact('letters'));
     }
     /**
      * AJAX request for letters
