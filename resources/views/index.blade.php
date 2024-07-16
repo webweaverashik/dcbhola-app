@@ -57,11 +57,6 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg> ডাক/পত্র
                             </button>
                         </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab-icon" data-bs-toggle="tab" data-bs-target="#profile-tab-icon-pane2" type="button" role="tab" aria-controls="profile-tab-icon-pane2" aria-selected="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg> প্রক্রিয়াধীন পত্র
-                            </button>
-                        </li> --}}
                     </ul>
                     
                     <div class="tab-content" id="myTabContent2">
@@ -94,25 +89,24 @@
                                                 @foreach ($results as $result)
                                                 <tr>
                                                     <td rowspan="2" class="text-left"><span class="badge badge-light-info">{{ $result->section_name }}</span></td>
-                                                    <td rowspan="2" class="text-center total-count">{{ strtr($result->total_count, $engToBng) }}</td>
-                                                    <td colspan="4" class="text-center total-status-1">{{ strtr($result->total_status_1, $engToBng) }}</td>
-                                                    <td rowspan="2" class="text-center total-status-2">{{ strtr($result->total_status_2, $engToBng) }}</td>
+                                                    <td rowspan="2" class="text-center total-count"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=0" target="_blank">{{ strtr($result->total_count, $engToBng) }}</a></td>
+                                                    <td colspan="4" class="text-center total-status-1"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=1" target="_blank">{{ strtr($result->total_status_1, $engToBng) }}</a></td>
+                                                    <td rowspan="2" class="text-center total-status-2"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=2" target="_blank">{{ strtr($result->total_status_2, $engToBng) }}</a></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center rounded-0">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_30_days, $engToBng) }}</td>
-                                                    <td class="text-center rounded-0">{{ strtr($result->days_30_plus, $engToBng) }}</td>
+                                                    <td class="text-center rounded-0"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_7_days&status=1" target="_blank">{{ strtr($result->up_to_7_days, $engToBng) }}</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_15_days&status=1" target="_blank">{{ strtr($result->up_to_15_days, $engToBng) }}</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_30_days&status=1" target="_blank">{{ strtr($result->up_to_30_days, $engToBng) }}</a></td>
+                                                    <td class="text-center rounded-0"><a href="/letters/show?section={{ $result->section_id }}&days=days_30_plus&status=1" target="_blank">{{ strtr($result->days_30_plus, $engToBng) }}</a></td>
                                                 </tr>
                                                 <tr></tr>
                                                 @endforeach
                                             
                                                 <tr>
                                                     <td class="text-center">সর্বমোট</td>
-                                                    <td class="text-center" id="sum-total-count">0</td>
-                                                    {{-- <td colspan="4" class="text-center"><span class="badge badge-warning" id="sum-total-status-1">0</span></td> --}}
-                                                    <td colspan="4" class="text-center" id="sum-total-status-1">0</td>
-                                                    <td class="text-center" id="sum-total-status-2">0</td>
+                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=0" target="_blank" id="sum-total-count">0</a></td>
+                                                    <td colspan="4" class="text-center"><a href="/letters/show?section=0&days=all_days&status=1" target="_blank" id="sum-total-status-1">0</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=2" target="_blank" id="sum-total-status-2">0</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -120,43 +114,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="tab-pane fade" id="profile-tab-icon-pane2" role="tabpanel" aria-labelledby="profile-tab-icon" tabindex="0">
-                            <div class="widget widget-table-two border-0">
-
-                                <div class="widget-heading">
-                                    <h5 class="">প্রক্রিয়াধীন পত্রের দিনভিত্তিক অবস্থা</h5>
-                                </div>
-                    
-                                <div class="widget-content">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th><div class="th-content">শাখার নাম</div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-secondary">৩ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিনের বেশি</span></div></th>
-                                                    <th><div class="th-content text-center">মোট</div></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($processing_letters_duration as $result)
-                                                <tr>
-                                                    <td class="text-left"><span class="badge badge-light-info">{{ $result->section_name }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_3_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->more_than_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->total, $engToBng) }}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
 
                 </div>

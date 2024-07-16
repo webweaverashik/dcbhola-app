@@ -257,16 +257,65 @@ class LetterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        $letters = DB::table('letters')
-                        ->join('sections', 'letters.section_to', '=', 'sections.id')
-                        ->join('users', 'letters.uploaded_by', '=', 'users.id')
-                        ->select('letters.*', 'sections.name as section_name', 'users.name as uploader_user', 'users.designation as designation')
-                        ->where('letters.is_deleted', 0)
-                        ->orderBy('created_at', 'DESC')
-                        ->get();
+        // Retrieve query parameters
+        $sectionId = $request->query('section');
+        $days = $request->query('days');
+        $status = $request->query('status');
+        $role = session('role');
+        $loginId = session('loginId');
 
+        // Initialize the query
+        $letters = DB::table('letters')
+                    ->join('sections', 'letters.section_to', '=', 'sections.id')
+                    ->select('letters.*', 'sections.name as section_name')
+                    ->where('letters.is_deleted', 0)
+                    ->orderBy('created_at', 'DESC');
+
+        // Handle section filter
+        /*
+        If section=0, that means all section letters will be shown for role=1 (DC), for role=3 sections.officer_id will be that officer session loginId
+        and role=4 sections.staff_id will be that staff session loginId
+        */        
+        if ($sectionId != 0) {
+            $letters = $letters->where('letters.section_to', $sectionId);
+        }
+        elseif ($sectionId == 0) {
+            if ($role == 3) {
+                $letters = $letters->where('sections.officer_id', $loginId);
+            }
+            elseif ($role == 4) {
+                $letters = $letters->where('sections.staff_id', $loginId);
+            }
+        }
+
+        // Handle status
+        if ($status != 0) {
+            $letters = $letters->where('letters.status', $status);
+        }
+
+        // Handle the date range based on the 'days' parameter
+        if ($days != 'all_days') {
+            $dateRange = null;
+            if ($days == 'up_to_7_days') {
+                $dateRange = now()->subDays(7);
+            } elseif ($days == 'up_to_15_days') {
+                $dateRange = now()->subDays(15);
+            } elseif ($days == 'up_to_30_days') {
+                $dateRange = now()->subDays(30);
+            } elseif ($days == 'days_30_plus') {
+                $dateRange = now()->subDays(30);
+            }
+
+            if ($days != 'days_30_plus') {
+                $letters = $letters->where('letters.created_at', '>=', $dateRange);
+            } else {
+                $letters = $letters->where('letters.created_at', '<=', $dateRange);
+            }
+        }
+
+        $letters = $letters->get();
 
         // Create an instance of the NumberToBangla class
         $numToBangla = new NumberToBangla();
@@ -278,7 +327,7 @@ class LetterController extends Controller
             return $letter;
         });
         
-
+        // return $letters;
         return view('letters.show', compact('letters'));
     }
     /**

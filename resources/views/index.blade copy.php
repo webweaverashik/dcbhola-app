@@ -57,11 +57,6 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg> ডাক/পত্র
                             </button>
                         </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab-icon" data-bs-toggle="tab" data-bs-target="#profile-tab-icon-pane2" type="button" role="tab" aria-controls="profile-tab-icon-pane2" aria-selected="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg> প্রক্রিয়াধীন পত্র
-                            </button>
-                        </li> --}}
                     </ul>
                     
                     <div class="tab-content" id="myTabContent2">
@@ -78,35 +73,25 @@
                                             <thead>
                                                 <tr>
                                                     <th rowspan="2"><div class="th-content">শাখার নাম</div></th>
-                                                    <th rowspan="2"><div class="th-content text-center">সর্বমোট</div></th>
+                                                    <th rowspan="2"><div class="th-content text-center">শাখা ভিত্তিক মোট</div></th>
                                                     <th colspan="4"><div class="th-content text-center"><span class="badge badge-warning">চলমান</span></div></th>
                                                     <th rowspan="2"><div class="th-content text-center"><span class="badge badge-success">সম্পন্ন</span></div></th>
                                                 </tr>
                                                 <tr>
-                                                    <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-secondary">৭ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭-১৫ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫-৩০ দিন যাবৎ</span></div></th>
-                                                    <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-danger">৩০ দিনের বেশি</span></div></th>
+                                                    <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-secondary">৭ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-warning">৭-১৫ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-danger">১৫-৩০ দিন যাবৎ</span></div></th>
+                                                    <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিনের বেশি</span></div></th>
                                                 </tr>
 
-                                                {{-- <tr>
-                                                    <th><div class="th-content">শাখার নাম</div></th>
-                                                    <th><div class="th-content text-center">সর্বমোট</div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-secondary">৭ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭-১৫ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫-৩০ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">৩০ দিনের বেশি</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-warning">চলমান</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-success">সম্পন্ন</span></div></th>
-                                                </tr> --}}
                                             </thead>
-                                            <tbody>
+                                            <tbody id="results-body">
                                                 @foreach ($results as $result)
                                                 <tr>
                                                     <td rowspan="2" class="text-left"><span class="badge badge-light-info">{{ $result->section_name }}</span></td>
-                                                    <td rowspan="2" class="text-center">{{ strtr($result->total_count, $engToBng) }}</td>
-                                                    <td colspan="4" class="text-center">{{ strtr($result->total_status_1, $engToBng) }}</td>
-                                                    <td rowspan="2" class="text-center">{{ strtr($result->total_status_2, $engToBng) }}</td>
+                                                    <td rowspan="2" class="text-center total-count">{{ strtr($result->total_count, $engToBng) }}</td>
+                                                    <td colspan="4" class="text-center total-status-1">{{ strtr($result->total_status_1, $engToBng) }}</td>
+                                                    <td rowspan="2" class="text-center total-status-2">{{ strtr($result->total_status_2, $engToBng) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center rounded-0">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
@@ -116,12 +101,12 @@
                                                 </tr>
                                                 <tr></tr>
                                                 @endforeach
-
+                                            
                                                 <tr>
-                                                    <td class="text-center">মোট</td>
-                                                    <td class="text-center">sum of total_count of all row</td>
-                                                    <td colspan="4" class="text-center">sum of total_status_1 of all row</td>
-                                                    <td class="text-center">sum of total_status_2 of all row</td>
+                                                    <td class="text-center">সর্বমোট</td>
+                                                    <td class="text-center" id="sum-total-count">0</td>
+                                                    <td colspan="4" class="text-center" id="sum-total-status-1">0</td>
+                                                    <td class="text-center" id="sum-total-status-2">0</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -129,43 +114,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="tab-pane fade" id="profile-tab-icon-pane2" role="tabpanel" aria-labelledby="profile-tab-icon" tabindex="0">
-                            <div class="widget widget-table-two border-0">
-
-                                <div class="widget-heading">
-                                    <h5 class="">প্রক্রিয়াধীন পত্রের দিনভিত্তিক অবস্থা</h5>
-                                </div>
-                    
-                                <div class="widget-content">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th><div class="th-content">শাখার নাম</div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-secondary">৩ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-warning">৭ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিন</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-danger">১৫ দিনের বেশি</span></div></th>
-                                                    <th><div class="th-content text-center">মোট</div></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($processing_letters_duration as $result)
-                                                <tr>
-                                                    <td class="text-left"><span class="badge badge-light-info">{{ $result->section_name }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_3_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->more_than_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->total, $engToBng) }}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
 
                 </div>
@@ -193,4 +141,48 @@
     // document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
     // document.getElementById("letters_ul").className += " show";
 </script>
+
+<script>
+    // To update the sums of total_count, total_status_1, and total_status_2 dynamically using JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to convert Bengali numerals to English numerals
+        function toEnglishNumerals(bengaliNumeral) {
+            return bengaliNumeral.replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
+        }
+
+        // Function to convert English numerals to Bengali numerals
+        function toBengaliNumerals(englishNumeral) {
+            return englishNumeral.toString().replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+        }
+
+        // Function to sum values in a column with a given class name
+        function sumColumn(className) {
+            let sum = 0;
+            document.querySelectorAll(className).forEach(cell => {
+                const num = parseInt(toEnglishNumerals(cell.textContent));
+                if (!isNaN(num)) {
+                    sum += num;
+                }
+            });
+            return sum;
+        }
+
+        // Function to update the sums and display them in Bengali numerals
+        function updateSums() {
+            const sumTotalCount = sumColumn('.total-count');
+            const sumTotalStatus1 = sumColumn('.total-status-1');
+            const sumTotalStatus2 = sumColumn('.total-status-2');
+
+            document.getElementById('sum-total-count').textContent = toBengaliNumerals(sumTotalCount);
+            document.getElementById('sum-total-status-1').textContent = toBengaliNumerals(sumTotalStatus1);
+            document.getElementById('sum-total-status-2').textContent = toBengaliNumerals(sumTotalStatus2);
+        }
+
+        updateSums();
+    });
+
+
+</script>
+
+
 @endsection
