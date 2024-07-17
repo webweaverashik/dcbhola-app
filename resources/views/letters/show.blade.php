@@ -30,7 +30,7 @@
             <div class="widget-header">
                 <div class="row justify-content-between">
                     <div class="col-md-auto col-12">
-                        <h4>সকল ডাক/চিঠি</h4>
+                        <h4 id="dynamic-title">সকল ডাক/চিঠি</h4>
                     </div>
                 </div>
             </div>
@@ -478,6 +478,76 @@
 
     });
     // ------- Letter View Modal Data Showing Ends -------
+
+
+    // ------- Dynamic Page Heading Starts -------
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the section name from the PHP variable
+        const sectionName = '{{ $sectionName }}';
+        console.log(sectionName);
+
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let m;
+            while (m = regex.exec(queryString)) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2].replace(/\+/g, ' '));
+            }
+            return params;
+        }
+
+        // Function to update the title based on parameters
+        function updateTitle() {
+            const params = getQueryParams();
+            // const sectionName = params.section;
+            const days = params.days;
+            const status = params.status;
+
+            // let title = 'সকল ডাক/চিঠি'; // Default title
+            let title = ''; // Initialize title
+
+            // Check if sectionName is set
+            if (sectionName && sectionName !== '0') {
+                title = `${sectionName}র`; // Use the section name from the Blade variable
+            } else {
+                title = 'সকল শাখা'; // Default to all sections
+            }
+
+            if (days && days != 'all_days') {
+                if (days == 'up_to_7_days') {
+                    title += ' (৭ দিন যাবৎ)';
+                } else if (days == 'up_to_15_days') {
+                    title += ' (১৫ দিন যাবৎ)';
+                } else if (days == 'up_to_30_days') {
+                    title += ' (৩০ দিন যাবৎ)';
+                } else if (days == 'days_30_plus') {
+                    title += ' (৩০ দিনের বেশি)';
+                }
+            } else if (days == 'all_days') {
+                title += ' (সকল সময়ের)';
+            }
+
+            if (status) {
+                if (status == 1) {
+                    title += ' <span class="badge badge-warning">চলমান</span> পত্রসমূহ';
+                } else if (status == 2) {
+                    title += ' <span class="badge badge-success">সম্পন্ন</span> পত্রসমূহ';
+                }
+                else {
+                    title += ' পত্রসমূহ'; // Default case for other statuses
+                }
+            }
+
+            // Set the title
+            document.getElementById('dynamic-title').innerHTML = title;
+        }
+
+        // Call the function to update the title
+        updateTitle();
+    });
+    // ------- Dynamic Page Heading Ends -------
     
 </script>
 

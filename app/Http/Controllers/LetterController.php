@@ -280,6 +280,12 @@ class LetterController extends Controller
         */        
         if ($sectionId != 0) {
             $letters = $letters->where('letters.section_to', $sectionId);
+
+            // Running this query to fetch the page heading section name
+            $section = DB::table('sections')
+                            ->where('id', $sectionId)
+                            ->first();
+            $sectionName = $section ? $section->name : ''; // Get only the section name
         }
         elseif ($sectionId == 0) {
             if ($role == 3) {
@@ -288,6 +294,8 @@ class LetterController extends Controller
             elseif ($role == 4) {
                 $letters = $letters->where('sections.staff_id', $loginId);
             }
+
+            $sectionName = "সকল শাখা";
         }
 
         // Handle status
@@ -297,25 +305,35 @@ class LetterController extends Controller
 
         // Handle the date range based on the 'days' parameter
         if ($days != 'all_days') {
-            $dateRange = null;
+            $dateRangeStart = null;
+            $dateRangeEnd = null;
+
             if ($days == 'up_to_7_days') {
-                $dateRange = now()->subDays(7);
+                $dateRangeStart = now()->subDays(7);
+                $dateRangeEnd = now(); // From now to 7 days ago
             } elseif ($days == 'up_to_15_days') {
-                $dateRange = now()->subDays(15);
+                $dateRangeStart = now()->subDays(15);
+                $dateRangeEnd = now()->subDays(8); // From 8 to 15 days ago
             } elseif ($days == 'up_to_30_days') {
-                $dateRange = now()->subDays(30);
+                $dateRangeStart = now()->subDays(30);
+                $dateRangeEnd = now()->subDays(16); // From 16 to 30 days ago
             } elseif ($days == 'days_30_plus') {
-                $dateRange = now()->subDays(30);
+                $dateRangeStart = now()->subDays(30);
+                $dateRangeEnd = null; // More than 30 days
             }
 
-            if ($days != 'days_30_plus') {
-                $letters = $letters->where('letters.created_at', '>=', $dateRange);
+            // Apply the date filters
+            if ($days == 'days_30_plus') {
+                $letters = $letters->where('letters.created_at', '<=', $dateRangeStart);
             } else {
-                $letters = $letters->where('letters.created_at', '<=', $dateRange);
+                $letters = $letters->whereBetween('letters.created_at', [$dateRangeStart, $dateRangeEnd]);
             }
         }
 
+
         $letters = $letters->get();
+
+
 
         // Create an instance of the NumberToBangla class
         $numToBangla = new NumberToBangla();
@@ -327,8 +345,10 @@ class LetterController extends Controller
             return $letter;
         });
         
+        // return $sectionName;
         // return $letters;
-        return view('letters.show', compact('letters'));
+
+        return view('letters.show', compact('letters', 'sectionName'));
     }
     /**
      * AJAX request for letters

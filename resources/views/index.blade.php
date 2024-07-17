@@ -79,8 +79,8 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-secondary">৭ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-light-warning">৭-১৫ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-light-danger">১৫-৩০ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-warning">১৫ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিন যাবৎ</span></div></th>
                                                     <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিনের বেশি</span></div></th>
                                                 </tr>
 
