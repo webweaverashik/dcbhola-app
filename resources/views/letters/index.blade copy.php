@@ -329,18 +329,6 @@
 
         setCustomRangeToThisMonth();
 
-
-        // Here's how you can modify your DataTables configuration to include a custom sorting function for the column displaying the iteration number:
-        $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
-            // Convert Bengali digits to English digits for sorting
-            var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
-            var engData = data.replace(/[০-৯]/g, function (match) {
-                return engDigits[match];
-            });
-            return parseInt(engData, 10);
-        };
-
-        
         var table = $('#style-3').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
@@ -355,12 +343,6 @@
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10,
-            "columnDefs": [
-                {
-                    "targets": 0, // Adjust the target column index as per your table structure
-                    "type": "bengali-numeric"
-                }
-            ]
         });
 
         $.fn.dataTable.ext.search.push(

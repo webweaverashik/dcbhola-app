@@ -1,13 +1,13 @@
 @section('page-level-custom-css')
     <link href="{{ asset('src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('src/assets/css/light/components/list-group.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('src/assets/css/light/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/light/components/tabs.css') }}" rel="stylesheet" type="text/css" />
 
 
     <link href="{{ asset('src/assets/css/dark/components/list-group.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('src/assets/css/dark/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/dark/components/tabs.css') }}" rel="stylesheet" type="text/css" />
 
@@ -79,8 +79,8 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-secondary">৭ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-light-warning">৭-১৫ দিন যাবৎ</span></div></th>
-                                                    <th><div class="th-content text-center"><span class="badge badge-light-danger">১৫-৩০ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-warning">১৫ দিন যাবৎ</span></div></th>
+                                                    <th><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিন যাবৎ</span></div></th>
                                                     <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিনের বেশি</span></div></th>
                                                 </tr>
 
@@ -89,24 +89,24 @@
                                                 @foreach ($results as $result)
                                                 <tr>
                                                     <td rowspan="2" class="text-left"><span class="badge badge-light-info">{{ $result->section_name }}</span></td>
-                                                    <td rowspan="2" class="text-center total-count">{{ strtr($result->total_count, $engToBng) }}</td>
-                                                    <td colspan="4" class="text-center total-status-1">{{ strtr($result->total_status_1, $engToBng) }}</td>
-                                                    <td rowspan="2" class="text-center total-status-2">{{ strtr($result->total_status_2, $engToBng) }}</td>
+                                                    <td rowspan="2" class="text-center total-count"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=0" target="_blank">{{ strtr($result->total_count, $engToBng) }}</a></td>
+                                                    <td colspan="4" class="text-center total-status-1"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=1" target="_blank">{{ strtr($result->total_status_1, $engToBng) }}</a></td>
+                                                    <td rowspan="2" class="text-center total-status-2"><a href="/letters/show?section={{ $result->section_id }}&days=all_days&status=2" target="_blank">{{ strtr($result->total_status_2, $engToBng) }}</a></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center rounded-0">{{ strtr($result->up_to_7_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_15_days, $engToBng) }}</td>
-                                                    <td class="text-center">{{ strtr($result->up_to_30_days, $engToBng) }}</td>
-                                                    <td class="text-center rounded-0">{{ strtr($result->days_30_plus, $engToBng) }}</td>
+                                                    <td class="text-center rounded-0"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_7_days&status=1" target="_blank">{{ strtr($result->up_to_7_days, $engToBng) }}</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_15_days&status=1" target="_blank">{{ strtr($result->up_to_15_days, $engToBng) }}</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section={{ $result->section_id }}&days=up_to_30_days&status=1" target="_blank">{{ strtr($result->up_to_30_days, $engToBng) }}</a></td>
+                                                    <td class="text-center rounded-0"><a href="/letters/show?section={{ $result->section_id }}&days=days_30_plus&status=1" target="_blank">{{ strtr($result->days_30_plus, $engToBng) }}</a></td>
                                                 </tr>
                                                 <tr></tr>
                                                 @endforeach
                                             
                                                 <tr>
                                                     <td class="text-center">সর্বমোট</td>
-                                                    <td class="text-center" id="sum-total-count">0</td>
-                                                    <td colspan="4" class="text-center" id="sum-total-status-1">0</td>
-                                                    <td class="text-center" id="sum-total-status-2">0</td>
+                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=0" target="_blank" id="sum-total-count">0</a></td>
+                                                    <td colspan="4" class="text-center"><a href="/letters/show?section=0&days=all_days&status=1" target="_blank" id="sum-total-status-1">0</a></td>
+                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=2" target="_blank" id="sum-total-status-2">0</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -127,11 +127,11 @@
 @section('scripts')
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script>
-<script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
-<script src="{{ asset('src/assets/js/dashboard/dash_2.js') }}"></script>
+{{-- <script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script> --}}
+{{-- <script src="{{ asset('src/assets/js/dashboard/dash_2.js') }}"></script> --}}
 
-<script src="{{ asset('custom/dashboard.js') }}"></script>
+{{-- <script src="{{ asset('custom/dashboard.js') }}"></script> --}}
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <script>
@@ -181,6 +181,11 @@
         updateSums();
     });
 
+
+    // Refresh the page every 30 seconds (30000 milliseconds)
+    setInterval(function(){
+        window.location.reload();
+    }, 30000); // 30000 milliseconds = 30 seconds
 
 </script>
 

@@ -100,7 +100,7 @@ class UserController extends Controller
             'email'         => 'required|email',
         ]);
 
-        // Officer Role Type setting
+        // Officer Role Type setting (ADC or Asst. Commissioner)
         if ($request->role == '2')
             $role = 2;
         elseif ($request->role == '3')
@@ -153,7 +153,6 @@ class UserController extends Controller
             'designation'   => 'required|string',
             'phone'         => 'required|string',
             'email'         => 'required|email',
-            'role'          => 'required|string',
         ]);
       
         if ($request->has('photo_url')) 

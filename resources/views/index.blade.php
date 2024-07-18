@@ -1,13 +1,13 @@
 @section('page-level-custom-css')
     <link href="{{ asset('src/plugins/src/apex/apexcharts.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('src/assets/css/light/components/list-group.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('src/assets/css/light/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('src/assets/css/light/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/light/components/tabs.css') }}" rel="stylesheet" type="text/css" />
 
 
     <link href="{{ asset('src/assets/css/dark/components/list-group.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('src/assets/css/dark/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/dark/components/tabs.css') }}" rel="stylesheet" type="text/css" />
 
@@ -17,7 +17,7 @@
 @extends('layouts.layout')
 
 
-@section('title', 'Dashboard')
+@section('title', 'ড্যাশবোর্ড')
 
 @section('content')
 
@@ -83,7 +83,6 @@
                                                     <th><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিন যাবৎ</span></div></th>
                                                     <th class="rounded-0"><div class="th-content text-center"><span class="badge badge-light-danger">৩০ দিনের বেশি</span></div></th>
                                                 </tr>
-
                                             </thead>
                                             <tbody id="results-body">
                                                 @foreach ($results as $result)
@@ -101,7 +100,6 @@
                                                 </tr>
                                                 <tr></tr>
                                                 @endforeach
-                                            
                                                 <tr>
                                                     <td class="text-center">সর্বমোট</td>
                                                     <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=0" target="_blank" id="sum-total-count">0</a></td>
@@ -127,11 +125,11 @@
 @section('scripts')
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script>
-<script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script>
-<script src="{{ asset('src/assets/js/dashboard/dash_2.js') }}"></script>
+{{-- <script src="{{ asset('src/plugins/src/apex/apexcharts.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('src/assets/js/dashboard/dash_1.js') }}"></script> --}}
+{{-- <script src="{{ asset('src/assets/js/dashboard/dash_2.js') }}"></script> --}}
 
-<script src="{{ asset('custom/dashboard.js') }}"></script>
+{{-- <script src="{{ asset('custom/dashboard.js') }}"></script> --}}
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 <script>
@@ -180,6 +178,12 @@
 
         updateSums();
     });
+
+
+    // Refresh the page every 30 seconds (30000 milliseconds)
+    setInterval(function(){
+        window.location.reload();
+    }, 60000); // 30000 milliseconds = 30 seconds
 
 
 </script>

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'All Letters')
+@section('title', 'সকল পত্র')
 
 
 @section('page-level-custom-css')
@@ -185,7 +185,7 @@
                             <td>
                                 <div class="action-btns">
                                     
-                                    <a href="{{ $letter->file_url }}" target="_blank" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="ডাউনলোড">
+                                    <a href="http://localhost:8000/{{ $letter->file_url }}" target="_blank" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="ডাউনলোড">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                     </a>  {{-- File Download Button --}}
 
@@ -240,6 +240,16 @@
 
     // ------- Letter Filter Buttons JS Codes Starts -------
     $(document).ready(function() {
+        // Here's how you can modify your DataTables configuration to include a custom sorting function for the column displaying the iteration number:
+        $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
+            // Convert Bengali digits to English digits for sorting
+            var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
+            var engData = data.replace(/[০-৯]/g, function (match) {
+                return engDigits[match];
+            });
+            return parseInt(engData, 10);
+        };
+        
         var table = $('#style-3').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
@@ -254,6 +264,12 @@
             "stripeClasses": [],
             "lengthMenu": [10, 20, 50, 100],
             "pageLength": 10,
+            "columnDefs": [
+                {
+                    "targets": 0, // Adjust the target column index as per your table structure
+                    "type": "bengali-numeric"
+                }
+            ]
         });
 
         // Trigger initial draw
@@ -548,6 +564,12 @@
         updateTitle();
     });
     // ------- Dynamic Page Heading Ends -------
+
+
+    // Refresh the page every 30 seconds (30000 milliseconds)
+    setInterval(function(){
+        window.location.reload();
+    }, 60000); // 30000 milliseconds = 30 seconds
     
 </script>
 

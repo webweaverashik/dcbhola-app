@@ -20,7 +20,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label><span class="text-danger">*</span>
+                                                        <label for="photo_url">প্রোফাইল ছবি (সর্বোচ্চ ১০০ KB)</label>
                                                         <input type="file" class="form-control mb-3" accept="image/jpg, image/png, image/jpeg, image/webp" name="photo_url">
                                                         @error('photo_url') <span class="text-danger">{{ $message }}</span> @enderror
                                                     </div>
