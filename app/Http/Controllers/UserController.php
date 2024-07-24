@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Rakibhstu\Banglanumber\NumberToBangla;
-
 
 class UserController extends Controller
 {
@@ -21,13 +18,13 @@ class UserController extends Controller
     public function index()
     {
         $role = session('role');
-        if ($role != 1) // Only DC has permissions to visit this page
-        {
+        if ($role != 1) { // Only DC has permissions to visit this page
             return back()->with('warning', 'ঐ পেজে শুধুমাত্র ডিসি স্যারের অনুমতি আছে।');
         }
 
-
-        $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->orderBy('role', 'asc')->get();
+        // $officers = User::whereIn('role', [2, 3])->where('is_deleted', 0)->orderBy('role', 'asc')->get();
+        $adc_users = User::where('role', 2)->where('is_deleted', 0)->get();
+        $officers = User::where('role', 3)->where('is_deleted', 0)->get();
         $staffs = User::where('role', 4)->where('is_deleted', 0)->get();
 
         // Create an instance of the NumberToBangla class
@@ -36,23 +33,20 @@ class UserController extends Controller
         // Iterate over each student and convert phone numbers, birth date, and created_at to Bangla for frontend display
         $officers->transform(function ($officer) use ($numToBangla) {
             $officer->created_at_bn = $this->convertDateTimeToBangla($officer->created_at, $numToBangla);
-            
+
             return $officer;
         });
 
         $staffs->transform(function ($staff) use ($numToBangla) {
             $staff->created_at_bn = $this->convertDateTimeToBangla($staff->created_at, $numToBangla);
-            
+
             return $staff;
         });
 
-
         $sections = Section::get();
 
-        return view('users.index', compact('officers', 'staffs', 'sections'));
+        return view('users.index', compact('adc_users', 'officers', 'staffs', 'sections'));
     }
-
-
 
     private function convertDateTimeToBangla($dateTime, $numToBangla)
     {
@@ -64,7 +58,7 @@ class UserController extends Controller
         $minute = $numToBangla->bnNum($dateTime->format('i'));
         $second = $numToBangla->bnNum($dateTime->format('s'));
 
-        $hour = date("H", strtotime($dateTime));
+        $hour = date('H', strtotime($dateTime));
         $period = '';
         if ($hour >= 5 && $hour < 12) {
             $period = 'সকাল';
@@ -93,52 +87,48 @@ class UserController extends Controller
     public function addOfficer(Request $request)
     {
         $request->validate([
-            'photo_url'     => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
-            'name'          => 'required|min:5|max:100|string',
-            'designation'   => 'required|string',
-            'phone'         => 'required|string',
-            'email'         => 'required|email',
+            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
+            'name' => 'required|min:5|max:100|string',
+            'designation' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
         ]);
 
         // Officer Role Type setting (ADC or Asst. Commissioner)
-        if ($request->role == '2')
+        if ($request->role == '2') {
             $role = 2;
-        elseif ($request->role == '3')
+        } elseif ($request->role == '3') {
             $role = 3;
-        else
+        } else {
             $role = 3;
+        }
 
-        if ($request->has('photo_url')) 
-        {
+        if ($request->has('photo_url')) {
             $image = $request->file('photo_url');
             $extension = $image->getClientOriginalExtension();
-            
 
-            $filename = 'photo_' . time() . '.' . $extension;
+            $filename = 'photo_'.time().'.'.$extension;
 
-            
             $path = 'uploads/photo/';
             $image->move($path, $filename);
 
             User::create([
-                'name'          => $request->name,
-                'email'         => $request->email,
-                'phone'         => $request->phone,
-                'role'          => $role,
-                'password'      => bcrypt('12345678'),
-                'designation'   => $request->designation,
-                'photo_url'     => $path.$filename
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role' => $role,
+                'password' => bcrypt('12345678'),
+                'designation' => $request->designation,
+                'photo_url' => $path.$filename,
             ]);
-        } 
-        else
-        {
+        } else {
             User::create([
-                'name'          => $request->name,
-                'email'         => $request->email,
-                'phone'         => $request->phone,
-                'role'          => $role,
-                'password'      => bcrypt('12345678'),
-                'designation'   => $request->designation,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role' => $role,
+                'password' => bcrypt('12345678'),
+                'designation' => $request->designation,
             ]);
         }
 
@@ -148,54 +138,49 @@ class UserController extends Controller
     public function addStaff(Request $request)
     {
         $request->validate([
-            'photo_url'     => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
-            'name'          => 'required|min:5|max:100|string',
-            'designation'   => 'required|string',
-            'phone'         => 'required|string',
-            'email'         => 'required|email',
+            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
+            'name' => 'required|min:5|max:100|string',
+            'designation' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
         ]);
-      
-        if ($request->has('photo_url')) 
-        {
+
+        if ($request->has('photo_url')) {
             $image = $request->file('photo_url');
             $extension = $image->getClientOriginalExtension();
-            
 
-            $filename = 'photo_' . time() . '.' . $extension;
+            $filename = 'photo_'.time().'.'.$extension;
 
-            
             $path = 'uploads/photo/';
             $image->move($path, $filename);
 
             User::create([
-                'name'          => $request->name,
-                'email'         => $request->email,
-                'phone'         => $request->phone,
-                'role'          => 4,
-                'password'      => bcrypt('12345678'),
-                'designation'   => $request->designation,
-                'photo_url'     => $path.$filename
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role' => 4,
+                'password' => bcrypt('12345678'),
+                'designation' => $request->designation,
+                'photo_url' => $path.$filename,
             ]);
-        } 
-        else
-        {
+        } else {
             User::create([
-                'name'          => $request->name,
-                'email'         => $request->email,
-                'phone'         => $request->phone,
-                'role'          => 4,
-                'password'      => bcrypt('12345678'),
-                'designation'   => $request->designation,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role' => 4,
+                'password' => bcrypt('12345678'),
+                'designation' => $request->designation,
             ]);
         }
 
         return redirect()->back()->with('success', 'কর্মচারী সফলভাবে যুক্ত হয়েছে।');
     }
 
-    
     public function ajaxUserInfo(string $id)
     {
         $user = User::findOrFail($id);
+
         return $user;
     }
 
@@ -211,21 +196,18 @@ class UserController extends Controller
         // return view('users.profile', compact('profile'));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit()
     {
         $id = session('loginId');
-        
+
         $profile = User::findOrFail($id);
 
         // return  $profile;
         return view('users.profile', compact('profile'));
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -233,26 +215,22 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $id = session('loginId');
-        
+
         $request->validate([
             'name' => 'required|min:5|max:100|string',
             'phone' => 'required|string',
             'designation' => 'required|string',
-            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100'
+            'photo_url' => 'nullable|mimes:jpg,png,jpeg,webp|max:100',
         ]);
-
 
         $user = User::findOrFail($id);
 
-        if ($request->has('photo_url'))
-        {
+        if ($request->has('photo_url')) {
             $image = $request->file('photo_url');
             $extension = $image->getClientOriginalExtension();
-            
 
-            $filename = 'photo_' . session('loginId') . '.' . $extension;
+            $filename = 'photo_'.session('loginId').'.'.$extension;
 
-            
             $path = 'uploads/photo/';
             $image->move($path, $filename);
 
@@ -263,25 +241,23 @@ class UserController extends Controller
             User::findOrFail($id)->update([
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'designation'=> $request->designation,
-                'photo_url' => $path.$filename
+                'designation' => $request->designation,
+                'photo_url' => $path.$filename,
             ]);
 
             session()->put('photo_url', $path.$filename);
-        } 
-        else
-        {
-            $path = NULL;
-            $filename = NULL;
+        } else {
+            $path = null;
+            $filename = null;
 
             User::findOrFail($id)->update([
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'designation'=> $request->designation,
+                'designation' => $request->designation,
                 // 'photo_url' => $path.$filename
             ]);
         }
-        
+
         session()->put('name', $request->name);
         session()->put('designation', $request->designation);
         // session()->put('photo_url', $path.$filename);
@@ -295,13 +271,13 @@ class UserController extends Controller
     public function passwordUpdate(Request $request)
     {
         $request->validate([
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()]
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
         ]);
 
         // return bcrypt($request->password);
 
         User::findOrFail(session('loginId'))->update([
-            'password' =>  bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
@@ -313,18 +289,17 @@ class UserController extends Controller
     public function passwordReset(Request $request)
     {
         $request->validate([
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()]
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
         ]);
 
         // return bcrypt($request->password);
 
         User::findOrFail($request->id)->update([
-            'password' =>  bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->back()->with('success', 'পাসওয়ার্ড সফলভাবে আপডেট হয়েছে।');
     }
-
 
     public function updateOfficer(Request $request)
     {
@@ -336,42 +311,44 @@ class UserController extends Controller
         ]);
 
         User::findOrFail($request->id)->update([
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'phone'         => $request->phone,
-            'designation'   => $request->designation,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'designation' => $request->designation,
         ]);
 
         return redirect()->back()->with('success', 'কর্মকর্তার প্রোফাইল সফলভাবে আপডেট হয়েছে।');
     }
+
     public function updateStaff(Request $request)
     {
         $request->validate([
-            'name'          => 'required|min:5|max:100|string',
-            'email'         => 'required|email',
-            'phone'         => 'required|string',
-            'designation'   => 'required|string',
-            'role'          => 'required|string',
+            'name' => 'required|min:5|max:100|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'designation' => 'required|string',
+            'role' => 'required|string',
         ]);
 
         // Staff Type setting
-        if ($request->role == '3')
+        if ($request->role == '3') {
             $role = 3;
-        elseif ($request->role == '4')
+        } elseif ($request->role == '4') {
             $role = 4;
-        else
+        } else {
             $role = 3;
+        }
 
         User::findOrFail($request->id)->update([
-            'name'          => $request->name,
-            'email'         => $request->email,
-            'phone'         => $request->phone,
-            'designation'   => $request->designation,
-            'role'          => $role,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'designation' => $request->designation,
+            'role' => $role,
         ]);
 
         if ($role == 4) {
-            Section::where('staff_id', $request->id)->update(['staff_id' => NULL]);
+            Section::where('staff_id', $request->id)->update(['staff_id' => null]);
         }
 
         return redirect()->back()->with('success', 'কর্মচারির প্রোফাইল সফলভাবে আপডেট হয়েছে।');
@@ -387,18 +364,17 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        
-        if ($user->role == 2) {
+
+        if ($user->role == 3) {
             Section::where('officer_id', $id)->update([
-               'officer_id' => NULL
+                'officer_id' => null,
             ]);
-        }
-        elseif ($user->role == 3) {
+        } elseif ($user->role == 4) {
             Section::where('staff_id', $id)->update([
-               'staff_id' => NULL
+                'staff_id' => null,
             ]);
         }
-        
+
         return redirect()->back()->with('success', 'ইউজার সফলভাবে ডিলিট হয়েছে।');
     }
 }

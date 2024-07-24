@@ -27,7 +27,18 @@
                                                 </div>
         
                                                 <div class="col-md-12">
-                                                    <label for="officer_id" class="form-label">দায়িত্বপ্রাপ্ত কর্মকর্তা</label><span class="text-danger">*</span>
+                                                    <label for="adc_id" class="form-label">সংশ্লিষ্ট অতিরিক্ত জেলা প্রশাসক</label><span class="text-danger">*</span>
+                                                    <select id="adc_id" class="form-select mb-3" name="adc_id" required>
+                                                        <option value="" selected disabled>নির্বাচন করুন</option>
+                                                    @foreach ($adc_users as $adc)
+                                                        <option value="{{ $adc->id }}">{{ $adc->name . ', ' . $adc->designation}}</option>
+                                                    @endforeach
+                                                    </select>
+                                                    @error('adc_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                                </div>
+        
+                                                <div class="col-md-12">
+                                                    <label for="officer_id" class="form-label">শাখার দায়িত্বপ্রাপ্ত কর্মকর্তা</label><span class="text-danger">*</span>
                                                     <select id="officer_id" class="form-select mb-3" name="officer_id" required>
                                                         <option value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($officers as $officer)

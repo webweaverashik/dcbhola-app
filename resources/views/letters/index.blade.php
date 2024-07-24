@@ -297,12 +297,18 @@
     document.getElementById("letters_ul").className += " show";
 </script>
 
+{{-- Page Level Custom JS Starts --}}
 {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
 <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/jszip.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.print.min.js') }}"></script>
+{{-- Page Level Custom JS Ends --}}
+
 
 <script>
-
     // ------- Letter Filter Buttons JS Codes Starts -------
     $(document).ready(function() {
         function getLast15Days() {
@@ -345,6 +351,13 @@
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
             "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            buttons: {
+                buttons: [
+                    { extend: 'csv', className: 'btn btn-outline-info' },
+                    { extend: 'excel', className: 'btn btn-outline-success' },
+                    { extend: 'print', className: 'btn btn-outline-secondary' }
+                ]
+            },
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
@@ -684,13 +697,6 @@
 
     });
     // ------- Letter View Modal Data Showing Ends -------
-
-
-    // Refresh the page every 30 seconds (30000 milliseconds)
-    setInterval(function(){
-        window.location.reload();
-    }, 60000); // 30000 milliseconds = 30 seconds
-    
 </script>
 
 

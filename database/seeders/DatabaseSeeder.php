@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\User;
+
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'জেলা প্রশাসক',
             'role' => 1,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -31,9 +32,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অতিরিক্ত জেলা প্রশাসক (রাজস্ব)',
             'role' => 2,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
-        
+
         User::create([
             'name' => 'মো. আলমগীর হুসাইন',
             'email' => 'mahussain07@gmail.com',
@@ -41,7 +42,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অতিরিক্ত জেলা ম্যাজিস্ট্রেট',
             'role' => 2,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অতিরিক্ত জেলা প্রশাসক (সার্বিক)',
             'role' => 2,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -61,7 +62,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সিনিয়র সহকারী কমিশনার (রেভিনিউ ডেপুটি কালেক্টর)',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -71,7 +72,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -81,7 +82,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -91,7 +92,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -101,7 +102,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -111,7 +112,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -121,7 +122,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -131,7 +132,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -141,7 +142,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -151,7 +152,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'সহকারী কমিশনার',
             'role' => 3,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         // serial number 15
@@ -162,7 +163,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'উপ-সহকারী প্রশাসনিক কর্মকর্তা',
             'role' => 4,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -172,7 +173,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অফিস সহকারী কাম-কম্পিউটার মুদ্রাক্ষরিক',
             'role' => 4,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -182,7 +183,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অফিস সহকারী কাম-কম্পিউটার মুদ্রাক্ষরিক',
             'role' => 4,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -192,7 +193,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অফিস সহকারী কাম-কম্পিউটার মুদ্রাক্ষরিক',
             'role' => 4,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
 
         User::create([
@@ -202,11 +203,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'designation' => 'অফিস সহকারী কাম-কম্পিউটার মুদ্রাক্ষরিক',
             'role' => 4,
-            'photo_url' => NULL,
+            'photo_url' => null,
         ]);
-        
 
-
+        // Adding All Section Name and Officer ID
         Section::create(['name' => 'গোপনীয় শাখা']);
         Section::create(['name' => 'সাধারণ শাখা']);
         Section::create(['name' => 'নেজারত শাখা']);

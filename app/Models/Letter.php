@@ -10,6 +10,7 @@ class Letter extends Model
     use HasFactory;
 
     protected $table = 'letters';
+
     protected $fillable = [
         'received_date',
         'sender_name',
@@ -21,7 +22,6 @@ class Letter extends Model
         'uploaded_by',
         'section_to',
         'file_url',
-        'status'
+        'status',
     ];
-
 }

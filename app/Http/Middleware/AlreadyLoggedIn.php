@@ -15,9 +15,10 @@ class AlreadyLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Session()->has('loginId') && (url('login') == $request->url() || url('registration') == $request->url())){
+        if (Session()->has('loginId') && (url('login') == $request->url() || url('registration') == $request->url())) {
             return back()->with('message', 'আপনি এখনও লগইন অবস্থায় আছেন।');
         }
+
         return $next($request);
     }
 }

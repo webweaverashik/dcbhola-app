@@ -564,13 +564,6 @@
         updateTitle();
     });
     // ------- Dynamic Page Heading Ends -------
-
-
-    // Refresh the page every 30 seconds (30000 milliseconds)
-    setInterval(function(){
-        window.location.reload();
-    }, 60000); // 30000 milliseconds = 30 seconds
-    
 </script>
 
 

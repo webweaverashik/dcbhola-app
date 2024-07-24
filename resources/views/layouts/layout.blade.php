@@ -96,8 +96,9 @@
     <!-- END SWEET ALERT SCRIPTS -->
 
 
-    <!-- Custom Scripts from each page -->
+    <!-- Custom Scripts from each page Starts-->
     @yield('scripts')
+    <!-- Custom Scripts from each page Ends-->
 
     @if($message = session('success'))
         <script>

@@ -10,15 +10,6 @@
 
 @section('content')
 <div class="row">
-@if ($errors->any())
-    <div class="p-2">
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
     <div class="col-lg-12 layout-spacing layout-top-spacing">
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
@@ -29,7 +20,7 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <form class="row g-3" action="{{ url('letters/' . $letter->id . '/edit') }}" method="POST">
+                <form class="row g-3" action="{{ url('letters/' . $letter->id . '/edit') }}" method="POST" novalidate>
                     @csrf
                     @method('PUT')
 
@@ -152,34 +143,34 @@
 
                     <div class="col-md-6">
                         <label for="memorandum_no" class="form-label">স্মারক নং</label>
-                        <input type="text" class="form-control" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no" value="{{ $letter->memorandum_no }}">
+                        <input type="text" class="form-control @error('memorandum_no') border-danger @enderror" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no" value="{{ $letter->memorandum_no }}">
                         @error('memorandum_no') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="serial_no" class="form-label">ক্রমিক নং</label>
-                        <input type="text" class="form-control" id="serial_no" placeholder="পত্র গ্রহণ রেজিস্টারের ক্রমিক নং লিখুন" name="serial_no" value="{{ $letter->serial_no }}">
+                        <input type="text" class="form-control @error('serial_no') border-danger @enderror" id="serial_no" placeholder="পত্র গ্রহণ রেজিস্টারের ক্রমিক নং লিখুন" name="serial_no" value="{{ $letter->serial_no }}">
                         @error('serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="received_date" class="form-label">পত্র প্রাপ্তির তারিখ</label><span class="text-danger">*</span>
-                        <input type="date" class="form-control" id="received_date" name="received_date" value="{{ $letter->received_date }}" required>
+                        <input type="date" class="form-control @error('received_date') border-danger @enderror" id="received_date" name="received_date" value="{{ $letter->received_date }}" required>
                         @error('received_date') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="sender_name" class="form-label">কোথা হতে প্রাপ্ত</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="sender_name" placeholder="যেমনঃ মোঃ বজলুর রহমান, বোরহানউদ্দিন" name="sender_name" value="{{ $letter->sender_name }}" required>
+                        <input type="text" class="form-control @error('sender_name') border-danger @enderror" id="sender_name" placeholder="যেমনঃ মোঃ বজলুর রহমান, বোরহানউদ্দিন" name="sender_name" value="{{ $letter->sender_name }}" required>
                         @error('sender_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="sent_date" class="form-label">প্রেরণের তারিখ</label><span class="text-danger">*</span>
-                        <input type="date" class="form-control" id="sent_date" placeholder="Apartment, studio, or floor" name="sent_date" value="{{ $letter->sent_date }}" required>
+                        <input type="date" class="form-control @error('sent_date') border-danger @enderror" id="sent_date" placeholder="Apartment, studio, or floor" name="sent_date" value="{{ $letter->sent_date }}" required>
                         @error('sent_date') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="short_title" class="form-label">সংক্ষিপ্ত বিষয়</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="short_title" placeholder="যেমনঃ জমি শ্রেণী পরিবর্তনের জন্য আবেদন" name="short_title" value="{{ $letter->short_title }}" required>
+                        <input type="text" class="form-control @error('short_title') border-danger @enderror" id="short_title" placeholder="যেমনঃ জমি শ্রেণী পরিবর্তনের জন্য আবেদন" name="short_title" value="{{ $letter->short_title }}" required>
                         @error('short_title') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
@@ -195,7 +186,7 @@
                             @endforeach
                         </select> --}}
                         
-                        <select id="section_to" class="form-select" name="section_to" required>
+                        <select id="section_to" class="form-select @error('section_to') border-danger @enderror" name="section_to" required>
                             <option selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
                                 <option value="{{ $section->id }}" @if ($letter->section_to == $section->id) selected @endif >{{ $section->name }}</option>
@@ -206,7 +197,7 @@
 
                     <div class="col-md-6">           
                         <label for="comment" class="form-label">মন্তব্য যুক্ত করুন</label><span class="text-danger">*</span>
-                        <textarea class="form-control" name="comment" id="comment" rows="1" required></textarea>
+                        <textarea class="form-control @error('comment') border-danger @enderror" name="comment" id="comment" rows="1" required>{{ old('comment') }}</textarea>
                         @error('comment') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
 
@@ -226,6 +217,8 @@
                                 সম্পন্ন
                             </label>
                         </div>
+                        <br>
+                        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     {{-- <div class="col-md-6">

@@ -8,7 +8,7 @@
 //     dateFormat: "Y-m-d H:i",
 //     defaultDate: new Date()
 // });
-var f3 = flatpickr(document.getElementById('rangeCalendarFlatpickr'), {
+var f3 = flatpickr(document.getElementById('basicFlatpickr'), {
     mode: "range",
 });
 // var f4 = flatpickr(document.getElementById('timeFlatpickr'), {

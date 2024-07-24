@@ -49,17 +49,27 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th scope="col" class="fw-bold">ক্রমিক</th>
                                 <th scope="col" class="fw-bold">শাখার নাম</th>
                                 <th scope="col" class="fw-bold w-50">কর্মকর্তার নাম ও পদবী</th>
                                 <th scope="col" class="fw-bold w-50">কর্মচারির নাম ও পদবী</th>
                             @if (Session::get('role') == 1) 
-                                <th class="text-center" scope="col">কার্যক্রম</th> 
+                                <th class="fw-bold text-center" scope="col">কার্যক্রম</th> 
                             @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                // Define an array mapping English digits to Bengali digits
+                                $engToBng = ['0' => '০', '1' => '১', '2' => '২', '3' => '৩', '4' => '৪', '5' => '৫', '6' => '৬', '7' => '৭', '8' => '৮', '9' => '৯'];
+                            @endphp
+
                             @foreach ($sections as $section)                                
                                 <tr>
+                                    <td class="text-center fw-bold">
+                                        {{ strtr($loop->iteration, $engToBng) }}
+                                        {{-- {{ strtr((string)(int)$loop->iteration, $engToBng) }} --}}
+                                    </td>
                                     <td>
                                         <span class="badge badge-light-info">{{ $section->section_name }}</span>
                                     </td>
@@ -107,7 +117,7 @@
 @section('scripts')
 
 <!-- BEGIN THEME GLOBAL STYLE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script> --}}
 
 <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <!-- END THEME GLOBAL STYLE -->    
@@ -119,7 +129,7 @@
 
 
 <script>
-    // Section Modal AJAX
+    // ---- Edit Section Modal AJAX -----
     $(document).ready(function() {
         $('.btnEditSection').click(function() {
             const id = $(this).attr("data-id");
@@ -130,14 +140,25 @@
                     'id': id,
                 },
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
                     $('#sectionHiddenId').val(data.id);
                     $('#sectionEditName').val(data.name);
+
+                    // Setting ADC name selected
+                    $('#editADCId option').each(function() {
+                        if ($(this).val() == data.adc_id) {
+                            $(this).prop('selected', true);
+                        } else if (data.adc_id == null) {
+                            $('#adc_blank').prop('selected', true);
+                        }
+                    });
 
                     // Setting officer name selected
                     $('#editOfficerId option').each(function() {
                         if ($(this).val() == data.officer_id) {
                             $(this).prop('selected', true);
+                        } else if (data.officer_id == null) {
+                            $('#officer_blank').prop('selected', true);
                         }
                     });
 
@@ -145,6 +166,8 @@
                     $('#editStaffId option').each(function() {
                         if ($(this).val() == data.staff_id) {
                             $(this).prop('selected', true);
+                        } else if (data.staff_id == null){
+                            $('#staff_blank').prop('selected', true);
                         }
                     });
                 }

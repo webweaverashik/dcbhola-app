@@ -51,13 +51,13 @@
             <div class="widget-content widget-content-area border-0 p-0">
                 <div class="simple-tab">
                     
-                    <ul class="nav nav-tabs mb-1" id="myTab" role="tablist">
+                    {{-- <ul class="nav nav-tabs mb-1" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="home-tab-icon" data-bs-toggle="tab" data-bs-target="#home-tab-icon-pane2" type="button" role="tab" aria-controls="home-tab-icon-pane2" aria-selected="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg> ডাক/পত্র
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="2" x2="12" y2="9"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg> সকল পত্রের অবস্থা
                             </button>
                         </li>
-                    </ul>
+                    </ul> --}}
                     
                     <div class="tab-content" id="myTabContent2">
                         <div class="tab-pane fade show active" id="home-tab-icon-pane2" role="tabpanel" aria-labelledby="home-tab-icon" tabindex="0">
@@ -72,8 +72,8 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2"><div class="th-content">শাখার নাম</div></th>
-                                                    <th rowspan="2"><div class="th-content text-center">শাখা ভিত্তিক মোট</div></th>
+                                                    <th rowspan="2"><div class="th-content fw-bold">শাখার নাম</div></th>
+                                                    <th rowspan="2"><div class="th-content fw-bold text-center">শাখা ভিত্তিক মোট</div></th>
                                                     <th colspan="4"><div class="th-content text-center"><span class="badge badge-warning">চলমান</span></div></th>
                                                     <th rowspan="2"><div class="th-content text-center"><span class="badge badge-success">সম্পন্ন</span></div></th>
                                                 </tr>
@@ -101,10 +101,10 @@
                                                 <tr></tr>
                                                 @endforeach
                                                 <tr>
-                                                    <td class="text-center">সর্বমোট</td>
-                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=0" target="_blank" id="sum-total-count">0</a></td>
-                                                    <td colspan="4" class="text-center"><a href="/letters/show?section=0&days=all_days&status=1" target="_blank" id="sum-total-status-1">0</a></td>
-                                                    <td class="text-center"><a href="/letters/show?section=0&days=all_days&status=2" target="_blank" id="sum-total-status-2">0</a></td>
+                                                    <td class="fw-bold text-center">সর্বমোট</td>
+                                                    <td class="fw-bold text-center"><a href="/letters/show?section=0&days=all_days&status=0" target="_blank" id="sum-total-count">0</a></td>
+                                                    <td colspan="4" class="fw-bold text-center"><a href="/letters/show?section=0&days=all_days&status=1" target="_blank" id="sum-total-status-1">0</a></td>
+                                                    <td class="fw-bold text-center"><a href="/letters/show?section=0&days=all_days&status=2" target="_blank" id="sum-total-status-2">0</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>

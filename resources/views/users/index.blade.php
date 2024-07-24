@@ -49,16 +49,68 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col" class="w-50">নাম ও পদবি</th>
-                                <th scope="col">ইমেইল ও ফোন</th>
+                                <th scope="col" class="w-50 fw-bold">নাম ও পদবি</th>
+                                <th scope="col" class="fw-bold">ইমেইল ও ফোন</th>
                                 {{-- <th scope="col">একাউন্ট তৈরির সময়</th> --}}
-                                <th scope="col">দায়িত্বপ্রাপ্ত শাখা</th>
+                                <th scope="col" class="fw-bold">দায়িত্বপ্রাপ্ত শাখা</th>
                                 @if (Session::get('role') == 1) 
-                                    <th class="text-center" scope="col">কার্যক্রম</th> 
+                                    <th class="fw-bold text-center" scope="col">কার্যক্রম</th> 
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($adc_users as $adc)                                
+                                <tr>
+                                    <td class="text-wrap">
+                                        <div class="media">
+                                            <div class="avatar me-3">
+                                                @if ($adc->photo_url != NULL)
+                                                    <img alt="avatar" src="{{ url('/') . '/' . $adc->photo_url }}" class="rounded-circle" />
+                                                @else
+                                                    <img alt="avatar" src="{{ asset('custom/img/dummy-user.png') }}" class="rounded-circle" />
+                                                @endif
+                                            </div>
+                                            <div class="media-body align-self-center">
+                                                <h6 class="mb-0">{{ $adc->name }}</h6>
+                                                <span>{{ $adc->designation }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">{{ $adc->email }}</p>
+                                        <span>{{ $adc->phone }}</span>
+                                    </td>
+                                    {{-- <td>
+                                        <p class="mb-0">{{ $adc->created_at_bn }}</p>
+                                    </td> --}}
+                                    <td>
+                                        @foreach ($sections as $section)
+                                            @if ($section->adc_id == $adc->id)
+                                                <span class="badge badge-light-secondary mb-1">{{ $section->name }}</span>
+                                            @endif
+                                        @endforeach
+                                    </td>
+
+                                    @if (Session::get('role') == 1)
+                                        <td class="text-center">
+                                            <div class="action-btns">
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnOfficerEditId" data-toggle="tooltip" data-placement="top" title="সংশোধন" data-bs-toggle="modal" data-bs-target="#editOfficerModal" data-id="{{ $adc->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                                </a>
+                                                <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2 btnPasswordReset" data-toggle="tooltip" data-placement="top" title="পাসওয়ার্ড রিসেট" data-bs-toggle="modal" data-bs-target="#btnPasswordModal" data-id="{{ $adc->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-key"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                                                </a>
+                                                <a href="{{ url('users/' . $adc->id . '/delete') }}" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="মুছুন" onclick="deleteWarning(event)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                </tr>
+                            @endforeach
+
+
                             @foreach ($officers as $officer)                                
                                 <tr>
                                     <td class="text-wrap">
@@ -86,7 +138,7 @@
                                     <td>
                                         @foreach ($sections as $section)
                                             @if ($section->officer_id == $officer->id)
-                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span><br>
+                                                <span class="badge badge-light-success mb-1">{{ $section->name }}</span>
                                             @endif
                                         @endforeach
                                     </td>
@@ -142,12 +194,12 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col" class="w-50">নাম ও পদবি</th>
-                                <th scope="col">ইমেইল ও ফোন</th>
+                                <th scope="col" class="w-50 fw-bold">নাম ও পদবি</th>
+                                <th scope="col" class="fw-bold">ইমেইল ও ফোন</th>
                                 {{-- <th scope="col">একাউন্ট তৈরির সময়</th> --}}
-                                <th scope="col">সংশ্লিষ্ট শাখা</th>
+                                <th scope="col" class="fw-bold">সংশ্লিষ্ট শাখা</th>
                                 @if (Session::get('role') == 1)
-                                    <th class="text-center" scope="col">কার্যক্রম</th>
+                                    <th class="fw-bold text-center" scope="col">কার্যক্রম</th>
                                 @endif
                             </tr>
                         </thead>

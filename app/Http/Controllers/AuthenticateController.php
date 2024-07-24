@@ -17,17 +17,17 @@ class AuthenticateController extends Controller
 
     public function loginUser(Request $request)
     {
-        $request->validate([            
-            'email'=>'required|email:users',
-            'password'=>'required|min:6'
+        $request->validate([
+            'email' => 'required|email:users',
+            'password' => 'required|min:6',
         ]);
 
-        $user = User::where('email','=', $request->email)->where('is_deleted', '=', 0)->first();
+        $user = User::where('email', '=', $request->email)->where('is_deleted', '=', 0)->first();
 
         // return $user;
 
-        if($user){
-            if(Hash::check($request->password, $user->password)) {
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
                 // storing logged in user data into session variables
                 $request->session()->put('loginId', $user->id);
                 $request->session()->put('name', $user->name);
@@ -37,11 +37,11 @@ class AuthenticateController extends Controller
 
                 return redirect('dashboard')->with('success', 'লগইন সফল হয়েছে।');
             } else {
-                return back()->with('fail','পাসওয়ার্ড সঠিক নয়!');
+                return back()->with('fail', 'পাসওয়ার্ড সঠিক নয়!');
             }
         } else {
-            return back()->with('fail','ইমেইলটি নিবন্ধিত নয়!');
-        }        
+            return back()->with('fail', 'ইমেইলটি নিবন্ধিত নয়!');
+        }
     }
 
     //// Dashboard
@@ -49,16 +49,16 @@ class AuthenticateController extends Controller
     {
         return view('index');
     }
-    
+
     ///Logout
     public function logout()
     {
-        $data = array();
+        $data = [];
         if (Session::has('loginId')) {
             Session::pull('loginId');
+
             return redirect('login')->with('success', 'সফলভাবে লগআউট হয়েছেন।');
-        }
-        else {
+        } else {
             return redirect('login');
         }
     }

@@ -22,7 +22,7 @@
                     <div class="col-md-6">
                         <label class="form-label">পত্রের ধরন</label><span class="text-danger">*</span><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="type" value="1" id="official_letter" checked>
+                            <input class="form-check-input" type="radio" name="type" value="1" id="official_letter" @checked(old('type') != "2")>
                             <label class="form-check-label" for="official_letter">
                                 <span title="দাপ্তরিক ডাক">
                                     <svg height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
@@ -86,7 +86,7 @@
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="type" value="2" id="civil_letter">
+                            <input class="form-check-input" type="radio" name="type" value="2" id="civil_letter" @checked(old('type') == "2")>
                             <label class="form-check-label" for="civil_letter">
                                 <span title="নাগরিক ডাক">
                                     <svg height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
@@ -132,56 +132,54 @@
                                 </span> নাগরিক ডাক
                             </label>
                         </div>
-                        
-                        {{-- <input type="radio" class="form-control" id="type" name="type" value="{{ old('type') }}"> --}}
                         @error('type') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="memorandum_no" class="form-label">স্মারক নং</label>
-                        <input type="text" class="form-control" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no" value="{{ old('memorandum_no') }}">
+                        <input type="text" class="form-control @error('memorandum_no') border-danger @enderror" id="memorandum_no" placeholder="যেমনঃ ৫৬.০৪.০৯০০.০০০.০৬.০০৩.২২-২০০" name="memorandum_no" value="{{ old('memorandum_no') }}">
                         @error('memorandum_no') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="serial_no" class="form-label">ক্রমিক নং</label>
-                        <input type="text" class="form-control" id="serial_no" placeholder="পত্র গ্রহণ রেজিস্টারের ক্রমিক নং লিখুন" name="serial_no" value="{{ old('serial_no') }}">
+                        <input type="text" class="form-control @error('serial_no') border-danger @enderror" id="serial_no" placeholder="পত্র গ্রহণ রেজিস্টারের ক্রমিক নং লিখুন" name="serial_no" value="{{ old('serial_no') }}">
                         @error('serial_no') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-md-6">
                         <label for="received_date" class="form-label">পত্র প্রাপ্তির তারিখ</label><span class="text-danger">*</span>
-                        <input type="date" class="form-control" id="received_date" name="received_date" value="{{ old('received_date') }}" required>
+                        <input type="date" class="form-control @error('received_date') border-danger @enderror" id="received_date" name="received_date" value="{{ old('received_date') }}" required>
                         @error('received_date') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="sender_name" class="form-label">কোথা হতে প্রাপ্ত</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="sender_name" placeholder="প্রেরণকারী ব্যক্তি বা দপ্তরের নাম লিখুন" name="sender_name" value="{{ old('sender_name') }}" required>
+                        <input type="text" class="form-control @error('sender_name') border-danger @enderror" id="sender_name" placeholder="প্রেরণকারী ব্যক্তি বা দপ্তরের নাম লিখুন" name="sender_name" value="{{ old('sender_name') }}" required>
                         @error('sender_name') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="sent_date" class="form-label">প্রেরণের তারিখ</label><span class="text-danger">*</span>
-                        <input type="date" class="form-control" id="sent_date" placeholder="Apartment, studio, or floor" name="sent_date" value="{{ old('sent_date') }}" required>
+                        <input type="date" class="form-control @error('sent_date') border-danger @enderror" id="sent_date" placeholder="Apartment, studio, or floor" name="sent_date" value="{{ old('sent_date') }}" required>
                         @error('sent_date') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="short_title" class="form-label">সংক্ষিপ্ত বিষয়</label><span class="text-danger">*</span>
-                        <input type="text" class="form-control" id="short_title" placeholder="পত্রের বিষয়টি সংক্ষেপে লিখুন" name="short_title" value="{{ old('short_title') }}" required>
+                        <input type="text" class="form-control @error('short_title') border-danger @enderror" id="short_title" placeholder="পত্রের বিষয়টি সংক্ষেপে লিখুন" name="short_title" value="{{ old('short_title') }}" required>
                         @error('short_title') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">
                         <label for="section_to" class="form-label">যে শাখায় পত্র রক্ষিত হইল</label><span class="text-danger">*</span>
-                        <select id="section_to" class="form-select" name="section_to" required>
+                        <select id="section_to" class="form-select @error('section_to') border-danger @enderror" name="section_to" required>
                             <option value="" selected disabled>নির্বাচন করুন</option>
                             @foreach ($sections as $section)
-                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                <option @selected(old('section_to') == $section->id) value="{{ $section->id }}">{{ $section->name }}</option>
                             @endforeach
                         </select>
                         @error('section_to') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-6">           
                         <label for="file_url" class="form-label">স্ক্যানকৃত ডাক/চিঠি আপলোড করুন (শুধুমাত্র PDF ও সর্বোচ্চ ৩ MB)</label><span class="text-danger">*</span>
-                        <input type="file" id="file_url" class="form-control file-upload-input" accept=".pdf" name="file_url" required>
+                        <input type="file" id="file_url" class="form-control file-upload-input @error('file_url') border-danger @enderror" accept=".pdf" name="file_url" required>
                         @error('file_url') <span class="text-danger">{{ $message }}</span> @enderror                      
                     </div>
                     <div class="col-md-12">

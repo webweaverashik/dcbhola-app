@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -10,9 +9,8 @@ class DashboardController extends Controller
     public function index()
     {
         $role = session('role');
-        
-        if ($role == 1) // For DC Role
-        {
+
+        if ($role == 1) { // For DC Role
             $results = DB::table('letters')
                     ->join('sections', 'letters.section_to', '=', 'sections.id')
                     ->select(
@@ -30,9 +28,7 @@ class DashboardController extends Controller
                     ->groupBy('sections.name')
                     ->groupBy('sections.id')
                     ->get();
-        }
-        elseif ($role == 2) // For ADC Role
-        {
+        } elseif ($role == 2) { // For ADC Role
             $results = DB::table('letters')
                     ->join('sections', 'letters.section_to', '=', 'sections.id')
                     ->select(
@@ -47,13 +43,12 @@ class DashboardController extends Controller
                         DB::raw('SUM(CASE WHEN letters.status = 2 THEN 1 ELSE 0 END) as total_status_2')
                     )
                     ->where('letters.is_deleted', 0)
+                    ->where('sections.adc_id', session('loginId'))
                     ->groupBy('sections.name')
                     ->groupBy('sections.id')
                     ->get();
-                    // Need to filter section IDs 
-        }
-        elseif ($role == 3)  // Section Officer Role
-        {
+            // Need to filter section IDs
+        } elseif ($role == 3) {  // Section Officer Role
             $results = DB::table('letters')
                     ->join('sections', 'letters.section_to', '=', 'sections.id')
                     ->select(
@@ -72,9 +67,7 @@ class DashboardController extends Controller
                     ->groupBy('sections.name')
                     ->groupBy('sections.id')
                     ->get();
-        }
-        elseif ($role == 4) // Section Staff CO Role
-        {
+        } elseif ($role == 4) { // Section Staff CO Role
             $results = DB::table('letters')
                     ->join('sections', 'letters.section_to', '=', 'sections.id')
                     ->select(
@@ -103,9 +96,9 @@ class DashboardController extends Controller
     {
         $sectionsData = DB::table('sections')
             ->leftJoin('letters', 'sections.id', '=', 'letters.section_to')
-            ->select('sections.name as section_name', 
-                    DB::raw('SUM(CASE WHEN letters.status = 1 THEN 1 ELSE 0 END) as status_1_count'),
-                    DB::raw('SUM(CASE WHEN letters.status = 2 THEN 1 ELSE 0 END) as status_2_count'))
+            ->select('sections.name as section_name',
+                DB::raw('SUM(CASE WHEN letters.status = 1 THEN 1 ELSE 0 END) as status_1_count'),
+                DB::raw('SUM(CASE WHEN letters.status = 2 THEN 1 ELSE 0 END) as status_2_count'))
             ->groupBy('sections.name')
             ->get();
 

@@ -29,9 +29,20 @@
                                                 </div>
         
                                                 <div class="col-md-12">
-                                                    <label for="editOfficerId" class="form-label">দায়িত্বপ্রাপ্ত কর্মকর্তা</label><span class="text-danger">*</span>
+                                                    <label for="editADCId" class="form-label">সংশ্লিষ্ট অতিরিক্ত জেলা প্রশাসক</label><span class="text-danger">*</span>
+                                                    <select id="editADCId" class="form-select mb-3" name="adc_id" required>
+                                                        <option id="adc_blank" value="" selected disabled>নির্বাচন করুন</option>
+                                                    @foreach ($adc_users as $adc)
+                                                        <option value="{{ $adc->id }}">{{ $adc->name . ', ' . $adc->designation}}</option>
+                                                    @endforeach
+                                                    </select>
+                                                    @error('adc_id') <span class="text-danger">{{ $message }}</span> @enderror
+                                                </div>
+        
+                                                <div class="col-md-12">
+                                                    <label for="editOfficerId" class="form-label">শাখার দায়িত্বপ্রাপ্ত কর্মকর্তা</label><span class="text-danger">*</span>
                                                     <select id="editOfficerId" class="form-select mb-3" name="officer_id" required>
-                                                        <option value="" selected disabled>নির্বাচন করুন</option>
+                                                        <option id="officer_blank" value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($officers as $officer)
                                                         <option value="{{ $officer->id }}">{{ $officer->name . ', ' . $officer->designation}}</option>
                                                     @endforeach
@@ -42,7 +53,7 @@
                                                 <div class="col-md-12">
                                                     <label for="editStaffId" class="form-label">কর্মচারী</label><span class="text-danger">*</span>
                                                     <select id="editStaffId" class="form-select" name="staff_id" required>
-                                                        <option value="" selected disabled>নির্বাচন করুন</option>
+                                                        <option id="staff_blank" value="" selected disabled>নির্বাচন করুন</option>
                                                     @foreach ($staffs as $staff)
                                                         <option value="{{ $staff->id }}">{{ $staff->name . ', ' . $staff->designation }}</option>
                                                     @endforeach
