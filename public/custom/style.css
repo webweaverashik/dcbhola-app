@@ -14,24 +14,8 @@
 	font-family: 'SolaimanLipi' !important;
 }
 
-
-
-/* HTML 5 */
-.dt-buttons .dt-button {
-	color: #fff !important;
-	background-color: #4361ee !important;
-	border-color: #4361ee;
-	margin-bottom: 5px;
-	margin-right: 5px;
-  }
-
-
-/* HTML 5 */
-body.dark .dt-buttons .dt-button {
-	color: #fff !important;
-	background-color: #4361ee !important;
-	border-color: #4361ee;
-	margin-bottom: 5px;
-	margin-right: 5px;
+/* Login page cover image */
+.auth-cover img, body.dark .auth-cover img {
+    width: 250px;
+    height: 250px;
 }
-  

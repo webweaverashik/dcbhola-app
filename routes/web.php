@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LetterController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -71,6 +72,8 @@ Route::controller(AuthenticateController::class)->group(function () {
         Route::post('/sections/add', [SectionController::class, 'store']);
         Route::put('/sections/edit', [SectionController::class, 'update']);
         Route::get('/sections/ajax/{id}', [SectionController::class, 'fetch']);
+
+        Route::get('/reports', [ReportController::class, 'index']);
     });
 
 });

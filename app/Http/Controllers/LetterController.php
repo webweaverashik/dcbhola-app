@@ -251,7 +251,7 @@ class LetterController extends Controller
             ->join('sections', 'letters.section_to', '=', 'sections.id')
             ->select('letters.*', 'sections.name as section_name')
             ->where('letters.is_deleted', 0)
-            ->orderBy('created_at', 'DESC');
+            ->orderBy('letters.created_at', 'DESC');
 
         // Handle section filter
         /*
@@ -265,12 +265,16 @@ class LetterController extends Controller
             $section = DB::table('sections')
                 ->where('id', $sectionId)
                 ->first();
+
             $sectionName = $section ? $section->name : ''; // Get only the section name
+
         } elseif ($sectionId == 0) {
             if ($role == 2) {
                 $letters = $letters->where('sections.adc_id', $loginId);
+
             } elseif ($role == 3) {
                 $letters = $letters->where('sections.officer_id', $loginId);
+
             } elseif ($role == 4) {
                 $letters = $letters->where('sections.staff_id', $loginId);
             }
@@ -293,10 +297,10 @@ class LetterController extends Controller
                 $dateRangeEnd = now(); // From now to 7 days ago
             } elseif ($days == 'up_to_15_days') {
                 $dateRangeStart = now()->subDays(15);
-                $dateRangeEnd = now()->subDays(8); // From 8 to 15 days ago
+                $dateRangeEnd = now()->subDays(7); // From 8 to 15 days ago
             } elseif ($days == 'up_to_30_days') {
                 $dateRangeStart = now()->subDays(30);
-                $dateRangeEnd = now()->subDays(16); // From 16 to 30 days ago
+                $dateRangeEnd = now()->subDays(15); // From 16 to 30 days ago
             } elseif ($days == 'days_30_plus') {
                 $dateRangeStart = now()->subDays(30);
                 $dateRangeEnd = null; // More than 30 days

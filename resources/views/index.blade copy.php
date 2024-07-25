@@ -10,7 +10,6 @@
     {{-- <link href="{{ asset('src/assets/css/dark/dashboard/dash_1.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('src/assets/css/dark/dashboard/dash_2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('src/assets/css/dark/components/tabs.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('custom/dashboard.css') }}">
 
 @endsection
 
@@ -184,34 +183,10 @@
     // Refresh the page every 30 seconds (30000 milliseconds)
     setInterval(function(){
         window.location.reload();
-    }, 900000); // 30000 milliseconds = 30 seconds
+    }, 60000); // 30000 milliseconds = 30 seconds
 
 
 </script>
 
 
-
-{{-- Dashboard Table AutoScrolling Effect Starts  --}}
-<script>
-    const tbody = document.getElementById('results-body');
-
-    // Add the marquee class to the tbody element
-    tbody.classList.add('marquee');
-
-    // Set the animation duration based on the tbody height
-    const animationDuration = tbody.offsetHeight * 20; // adjust the multiplier as needed
-    document.querySelector('.marquee').style.animationDuration = `${animationDuration}ms`;
-
-    // Add event listeners to pause and resume the animation on mouseover and mouseout
-    tbody.addEventListener('mouseover', () => {
-    tbody.style.animationPlayState = 'paused';
-    });
-
-    tbody.addEventListener('mouseout', () => {
-    tbody.style.animationPlayState = 'running';
-    });
-</script>
-
-{{-- Dashboard Table AutoScrolling Effect Ends --}}
-    
 @endsection
