@@ -12,7 +12,7 @@
 @section('content')
 
 <div class="row layout-top-spacing">
-    <h1>রিপোর্ট প্যানেলের কাজ চলমান</h1>
+    <h1>রিপোর্ট প্যানেল ডেভেলপমেন্টের কাজ চলমান</h1>
 </div>
 @endsection
 

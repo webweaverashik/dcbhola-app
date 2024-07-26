@@ -16,6 +16,10 @@
     z-index: 1;
 }
 
+body.dark .table-responsive thead {
+    background-color: #0e1726; /* adjust the background color as needed */
+}
+
 .table-responsive tbody {
     position: relative;
     width: 100%;

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'সকল পত্র')
+@section('title', 'All Letters')
 
 
 @section('page-level-custom-css')
@@ -49,9 +49,6 @@
 
                             <!-- Section Name Filter -->
                             <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">সংশ্লিষ্ট শাখাঃ</label>
-                            </div>
-                            <div class="col-12 col-md-auto">
                                 <select id="section_name" class="form-control">
                                     <option value="">সকল শাখা</option>
                                     @foreach ($sections as $section)
@@ -65,18 +62,25 @@
                                 <label for="start_date" class="form-label fw-bold">পত্র প্রাপ্তির তারিখঃ</label>
                             </div>
                             <div class="col-12 col-md-auto">
-                                <input type="date" id="received_date_filter" class="form-control" placeholder="পত্র প্রাপ্তির তারিখ">
+                                <select id="date_range" class="form-control">
+                                    <option value="last_15_days">গত ১৫ দিন</option>
+                                    <option value="this_month">চলতি মাস</option>
+                                    <option value="custom">কাস্টম রেঞ্জ</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <input type="date" id="start_date" class="form-control d-none" placeholder="শুরু তারিখ">
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <input type="date" id="end_date" class="form-control d-none" placeholder="শেষ তারিখ">
                             </div>
 
                             <!-- Uploaded By Filter -->
-                            <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">পত্র আপলোডকারিঃ</label>
-                            </div>
                             <div class="col-12 col-md-auto @if(session('role') == 4) d-none @endif">
                                 <select id="uploaded_by" class="form-control">
-                                    <option value="">সকল কর্মচারি</option>
+                                    <option value="">চিঠি আপলোডকারি</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}">{{ $user->name }}, {{ $user->designation }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -301,111 +305,170 @@
 
 
 <script>
-// ------- Letter Filter Buttons JS Codes Starts -------
-$(document).ready(function() {
+    // ------- Letter Filter Buttons JS Codes Starts -------
+    $(document).ready(function() {
+        function getLast15Days() {
+            var today = new Date();
+            var last15DaysStart = new Date();
+            last15DaysStart.setDate(today.getDate() - 14); // Subtract 14 to include today
+            return { start: last15DaysStart, end: today };
+        }
 
-    // Custom sorting function for Bengali numeric values
-    $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
-        var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
-        var engData = data.replace(/[০-৯]/g, function (match) {
-            return engDigits[match];
+        function getThisMonth() {
+            var start = new Date();
+            start.setDate(1); // Set to the first day of the month
+            var end = new Date();
+            end.setMonth(end.getMonth() + 1);
+            end.setDate(0); // Set to the last day of the month
+            return { start: start, end: end };
+        }
+
+        function setCustomRangeToThisMonth() {
+            var thisMonth = getThisMonth();
+            $('#start_date').val(thisMonth.start.toISOString().split('T')[0]);
+            $('#end_date').val(thisMonth.end.toISOString().split('T')[0]);
+        }
+
+        setCustomRangeToThisMonth();
+
+
+        // Here's how you can modify your DataTables configuration to include a custom sorting function for the column displaying the iteration number:
+        $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
+            // Convert Bengali digits to English digits for sorting
+            var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
+            var engData = data.replace(/[০-৯]/g, function (match) {
+                return engDigits[match];
+            });
+            return parseInt(engData, 10);
+        };
+
+        
+        var table = $('#style-3').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "সার্চ করুন...",
+                "sLengthMenu": "ফলাফল :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10,
+            "columnDefs": [
+                {
+                    "targets": 0, // Adjust the target column index as per your table structure
+                    "type": "bengali-numeric"
+                }
+            ]
         });
-        return parseInt(engData, 10);
-    };
 
-    var table = $('#style-3').DataTable({
-        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
-        "oLanguage": {
-            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-            "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "সার্চ করুন...",
-            "sLengthMenu": "ফলাফল :  _MENU_",
-        },
-        "stripeClasses": [],
-        "lengthMenu": [10, 20, 50, 100],
-        "pageLength": 10,
-        "columnDefs": [
-            {
-                "targets": 0, // Adjust the target column index as per your table structure
-                "type": "bengali-numeric"
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var status = data[7];
+                var status1 = $('#status-1').is(':checked');
+                var status2 = $('#status-2').is(':checked');
+
+                if ((status1 && status === 'চলমান') || 
+                    (status2 && status === 'সম্পন্ন')) {
+                    return true;
+                }
+                return false;
             }
-        ]
-    });
+        );
 
-    // Filter for status
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var status = data[7];
-            var status1 = $('#status-1').is(':checked');
-            var status2 = $('#status-2').is(':checked');
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var section_name = $('#section_name').val();
+                var section_name_data = data[5]; // Adjust according to the actual data index
 
-            if ((status1 && status === 'চলমান') || 
-                (status2 && status === 'সম্পন্ন')) {
-                return true;
+                if (section_name === "" || section_name_data === section_name) {
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-    );
+        );
 
-    // Filter for section name
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var section_name = $('#section_name').val();
-            var section_name_data = data[5]; // Adjust according to the actual data index
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var dateRange = $('#date_range').val();
+                var minDate, maxDate;
 
-            if (section_name === "" || section_name_data === section_name) {
-                return true;
+                if (dateRange === 'last_15_days') {
+                    var last15Days = getLast15Days();
+                    minDate = last15Days.start;
+                    maxDate = last15Days.end;
+                } else if (dateRange === 'this_month') {
+                    var thisMonth = getThisMonth();
+                    minDate = thisMonth.start;
+                    maxDate = thisMonth.end;
+                } else if (dateRange === 'custom') {
+                    minDate = new Date($('#start_date').val());
+                    maxDate = new Date($('#end_date').val());
+                }
+
+                var date = new Date(data[1]);
+                if (
+                    (dateRange === 'last_15_days' || dateRange === 'this_month') &&
+                    date >= minDate && date <= maxDate
+                ) {
+                    return true;
+                } else if (
+                    dateRange === 'custom' &&
+                    (!isNaN(minDate.getTime()) && date >= minDate) &&
+                    (!isNaN(maxDate.getTime()) && date <= maxDate)
+                ) {
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-    );
+        );
 
-    // Filter for uploaded by
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var uploaded_by = $('#uploaded_by').val();
-            var uploaded_by_data = data[8]; // Adjust according to the actual data index
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var uploaded_by = $('#uploaded_by').val();
+                var uploaded_by_data = data[8]; // Adjust according to the actual data index
 
-            if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
-                return true;
+                if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-    );
+        );
 
-    // Filter for received date
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var received_date = $('#received_date_filter').val();
-            var received_date_data = data[1]; // Adjust according to the actual data index
-
-            if (received_date === "" || received_date_data === received_date) {
-                return true;
+        $('#date_range').on('change', function() {
+            if ($(this).val() === 'custom') {
+                $('#start_date, #end_date').removeClass('d-none');
+            } else {
+                $('#start_date, #end_date').addClass('d-none');
+                if ($(this).val() === 'this_month') {
+                    setCustomRangeToThisMonth();
+                }
             }
-            return false;
-        }
-    );
+            table.draw();
+        });
 
-    $('#status-1, #status-2, #uploaded_by, #section_name, #received_date_filter').on('change', function() {
+        $('#status-1, #status-2, #start_date, #end_date, #uploaded_by, #section_name').on('change', function() {
+            table.draw();
+        });
+
+        $('#clear_filters').on('click', function() {
+            $('#status-1, #status-2').prop('checked', true);
+            $('#section_name').val('');
+            $('#date_range').val('last_15_days');
+            setCustomRangeToThisMonth();
+            $('#start_date, #end_date').addClass('d-none');
+            $('#uploaded_by').val('');
+            table.draw();
+        });
+
+        // Trigger initial draw
         table.draw();
     });
 
-    $('#clear_filters').on('click', function() {
-        $('#status-1, #status-2').prop('checked', true);
-        $('#section_name').val('');
-        $('#uploaded_by').val('');
-    $('#received_date_filter').val('');
-        table.draw();
-    });
-
-    // Trigger initial draw
-    table.draw();
-    });
-// ------- Letter Filter Buttons JS Codes Ends -------
-
+    // ------- Letter Filter Buttons JS Codes Ends -------
 
 
 
