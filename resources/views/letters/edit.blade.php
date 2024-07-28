@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('src/assets/css/dark/forms/switches.css') }}">
 @endsection
 
-@section('title', 'Edit Letters')
+@section('title', 'পত্র সংশোধন')
 
 
 @section('content')

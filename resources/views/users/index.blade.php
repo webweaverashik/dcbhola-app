@@ -8,7 +8,7 @@
 
 @extends('layouts.layout')
 
-@section('title', 'All Users')
+@section('title', 'সকল ব্যবহারকারী')
 
 
 

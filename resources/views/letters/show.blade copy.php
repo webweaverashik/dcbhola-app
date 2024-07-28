@@ -30,68 +30,8 @@
             <div class="widget-header">
                 <div class="row justify-content-between">
                     <div class="col-md-auto col-12">
-                        <h4 id="exportTitle">সকল ডাক/চিঠি</h4>
+                        <h4 id="dynamic-title">সকল ডাক/চিঠি</h4>
                     </div>
-
-                    <div class="col-md-auto col-12 my-2">
-                        <div class="row g-2 d-flex justify-content-end align-items-center">
-                            <!-- Status Filter -->
-                            <div class="col-12 col-md-auto d-flex flex-wrap align-items-center">
-                                <div class="form-check form-switch form-check-inline form-switch-warning">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-1" checked>
-                                    <label class="form-check-label" for="status-1">চলমান</label>
-                                </div>
-                                <div class="form-check form-switch form-check-inline form-switch-success">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status-2" checked>
-                                    <label class="form-check-label" for="status-2">সম্পন্ন</label>
-                                </div>
-                            </div>
-
-                            <!-- Section Name Filter -->
-                            <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">সংশ্লিষ্ট শাখাঃ</label>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <select id="section_name" class="form-control">
-                                    <option value="">সকল শাখা</option>
-                                    @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Date Range Filter -->
-                            <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">পত্র প্রাপ্তির তারিখঃ</label>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <input type="date" id="received_date_filter" class="form-control" placeholder="পত্র প্রাপ্তির তারিখ">
-                            </div>
-
-                            <!-- Uploaded By Filter -->
-                            <div class="col-12 col-md-auto">
-                                <label for="start_date" class="form-label fw-bold">পত্র আপলোডকারিঃ</label>
-                            </div>
-                            <div class="col-12 col-md-auto @if(session('role') == 4) d-none @endif">
-                                <select id="uploaded_by" class="form-control">
-                                    <option value="">সকল কর্মচারি</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Clear Filters Button -->
-                            <div class="col-12 col-md-auto">
-                                <button id="clear_filters" class="btn btn-outline-secondary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                                    <span class="btn-text-inner">রিসেট</span>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
@@ -108,8 +48,6 @@
                             <th>সংশ্লিষ্ট শাখা</th>
                             <th>অবস্থা</th>
                             <th class="d-none">আপলোডকারি</th>
-                            <th class="d-none">অবস্থা</th>
-                            <th class="d-none">পত্রের ধরণ</th>
                             <th class="dt-no-sorting">কার্যক্রম</th>
                         </tr>
                     </thead>
@@ -123,9 +61,8 @@
                         <tr>
                             <!-- Use the iteration number and convert it to Bengali -->
                             <td>
-                                {{-- {{ strtr($loop->iteration, $engToBng) }} --}}
-                                {{ strtr((string)(int)$loop->iteration, $engToBng) }}
-                                
+                                {{ strtr($loop->iteration, $engToBng) }}
+
                                 @if ($letter->type == 1)
                                 <span title="দাপ্তরিক ডাক">
                                     <svg height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
@@ -243,26 +180,12 @@
                                 @elseif ($letter->status == 2)
                                     <span class="shadow-none badge badge-success">সম্পন্ন</span>
                                 @endif
-                                <td class="text-wrap d-none">{{ $letter->uploaded_by }}</td>
                             </td>
-                            <td class="d-none">
-                                @if ($letter->status == 1)
-                                    <span class="shadow-none badge badge-warning">&#8635;</span>
-                                @elseif ($letter->status == 2)
-                                    <span class="shadow-none badge badge-success">&#x2714;</span>
-                                @endif
-                            </td>
-                            <td class="d-none">
-                                @if ($letter->type == 1)
-                                    <span title="দাপ্তরিক ডাক">দাপ্তরিক</span>
-                                @elseif ($letter->type == 2)
-                                    <span title="নাগরিক ডাক">নাগরিক</span>
-                                @endif
-                            </td>
-                                <td>
-                                    <div class="action-btns">
-                                        
-                                    <a href="{{ $letter->file_url }}" target="_blank" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="ডাউনলোড">
+                            <td class="text-wrap d-none">{{ $letter->uploaded_by }}</td>
+                            <td>
+                                <div class="action-btns">
+                                    
+                                    <a href="http://localhost:8000/{{ $letter->file_url }}" target="_blank" class="action-btn btn-view bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="ডাউনলোড">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                     </a>  {{-- File Download Button --}}
 
@@ -304,176 +227,56 @@
 <script>
     document.getElementById("pageBreadcrumb").innerHTML = '<li class="breadcrumb-item"><a href="{{ url('/letters') }}">চিঠি\/ডাক</a></li>' + '<li class="breadcrumb-item active" aria-current="page">সকল চিঠি/ডাক</li>';
     document.getElementById("letters_menu").className += " active";
-    document.getElementById("letters_all_id").className += " active";
+    // document.getElementById("letters_all_id").className += " active";
     document.getElementById("letters_menu_dropdown").setAttribute("aria-expanded", true);
     document.getElementById("letters_ul").className += " show";
 </script>
 
-{{-- Page Level Custom JS Starts --}}
 {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
 <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
-<script src="{{ asset('src/plugins/src/table/datatable/button-ext/jszip.min.js') }}"></script>
-<script src="{{ asset('src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.print.min.js') }}"></script>
-{{-- Page Level Custom JS Ends --}}
-
 
 <script>
-// ------- Letter Filter Buttons JS Codes Starts -------
-$(document).ready(function() {
 
-    // Custom sorting function for Bengali numeric values
-    $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
-        var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
-        var engData = data.replace(/[০-৯]/g, function (match) {
-            return engDigits[match];
-        });
-        return parseInt(engData, 10);
-    };
-
-    // Get the custom title from the element
-    var customTitle = $('#exportTitle').text(); 
-
-    var table = $('#style-3').DataTable({
-        "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'lB><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
-        buttons: {
-            buttons: [
-                { 
-                    extend: 'excel', 
-                    className: 'border-0 bg-transparent',
-                    text: '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="32px" height="32px"><path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"/><path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"/><path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"/><path fill="#17472a" d="M14 24.005H29V33.055H14z"/><g><path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"/><path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"/><path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"/><path fill="#129652" d="M29 24.005H44V33.055H29z"/></g><path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"/><path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"/></svg>',
-                    title: customTitle,
-                    exportOptions: {
-                        columns: [0, 2, 3, 4, 6, 7]
-                    }
-                },
-                { 
-                    extend: 'print',
-                    className: 'border-0 bg-transparent',
-                    text: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>',
-                    title: customTitle,
-                    customize: function (win) {
-                        $(win.document.body).find('table').css({
-                            'font-size': '10pt',
-                            'width': '100%'
-                        });
-                        $(win.document.body).find('table th, table td').css({
-                            'padding': '8px', // Increase padding
-                            'word-wrap': 'break-word', // Ensures words break to prevent stretching
-                            'white-space': 'normal'
-                        });
-
-                        $(win.document.body)
-                            .css('font-size', '10pt') // Optional: Set default font size for the print view
-                            .prepend(
-                                '<style>' +
-                                '* { color: #000 !important; }'+
-                                // '@page { size: landscape; }' + // Set print layout to landscape
-                                'h1 { font-size: 24pt; }' + // Customize the title font size
-                                '</style>'
-                            );
-                        // Apply custom CSS for print title
-                        $(win.document.body).find('h1').css('font-size', '20pt'); // Adjust this to your desired font size
-                    },
-                    exportOptions: {
-                        columns: [0, 10, 2, 3, 4, 6, 9]
-                    }
-                 }
+    // ------- Letter Filter Buttons JS Codes Starts -------
+    $(document).ready(function() {
+        // Here's how you can modify your DataTables configuration to include a custom sorting function for the column displaying the iteration number:
+        $.fn.dataTable.ext.type.order['bengali-numeric-pre'] = function (data) {
+            // Convert Bengali digits to English digits for sorting
+            var engDigits = {'০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'};
+            var engData = data.replace(/[০-৯]/g, function (match) {
+                return engDigits[match];
+            });
+            return parseInt(engData, 10);
+        };
+        
+        var table = $('#style-3').DataTable({
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "সার্চ করুন...",
+                "sLengthMenu": "ফলাফল :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [10, 20, 50, 100],
+            "pageLength": 10,
+            "columnDefs": [
+                {
+                    "targets": 0, // Adjust the target column index as per your table structure
+                    "type": "bengali-numeric"
+                }
             ]
-        },
-        "oLanguage": {
-            "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-            "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "সার্চ করুন...",
-            "sLengthMenu": "তালিকা :  _MENU_",
-        },
-        "stripeClasses": [],
-        "lengthMenu": [10, 20, 50, 100],
-        "pageLength": 10,
-        "columnDefs": [
-            {
-                "targets": 0, // Adjust the target column index as per your table structure
-                "type": "bengali-numeric"
-            }
-        ]
-    });
+        });
 
-    // Filter for status
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var status = data[7];
-            var status1 = $('#status-1').is(':checked');
-            var status2 = $('#status-2').is(':checked');
-
-            if ((status1 && status === 'চলমান') || 
-                (status2 && status === 'সম্পন্ন')) {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    // Filter for section name
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var section_name = $('#section_name').val();
-            var section_name_data = data[5]; // Adjust according to the actual data index
-
-            if (section_name === "" || section_name_data === section_name) {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    // Filter for uploaded by
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var uploaded_by = $('#uploaded_by').val();
-            var uploaded_by_data = data[8]; // Adjust according to the actual data index
-
-            if (uploaded_by === "" || uploaded_by_data === uploaded_by) {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    // Filter for received date
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var received_date = $('#received_date_filter').val();
-            var received_date_data = data[1]; // Adjust according to the actual data index
-
-            if (received_date === "" || received_date_data === received_date) {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    $('#status-1, #status-2, #uploaded_by, #section_name, #received_date_filter').on('change', function() {
+        // Trigger initial draw
         table.draw();
     });
 
-    $('#clear_filters').on('click', function() {
-        $('#status-1, #status-2').prop('checked', true);
-        $('#section_name').val('');
-        $('#uploaded_by').val('');
-    $('#received_date_filter').val('');
-        table.draw();
-    });
-
-    // Trigger initial draw
-    table.draw();
-    });
-// ------- Letter Filter Buttons JS Codes Ends -------
-
+    // ------- Letter Filter Buttons JS Codes Ends -------
 
 
 
@@ -692,6 +495,75 @@ $(document).ready(function() {
     });
     // ------- Letter View Modal Data Showing Ends -------
 
+
+    // ------- Dynamic Page Heading Starts -------
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the section name from the PHP variable
+        const sectionName = '{{ $sectionName }}';
+        console.log(sectionName);
+
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let m;
+            while (m = regex.exec(queryString)) {
+                params[decodeURIComponent(m[1])] = decodeURIComponent(m[2].replace(/\+/g, ' '));
+            }
+            return params;
+        }
+
+        // Function to update the title based on parameters
+        function updateTitle() {
+            const params = getQueryParams();
+            // const sectionName = params.section;
+            const days = params.days;
+            const status = params.status;
+
+            // let title = 'সকল ডাক/চিঠি'; // Default title
+            let title = ''; // Initialize title
+
+            // Check if sectionName is set
+            if (sectionName && sectionName !== '0') {
+                title = `${sectionName}র`; // Use the section name from the Blade variable
+            } else {
+                title = 'সকল শাখা'; // Default to all sections
+            }
+
+            if (days && days != 'all_days') {
+                if (days == 'up_to_7_days') {
+                    title += ' (৭ দিন যাবৎ)';
+                } else if (days == 'up_to_15_days') {
+                    title += ' (১৫ দিন যাবৎ)';
+                } else if (days == 'up_to_30_days') {
+                    title += ' (৩০ দিন যাবৎ)';
+                } else if (days == 'days_30_plus') {
+                    title += ' (৩০ দিনের বেশি)';
+                }
+            } else if (days == 'all_days') {
+                title += ' (সকল সময়ের)';
+            }
+
+            if (status) {
+                if (status == 1) {
+                    title += ' <span class="badge badge-warning">চলমান</span> পত্রসমূহ';
+                } else if (status == 2) {
+                    title += ' <span class="badge badge-success">সম্পন্ন</span> পত্রসমূহ';
+                }
+                else {
+                    title += ' পত্রসমূহ'; // Default case for other statuses
+                }
+            }
+
+            // Set the title
+            document.getElementById('dynamic-title').innerHTML = title;
+        }
+
+        // Call the function to update the title
+        updateTitle();
+    });
+    // ------- Dynamic Page Heading Ends -------
 </script>
 
 
@@ -723,12 +595,6 @@ $(document).ready(function() {
 </script>
 
 {{-- <script src="{{ asset('custom/ajax.js') }}"></script> --}}
-
-
-
-
-
-
 
 
 @endsection

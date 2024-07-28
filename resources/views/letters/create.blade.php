@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Upload New Letters')
+@section('title', 'নতুন পত্র আপলোড')
 
 
 @section('content')

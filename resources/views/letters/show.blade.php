@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'সকল পত্র')
+@section('title', 'ফিল্টারকৃত পত্র')
 
 
 @section('page-level-custom-css')
@@ -48,6 +48,8 @@
                             <th>সংশ্লিষ্ট শাখা</th>
                             <th>অবস্থা</th>
                             <th class="d-none">আপলোডকারি</th>
+                            <th class="d-none">অবস্থা</th>
+                            <th class="d-none">পত্রের ধরণ</th>
                             <th class="dt-no-sorting">কার্যক্রম</th>
                         </tr>
                     </thead>
@@ -182,6 +184,20 @@
                                 @endif
                             </td>
                             <td class="text-wrap d-none">{{ $letter->uploaded_by }}</td>
+                            <td class="d-none">
+                                @if ($letter->status == 1)
+                                    <span class="shadow-none badge badge-warning">&#8635;</span>
+                                @elseif ($letter->status == 2)
+                                    <span class="shadow-none badge badge-success">&#x2714;</span>
+                                @endif
+                            </td>
+                            <td class="d-none">
+                                @if ($letter->type == 1)
+                                    <span title="দাপ্তরিক ডাক">দাপ্তরিক</span>
+                                @elseif ($letter->type == 2)
+                                    <span title="নাগরিক ডাক">নাগরিক</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="action-btns">
                                     
@@ -235,6 +251,10 @@
 {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
 <script src="{{ asset('src/plugins/src/global/vendors.min.js') }}"></script>  <!-- JQuery -->
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/jszip.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('src/plugins/src/table/datatable/button-ext/buttons.print.min.js') }}"></script>
 
 <script>
 
@@ -250,10 +270,58 @@
             return parseInt(engData, 10);
         };
         
+        // Get the custom title from the element
+        var customTitle = $('#dynamic-title').text(); 
+
         var table = $('#style-3').DataTable({
-            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
+            "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'lB><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
             "<'table-responsive'tr>" +
             "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            buttons: {
+                buttons: [
+                    { 
+                        extend: 'excel', 
+                        className: 'border-0 bg-transparent',
+                        text: '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="32px" height="32px"><path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"/><path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"/><path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"/><path fill="#17472a" d="M14 24.005H29V33.055H14z"/><g><path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"/><path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"/><path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"/><path fill="#129652" d="M29 24.005H44V33.055H29z"/></g><path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"/><path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"/></svg>',
+                        title: customTitle,
+                        exportOptions: {
+                            columns: [0, 2, 3, 4, 6, 7]
+                        }
+                    },
+                    { 
+                        extend: 'print',
+                        className: 'border-0 bg-transparent',
+                        text: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>',
+                        title: customTitle,
+                        customize: function (win) {
+                                $(win.document.body).find('table').css({
+                                    'font-size': '10pt',
+                                    'width': '100%'
+                                });
+                                
+                                $(win.document.body).find('table th, table td').css({
+                                    'padding': '8px', // Increase padding
+                                    'word-wrap': 'break-word', // Ensures words break to prevent stretching
+                                    'white-space': 'normal'
+                                });
+                                
+                                $(win.document.body)
+                                    .css('font-size', '10pt') // Optional: Set default font size for the print view
+                                    .prepend(
+                                        '<style>' +
+                                        '* { color: #000 !important; }'+
+                                        // '@page { size: landscape; }' + // Set print layout to landscape
+                                        'h1 { font-size: 24pt; }' + // Customize the title font size
+                                        '</style>'
+                                    );
+                                $(win.document.body).find('h1').css('font-size', '18pt'); // Adjust this to your desired font size
+                            },
+                        exportOptions: {
+                            columns: [0, 10, 2, 3, 4, 6, 9]
+                        }
+                    }
+                ]
+            },
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 "sInfo": "পৃষ্ঠা নং _PAGE_ এর _PAGES_",

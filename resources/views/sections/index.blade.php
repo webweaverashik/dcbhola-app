@@ -8,7 +8,7 @@
 
 @extends('layouts.layout')
 
-@section('title', 'All Sections')
+@section('title', 'সকল শাখা')
 
 
 

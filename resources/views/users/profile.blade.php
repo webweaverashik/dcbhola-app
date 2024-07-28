@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'My Profile')
+@section('title', 'আমার প্রোফাইল')
 
 @section('page-level-custom-css')
     <!--  BEGIN CUSTOM STYLE FILE  -->
